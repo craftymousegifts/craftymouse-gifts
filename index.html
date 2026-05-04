@@ -585,6 +585,25 @@ async function fetchProducts() {
 }
 
 function parseFrontmatter(text, filename) {
+ async function fetchPackages() {
+  try {
+    const res = await fetch('https://api.github.com/repos/craftymousegifts/craftymouse-gifts/contents/_packages');
+    const files = await res.json();
+    const packages = [];
+
+    for (const file of files) {
+      const fileRes = await fetch(file.download_url);
+      const text = await fileRes.text();
+      const pkg = parseFrontmatter(text, file.name);
+      if (pkg) packages.push(pkg);
+    }
+
+    return packages;
+  } catch(e) {
+    console.error('Error fetching packages:', e);
+    return [];
+  }
+}
   const match = text.match(/^---\n([\s\S]*?)\n---/);
   if (!match) return null;
   const fm = {};
@@ -710,11 +729,15 @@ async function showResults() {
   const cardsEl = document.getElementById('package-cards');
   cardsEl.innerHTML = '<div class="loading">Finding your perfect gifts...</div>';
 
-  const products = await fetchProducts();
-  const budget = answers.step4;
-  const giftType = answers.step3;
+  const packages = await fetchPackages();
+const budget = answers.step4;
 
-  let matched = matchProducts(products, budget, giftType);
+const [minB, maxB] = budgetRanges[budget] || [0, 9999];
+
+let matched = packages.filter(pkg => {
+  const price = parseFloat(pkg.price || 0);
+  return price >= minB && price <= maxB;
+});
 
   // If too few results, relax the filter
   if (matched.length < 2) {
@@ -735,7 +758,21 @@ async function showResults() {
       <a href="https://www.craftymousegifts.com/ourshop" target="_blank" class="shop-btn">Browse All Gifts</a>
     </div>`;
   } else {
-    cardsEl.innerHTML = matched.map(renderPackageCard).join('');
+    cardsEl.innerHTML = matched.map(pkg => `
+  <div class="package-card">
+    <div class="package-body">
+      <div class="package-top">
+        <div class="package-name">${pkg.title}</div>
+        <div class="package-price">£${parseFloat(pkg.price).toFixed(2)}</div>
+      </div>
+      ${pkg.tagline ? `<div class="package-tagline">${pkg.tagline}</div>` : ''}
+      ${pkg.description ? `<p class="package-desc">${pkg.description}</p>` : ''}
+      <a href="https://www.craftymousegifts.com/ourshop" class="shop-btn" target="_blank">
+        Shop This Package
+      </a>
+    </div>
+  </div>
+`).join('');
   }
 }
 
