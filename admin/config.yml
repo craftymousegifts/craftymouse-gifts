@@ -1,0 +1,20 @@
+backend:
+  name: github
+  repo: craftymousegifts/craftymouse-gifts
+  branch: main
+
+media_folder: "images/uploads"
+
+collections:
+  - name: "products"
+    label: "Products"
+    folder: "_products"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Product Name", name: "title", widget: "string" }
+      - { label: "Price (£)", name: "price", widget: "number" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Category", name: "category", widget: "string", required: false }
+      - { label: "In Stock", name: "in_stock", widget: "boolean", default: true }
