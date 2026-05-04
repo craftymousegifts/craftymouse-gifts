@@ -18,3 +18,35 @@ collections:
       - { label: "Image", name: "image", widget: "image", required: false }
       - { label: "Category", name: "category", widget: "string", required: false }
       - { label: "In Stock", name: "in_stock", widget: "boolean", default: true }
+  - name: "packages"
+    label: "Gift Packages"
+    folder: "_packages"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Package Name", name: "title", widget: "string" }
+      - { label: "Tagline", name: "tagline", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Price (£)", name: "price", widget: "number" }
+      - { label: "Badge", name: "badge", widget: "select", options: ["Popular", "Luxury", "Premium", "Bestseller"], required: false }
+      - { label: "Image", name: "image", widget: "image", required: false }
+
+      - label: "Products in this Package"
+        name: "products"
+        widget: "list"
+        field: { label: "Product Slug", name: "product", widget: "string" }
+
+      - label: "Suitable For"
+        name: "recipients"
+        widget: "list"
+        field: { label: "Recipient", name: "recipient", widget: "string" }
+
+      - label: "Occasions"
+        name: "occasions"
+        widget: "list"
+        field: { label: "Occasion", name: "occasion", widget: "string" }
+
+      - label: "Gift Types"
+        name: "types"
+        widget: "list"
+        field: { label: "Type", name: "type", widget: "string" }
