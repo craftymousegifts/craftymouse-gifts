@@ -616,6 +616,8 @@ function matchProducts(products, budget, giftType) {
 function buildProductUrl(product) {
   const sku = (product.sku || '').replace('.0', '').trim();
   const title = (product.title || '')
+    .replace(/[\u2018\u2019\u201A\u201B']/g, '')
+    .replace(/&/g, 'and')
     .replace(/[^a-zA-Z0-9\s-]/g, '')
     .trim()
     .replace(/\s+/g, '-');
