@@ -1,22 +1,747 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Crafty Mouse Gifts</title>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  </head>
-  <body>
-    <h1>Coming Soon</h1>
-    <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
-        });
-      }
-    </script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crafty Mouse Gifts — Find the Perfect Gift</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #f7f3f0;
+    --blush: #f0e8e8;
+    --rose: #e8d5d5;
+    --teal: #3d9b8f;
+    --teal-dark: #2d7a6f;
+    --teal-light: #e8f5f3;
+    --text-dark: #2c3440;
+    --text-mid: #5a6478;
+    --text-light: #8a93a8;
+    --white: #ffffff;
+    --card-border: #ecdede;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    min-height: 100vh;
+  }
+
+  .logo-wrap {
+    text-align: center;
+    padding: 2.5rem 1rem 1rem;
+  }
+
+  .logo-wrap img {
+    max-width: 280px;
+    width: 90%;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    background: white;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 1.5rem 1.5rem 0.5rem;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 6vw, 3rem);
+    font-weight: 400;
+    color: var(--text-dark);
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+    color: var(--text-mid);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .step-container {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 4rem;
+  }
+
+  .step-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .step-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    font-weight: 500;
+  }
+
+  .step-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 28px;
+    height: 5px;
+    border-radius: 3px;
+    background: var(--rose);
+    transition: background 0.3s;
+  }
+
+  .dot.active { background: var(--teal); }
+  .dot.done { background: var(--teal); opacity: 0.5; }
+
+  .step-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--blush);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+    font-size: 1.5rem;
+  }
+
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 0.4rem;
+    color: var(--text-dark);
+  }
+
+  .step-subtitle {
+    text-align: center;
+    color: var(--text-mid);
+    font-size: 0.95rem;
+    margin-bottom: 1.75rem;
+    font-weight: 300;
+  }
+
+  .option-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option-item {
+    background: var(--white);
+    border: 1.5px solid var(--card-border);
+    border-radius: 14px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1rem;
+    color: var(--text-dark);
+    font-weight: 400;
+  }
+
+  .option-item:hover {
+    border-color: var(--teal);
+    background: var(--teal-light);
+  }
+
+  .option-item.selected {
+    border-color: var(--teal);
+    background: var(--teal-light);
+  }
+
+  .option-radio {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid var(--rose);
+    background: white;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .option-item.selected .option-radio {
+    border-color: var(--teal);
+    background: var(--teal);
+  }
+
+  .option-item.selected .option-radio::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: white;
+  }
+
+  /* Results */
+  .results-intro {
+    text-align: center;
+    padding: 0 0 1.5rem;
+  }
+
+  .results-intro .step-icon { background: var(--blush); }
+
+  .results-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  .results-desc {
+    color: var(--text-mid);
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+
+  .start-over-btn {
+    display: inline-block;
+    padding: 0.6rem 1.75rem;
+    border: 1.5px solid var(--text-dark);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-family: 'Jost', sans-serif;
+    color: var(--text-dark);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 400;
+  }
+
+  .start-over-btn:hover {
+    background: var(--text-dark);
+    color: white;
+  }
+
+  .package-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .package-card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+  }
+
+  .package-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background: var(--blush);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .package-img img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .package-img-placeholder {
+    width: 100%;
+    height: 200px;
+    background: var(--blush);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    opacity: 0.4;
+  }
+
+  .package-badge {
+    position: absolute;
+    top: 12px; left: 12px;
+    padding: 0.3rem 0.85rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: white;
+  }
+
+  .badge-popular { background: #e85d7a; }
+  .badge-luxury { background: #e85d7a; }
+  .badge-premium { background: #e85d7a; }
+  .badge-bestseller { background: #e85d7a; }
+  .badge-new { background: var(--teal); }
+
+  .package-body {
+    padding: 1.25rem 1.25rem 1.5rem;
+  }
+
+  .package-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.3rem;
+    gap: 1rem;
+  }
+
+  .package-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    line-height: 1.2;
+  }
+
+  .package-price {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    white-space: nowrap;
+  }
+
+  .package-tagline {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+  }
+
+  .package-desc {
+    font-size: 0.92rem;
+    color: var(--text-mid);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+    font-weight: 300;
+  }
+
+  .whats-inside {
+    background: var(--blush);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .inside-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+  }
+
+  .inside-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid var(--rose);
+    gap: 0.5rem;
+  }
+
+  .inside-item:last-child { border-bottom: none; }
+
+  .inside-item-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text-dark);
+  }
+
+  .inside-item-price {
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    white-space: nowrap;
+  }
+
+  .shop-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Jost', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  .shop-btn:hover { background: var(--teal-dark); }
+
+  .no-results {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-mid);
+  }
+
+  .no-results a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  /* Loading */
+  .loading {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-mid);
+    font-size: 0.9rem;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .step-panel { animation: fadeIn 0.3s ease; }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="logo-wrap">
+  <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/6/21869983/1448x1086.png"
+       onerror="this.style.display='none'"
+       alt="Crafty Mouse Gifts">
+</div>
+
+<div class="hero">
+  <h1>Find the perfect gift</h1>
+  <p>Handmade luxury candles, wax melts, and eco-friendly home decor crafted with love in the Scottish Borders. Let us help you choose something truly special.</p>
+</div>
+
+<div class="step-container">
+
+  <!-- STEP 1 -->
+  <div id="step1" class="step-panel">
+    <div class="step-header">
+      <span class="step-label">Step 1 of 4</span>
+      <div class="step-dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+    <div class="step-icon">🤍</div>
+    <h2 class="step-title">Who are you treating?</h2>
+    <p class="step-subtitle">Let's find something perfect for them.</p>
+    <div class="option-list" id="list1"></div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div id="step2" class="step-panel hidden">
+    <div class="step-header">
+      <span class="step-label">Step 2 of 4</span>
+      <div class="step-dots">
+        <div class="dot done"></div>
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+    <div class="step-icon">🎉</div>
+    <h2 class="step-title">What's the occasion?</h2>
+    <p class="step-subtitle">Every moment deserves to be celebrated.</p>
+    <div class="option-list" id="list2"></div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div id="step3" class="step-panel hidden">
+    <div class="step-header">
+      <span class="step-label">Step 3 of 4</span>
+      <div class="step-dots">
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot active"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+    <div class="step-icon">🎁</div>
+    <h2 class="step-title">What kind of gift?</h2>
+    <p class="step-subtitle">Choose their favourite type of treat.</p>
+    <div class="option-list" id="list3"></div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div id="step4" class="step-panel hidden">
+    <div class="step-header">
+      <span class="step-label">Step 4 of 4</span>
+      <div class="step-dots">
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot active"></div>
+      </div>
+    </div>
+    <div class="step-icon">💰</div>
+    <h2 class="step-title">What's your budget?</h2>
+    <p class="step-subtitle">We have beautiful options at every price.</p>
+    <div class="option-list" id="list4"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="step-panel hidden">
+    <div class="results-intro">
+      <div class="step-icon">🎀</div>
+      <h2 class="results-title">Your Perfect Matches</h2>
+      <p class="results-desc">We've hand-picked these beautiful gift packages based on your selections. Each one is crafted with care in our Scottish Borders workshop.</p>
+      <button class="start-over-btn" onclick="startOver()">Start Over</button>
+    </div>
+    <div id="package-cards" class="package-cards"></div>
+  </div>
+
+</div>
+
+<script>
+// Step data
+const steps = [
+  {
+    id: 'list1', next: 2,
+    options: ['Mum','Dad','Partner','Friend','Sister','Brother','Grandma','Grandad','Colleague','Teacher','Neighbour','Treat Yourself']
+  },
+  {
+    id: 'list2', next: 3,
+    options: ['Birthday','Mother\'s Day','Father\'s Day','Christmas','Anniversary','New Home','Thank You','Get Well Soon','Valentine\'s Day','Just Because','Graduation','Wedding']
+  },
+  {
+    id: 'list3', next: 4,
+    options: ['Candles','Wax Melts','Home Decor','Wellness & Relaxation','Gift Set','Luxury Gift Box','Eco-Friendly','Surprise Me!']
+  },
+  {
+    id: 'list4', next: 'results',
+    options: ['Under £15','£15 – £25','£25 – £40','£40 – £60','Over £60']
+  }
+];
+
+const answers = {};
+
+// Budget ranges for matching
+const budgetRanges = {
+  'Under £15': [0, 15],
+  '£15 – £25': [15, 25],
+  '£25 – £40': [25, 40],
+  '£40 – £60': [40, 60],
+  'Over £60': [60, 9999]
+};
+
+// Category keywords for matching products
+const categoryKeywords = {
+  'Candles': ['candle'],
+  'Wax Melts': ['wax melt', 'wax melts', 'clamshell', 'snap bar', 'heart'],
+  'Home Decor': ['holder', 'tealight', 'warmer', 'magnet', 'keyring'],
+  'Wellness & Relaxation': ['chakra', 'reiki', 'meditation', 'crystal'],
+  'Gift Set': ['bouquet', 'collection'],
+  'Luxury Gift Box': ['bouquet', 'collection', 'hamsa'],
+  'Eco-Friendly': ['eco', 'jesmonite', 'resin', 'sustainable'],
+  'Surprise Me!': null
+};
+
+// Fetch products from GitHub
+async function fetchProducts() {
+  try {
+    const res = await fetch('https://api.github.com/repos/craftymousegifts/craftymouse-gifts/contents/_products');
+    const files = await res.json();
+    const products = [];
+    for (const file of files) {
+      const fileRes = await fetch(file.download_url);
+      const text = await fileRes.text();
+      const product = parseFrontmatter(text, file.name);
+      if (product) products.push(product);
+    }
+    return products;
+  } catch(e) {
+    console.error('Error fetching products:', e);
+    return [];
+  }
+}
+
+function parseFrontmatter(text, filename) {
+  const match = text.match(/^---\n([\s\S]*?)\n---/);
+  if (!match) return null;
+  const fm = {};
+  match[1].split('\n').forEach(line => {
+    const [key, ...vals] = line.split(':');
+    if (key && vals.length) {
+      fm[key.trim()] = vals.join(':').trim().replace(/^"|"$/g, '');
+    }
+  });
+  fm.filename = filename;
+  return fm;
+}
+
+function matchProducts(products, budget, giftType) {
+  const [minB, maxB] = budgetRanges[budget] || [0, 9999];
+  const keywords = categoryKeywords[giftType];
+
+  return products.filter(p => {
+    const price = parseFloat(p.price) || 0;
+    if (price < minB || price > maxB) return false;
+    if (!p.in_stock || p.in_stock === 'false') return false;
+    if (keywords === null) return true; // Surprise Me
+    const titleLower = (p.title || '').toLowerCase();
+    const catLower = (p.category || '').toLowerCase();
+    return keywords.some(kw => titleLower.includes(kw) || catLower.includes(kw));
+  });
+}
+
+function renderPackageCard(product) {
+  const price = parseFloat(product.price || 0).toFixed(2);
+  const hasImage = product.image && product.image !== '' && product.image !== 'nan';
+
+  const badges = {
+    'chakra': 'Wellness',
+    'bouquet': 'Popular',
+    'candle': 'Bestseller',
+    'wax melt': 'Popular',
+    'luxury': 'Luxury',
+    'eco': 'Eco-Friendly'
+  };
+
+  let badge = '';
+  const titleLow = (product.title || '').toLowerCase();
+  for (const [kw, label] of Object.entries(badges)) {
+    if (titleLow.includes(kw)) {
+      badge = `<span class="package-badge badge-popular">${label}</span>`;
+      break;
+    }
+  }
+
+  const imgHtml = hasImage
+    ? `<img src="${product.image}" alt="${product.title}" onerror="this.parentElement.innerHTML='<div class=\\'package-img-placeholder\\'>🎁</div>'">`
+    : `<div class="package-img-placeholder">🎁</div>`;
+
+  return `
+    <div class="package-card">
+      <div class="package-img" style="position:relative">
+        ${imgHtml}
+        ${badge}
+      </div>
+      <div class="package-body">
+        <div class="package-top">
+          <div class="package-name">${product.title || 'Gift Item'}</div>
+          <div class="package-price">£${price}</div>
+        </div>
+        ${product.category ? `<div class="package-tagline">${product.category}</div>` : ''}
+        ${product.description ? `<p class="package-desc">${product.description}</p>` : ''}
+        <a href="https://www.craftymousegifts.com/shop/" class="shop-btn" target="_blank">Shop This Gift</a>
+      </div>
+    </div>
+  `;
+}
+
+// Build option lists
+steps.forEach((step, i) => {
+  const list = document.getElementById(step.id);
+  step.options.forEach(opt => {
+    const div = document.createElement('div');
+    div.className = 'option-item';
+    div.innerHTML = `<span>${opt}</span><div class="option-radio"></div>`;
+    div.addEventListener('click', () => selectOption(i + 1, opt, step.next, div));
+    list.appendChild(div);
+  });
+});
+
+function selectOption(stepNum, value, next, el) {
+  // Highlight selected
+  el.closest('.option-list').querySelectorAll('.option-item').forEach(d => d.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[`step${stepNum}`] = value;
+
+  // Short delay then advance
+  setTimeout(() => {
+    document.getElementById(`step${stepNum}`).classList.add('hidden');
+    if (next === 'results') {
+      showResults();
+    } else {
+      document.getElementById(`step${next}`).classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, 300);
+}
+
+async function showResults() {
+  document.getElementById('results').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const cardsEl = document.getElementById('package-cards');
+  cardsEl.innerHTML = '<div class="loading">Finding your perfect gifts...</div>';
+
+  const products = await fetchProducts();
+  const budget = answers.step4;
+  const giftType = answers.step3;
+
+  let matched = matchProducts(products, budget, giftType);
+
+  // If too few results, relax the filter
+  if (matched.length < 2) {
+    const [minB, maxB] = budgetRanges[budget] || [0, 9999];
+    matched = products.filter(p => {
+      const price = parseFloat(p.price || 0);
+      return price >= minB && price <= maxB && p.in_stock !== 'false';
+    });
+  }
+
+  // Limit to 6
+  matched = matched.slice(0, 6);
+
+  if (matched.length === 0) {
+    cardsEl.innerHTML = `<div class="no-results">
+      <p>We couldn't find an exact match, but we'd love to help!</p>
+      <br>
+      <a href="https://www.craftymousegifts.com/shop/" target="_blank" class="shop-btn">Browse All Gifts</a>
+    </div>`;
+  } else {
+    cardsEl.innerHTML = matched.map(renderPackageCard).join('');
+  }
+}
+
+function startOver() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.step-panel').forEach(el => el.classList.add('hidden'));
+  document.getElementById('step1').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Netlify Identity redirect
+if (window.netlifyIdentity) {
+  window.netlifyIdentity.on("init", user => {
+    if (!user) {
+      window.netlifyIdentity.on("login", () => {
+        document.location.href = "/admin/";
+      });
+    }
+  });
+}
+</script>
+</body>
 </html>
