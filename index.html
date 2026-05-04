@@ -652,7 +652,7 @@ function renderPackageCard(product) {
         </div>
         ${product.category ? `<div class="package-tagline">${product.category}</div>` : ''}
         ${product.description ? `<p class="package-desc">${product.description}</p>` : ''}
-        <a href="https://www.craftymousegifts.com/shop/" class="shop-btn" target="_blank">Shop This Gift</a>
+        <a href="https://www.craftymousegifts.com/ourshop" class="shop-btn" target="_blank">Shop This Gift</a>
       </div>
     </div>
   `;
@@ -717,7 +717,7 @@ async function showResults() {
     cardsEl.innerHTML = `<div class="no-results">
       <p>We couldn't find an exact match, but we'd love to help!</p>
       <br>
-      <a href="https://www.craftymousegifts.com/shop/" target="_blank" class="shop-btn">Browse All Gifts</a>
+      <a href="https://www.craftymousegifts.com/ourshop" target="_blank" class="shop-btn">Browse All Gifts</a>
     </div>`;
   } else {
     cardsEl.innerHTML = matched.map(renderPackageCard).join('');
