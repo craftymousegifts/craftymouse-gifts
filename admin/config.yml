@@ -1,7 +1,7 @@
 backend:
   name: github
   repo: craftymousegifts/craftymouse-gifts
-  branch: main
+  branch: craftymousegifts
 
 media_folder: "images/uploads"
 
