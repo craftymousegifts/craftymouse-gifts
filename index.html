@@ -613,9 +613,22 @@ function matchProducts(products, budget, giftType) {
   });
 }
 
+function buildProductUrl(product) {
+  const sku = (product.sku || '').replace('.0', '').trim();
+  const title = (product.title || '')
+    .replace(/[^a-zA-Z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+  if (sku && sku !== 'nan' && title) {
+    return `https://www.craftymousegifts.com/ourshop/prod_${sku}-${title}.html`;
+  }
+  return 'https://www.craftymousegifts.com/ourshop';
+}
+
 function renderPackageCard(product) {
   const price = parseFloat(product.price || 0).toFixed(2);
   const hasImage = product.image && product.image !== '' && product.image !== 'nan';
+  const productUrl = buildProductUrl(product);
 
   const badges = {
     'chakra': 'Wellness',
@@ -652,7 +665,7 @@ function renderPackageCard(product) {
         </div>
         ${product.category ? `<div class="package-tagline">${product.category}</div>` : ''}
         ${product.description ? `<p class="package-desc">${product.description}</p>` : ''}
-        <a href="https://www.craftymousegifts.com/ourshop" class="shop-btn" target="_blank">Shop This Gift</a>
+        <a href="${productUrl}" class="shop-btn" target="_blank">Shop This Gift</a>
       </div>
     </div>
   `;
