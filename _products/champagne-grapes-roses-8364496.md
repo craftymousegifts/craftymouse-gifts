@@ -1,5 +1,5 @@
 ---
-title: Champagne Grapes & Roses - Clamshell
+title: Champagne Grapes & Roses - 6 Cell Wax Melt Clamshell
 price: 3.5
 description: >-
   Champagne Grapes & Roses wax melts offer a luxurious, romantic and
