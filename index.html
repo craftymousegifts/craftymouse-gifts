@@ -78,7 +78,10 @@
   .byo-item-info { flex: 1; }
   .byo-item-name { font-size: 0.9rem; font-weight: 500; color: var(--text-dark); }
   .byo-item-cat { font-size: 0.78rem; color: var(--text-light); }
+  .byo-item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; flex-shrink: 0; }
   .byo-item-price { font-size: 0.9rem; font-weight: 500; color: var(--teal); white-space: nowrap; }
+  .byo-view-link { font-size: 0.75rem; color: var(--teal); text-decoration: none; white-space: nowrap; opacity: 0.8; }
+  .byo-view-link:hover { opacity: 1; text-decoration: underline; }
   .byo-summary { background: var(--blush); border-radius: 14px; padding: 1rem 1.25rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
   .byo-summary-label { font-size: 0.85rem; color: var(--text-mid); }
   .byo-total { font-size: 1.2rem; font-weight: 500; color: var(--text-dark); }
@@ -342,13 +345,16 @@ async function showResults() {
   let byoList = allProducts.filter(p => parseFloat(p.price||0) <= maxB);
   if (byoList.length === 0) byoList = allProducts;
   byoEl.innerHTML = byoList.map(p => `
-    <div class="byo-item" data-price="${p.price}" onclick="toggleByo(this)">
+    <div class="byo-item" data-price="${p.price}" data-url="${buildProductUrl(p)}" onclick="toggleByo(this)">
       <div class="byo-checkbox"></div>
       <div class="byo-item-info">
         <div class="byo-item-name">${p.title}</div>
         <div class="byo-item-cat">${p.category||''}</div>
       </div>
-      <div class="byo-item-price">£${parseFloat(p.price||0).toFixed(2)}</div>
+      <div class="byo-item-right">
+        <div class="byo-item-price">£${parseFloat(p.price||0).toFixed(2)}</div>
+        <a href="${buildProductUrl(p)}" target="_blank" class="byo-view-link" onclick="event.stopPropagation()">View →</a>
+      </div>
     </div>`).join('');
 }
 
