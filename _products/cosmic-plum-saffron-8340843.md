@@ -1,5 +1,5 @@
 ---
-title: Cosmic Plum & Saffron
+title: Cosmic Plum & Saffron - Candle
 price: 16
 description: >-
   Cosmic Plum Rich, alluring and luxurious scent that is both fruity and woody,
