@@ -68,7 +68,10 @@
   .package-desc { font-size: 0.92rem; color: var(--text-mid); line-height: 1.65; margin-bottom: 1rem; font-weight: 300; }
   .shop-btn { display: block; width: 100%; padding: 1rem; background: var(--teal); color: white; border: none; border-radius: 50px; font-family: 'Jost', sans-serif; font-size: 1rem; text-align: center; cursor: pointer; text-decoration: none; transition: background 0.2s; }
   .shop-btn:hover { background: var(--teal-dark); }
-  .byo-intro { background: white; border-radius: 14px; padding: 1.25rem; border: 1px solid var(--card-border); margin-bottom: 1rem; font-size: 0.92rem; color: var(--text-mid); line-height: 1.65; font-weight: 300; }
+  .whats-inside { background: var(--blush); border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 1rem; }
+  .inside-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-light); font-weight: 500; margin-bottom: 0.5rem; }
+  .inside-item { padding: 0.3rem 0; border-bottom: 1px solid var(--rose); font-size: 0.88rem; color: var(--text-dark); }
+  .inside-item:last-child { border-bottom: none; }
   .byo-products { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.25rem; }
   .byo-item { background: white; border: 1.5px solid var(--card-border); border-radius: 12px; padding: 0.85rem 1rem; display: flex; align-items: center; gap: 0.85rem; cursor: pointer; transition: all 0.2s; }
   .byo-item:hover { border-color: var(--teal); }
@@ -199,13 +202,46 @@ const answers = {};
 const budgetRanges = { 'Under £15':[0,15], '£15 – £25':[15,25], '£25 – £40':[25,40], '£40 – £60':[40,60], 'Over £60':[60,9999] };
 
 const PACKAGES = [
-  { title:'The Relaxation Box', tagline:'A soothing retreat in a box — perfect for someone who deserves a moment to themselves.', description:'Treat someone special to the ultimate relaxation gift. This beautifully curated set includes our bestselling lavender candle, a champagne toast wax melt clamshell and a white Nordic Style Wax Melt Warmer — everything needed for a perfect cosy evening in.', price:39.99, badge:'Bestseller', recipients:['Mum','Friend','Partner','Sister','Grandma','Neighbour','Self','Everyone'], occasions:['Birthday','Mothers Day','Get Well','Anniversary','New Home','Just Because','Any'], types:['Candles','Wax Melts','Wellness & Relaxation','Gift Set','Surprise Me!'] },
-  { title:"The Candle Lover's Collection", tagline:'Three handcrafted soy candles for every mood — morning, midday, and evening.', description:'For the candle enthusiast in your life. Three of our most popular handmade soy candles, each with its own character and charm. Beautifully presented and ready to gift.', price:36.99, badge:'Popular', recipients:['Mum','Friend','Partner','Sister','Grandma','Colleague','Self','Everyone'], occasions:['Birthday','Mothers Day','Christmas','Anniversary','Thank You','Just Because','Any'], types:['Candles','Gift Set','Surprise Me!'] },
-  { title:'The Wax Melt Treat', tagline:'A gorgeous little gift that fills every room with warmth and fragrance.', description:'Our wax melt collection makes the perfect small gift. Six snap bars in our best-loved scents, neatly boxed and ready to give. A thoughtful treat that anyone will love.', price:19.99, badge:'Bestseller', recipients:['Friend','Colleague','Teacher','Mum','Sister','Neighbour','Self','Everyone'], occasions:['Thank You','Birthday','Just Because','Any'], types:['Wax Melts','Gift Set','Surprise Me!'] },
-  { title:'The Luxury Home Spa', tagline:'Indulgent self-care from the Scottish Borders, straight to their door.', description:'A truly luxurious gift experience. Our rose and oud candle, botanical dried flower arrangement, and rose & jasmine reed diffuser combine to transform any home into a sanctuary.', price:47.99, badge:'Luxury', recipients:['Mum','Partner','Friend','Sister','Grandma','Self','Everyone'], occasions:['Anniversary','Birthday','Christmas','Mothers Day','Valentines','Any'], types:['Wellness & Relaxation','Luxury Gift Box','Candles','Surprise Me!'] },
-  { title:'The Eco Gifting Set', tagline:'Beautiful, sustainable, and thoughtfully made in the Scottish Borders.', description:'For the eco-conscious gift recipient. Our fresh linen candle, a floral wax melt set, and sustainable gift wrap — all made with plant-based and recycled materials. Gorgeous packaging included.', price:24.99, badge:'Eco-Friendly', recipients:['Friend','Neighbour','Colleague','Teacher','Mum','Everyone'], occasions:['Thank You','New Home','Birthday','Just Because','Any'], types:['Eco-Friendly','Gift Set','Candles','Wax Melts','Surprise Me!'] },
-  { title:"The Dad's Treat Box", tagline:"A gift he'll actually love — crisp, clean scents and quality craftsmanship.", description:'A thoughtfully put-together gift for the dads and men in your life. Sea salt and driftwood candle paired with a vanilla caramel wax melt — understated, sophisticated, and genuinely enjoyable.', price:19.99, badge:'Popular', recipients:['Dad','Brother','Grandad','Everyone'], occasions:["Fathers Day",'Birthday','Christmas','Just Because','Any'], types:['Candles','Wax Melts','Gift Set','Surprise Me!'] },
-  { title:'The Grand Occasion Gift Box', tagline:'When only the very best will do — a show-stopping luxury hamper.', description:'Our most indulgent gift offering. The complete Crafty Mouse experience: two luxury candles, a full wax melt collection, hand-poured wax burner — presented in a beautiful keepsake box with botanical dried flowers.', price:74.99, badge:'Premium', recipients:['Mum','Partner','Friend','Sister','Grandma','Everyone'], occasions:['Wedding','Anniversary','Christmas','Birthday','Mothers Day','Any'], types:['Luxury Gift Box','Gift Set','Candles','Wax Melts','Surprise Me!'] }
+  { title:'The Relaxation Box', tagline:'A soothing retreat in a box — perfect for someone who deserves a moment to themselves.', description:'Treat someone special to the ultimate relaxation gift. This beautifully curated set includes our bestselling lavender candle, a champagne toast wax melt clamshell and a white Nordic Style Wax Melt Warmer — everything needed for a perfect cosy evening in.', price:39.99, badge:'Bestseller', url:'https://www.craftymousegifts.com/ourshop/prod_8401222-The-Relaxation-Box.html',
+    includes:[
+      { name:'Lavender Soy Candle', url:'https://www.craftymousegifts.com/ourshop' },
+      { name:'Champagne Toast Wax Melt Clamshell', url:'https://www.craftymousegifts.com/ourshop' },
+      { name:'Nordic Style Wax Melt Warmer', url:'https://www.craftymousegifts.com/ourshop' }
+    ], recipients:['Mum','Friend','Partner','Sister','Grandma','Neighbour','Self','Everyone'], occasions:['Birthday','Mothers Day','Get Well','Anniversary','New Home','Just Because','Any'], types:['Candles','Wax Melts','Wellness & Relaxation','Gift Set','Surprise Me!'] },
+  { title:"The Candle Lover's Collection", tagline:'Three handcrafted soy candles for every mood — morning, midday, and evening.', description:'For the candle enthusiast in your life. Three of our most popular handmade soy candles, each with its own character and charm. Beautifully presented and ready to gift.', price:36.99, badge:'Popular', url:'https://www.craftymousegifts.com/ourshop/prod_8401207-The-Candle-Lovers-Collection.html',
+    includes:[
+      { name:'Morning Soy Candle', url:'https://www.craftymousegifts.com/ourshop' },
+      { name:'Midday Soy Candle', url:'https://www.craftymousegifts.com/ourshop' },
+      { name:'Evening Soy Candle', url:'https://www.craftymousegifts.com/ourshop' }
+    ], recipients:['Mum','Friend','Partner','Sister','Grandma','Colleague','Self','Everyone'], occasions:['Birthday','Mothers Day','Christmas','Anniversary','Thank You','Just Because','Any'], types:['Candles','Gift Set','Surprise Me!'] },
+  { title:'The Wax Melt Treat', tagline:'A gorgeous little gift that fills every room with warmth and fragrance.', description:'Our wax melt collection makes the perfect small gift. Six snap bars in our best-loved scents, neatly boxed and ready to give. A thoughtful treat that anyone will love.', price:19.99, badge:'Bestseller', url:'https://www.craftymousegifts.com/ourshop/prod_8401224-The-Wax-Melt-Treat.html',
+    includes:[
+      { name:'6 Cell Wax Melt Clamshells (choice of scent)', url:'https://www.craftymousegifts.com/ourshop' }
+    ], recipients:['Friend','Colleague','Teacher','Mum','Sister','Neighbour','Self','Everyone'], occasions:['Thank You','Birthday','Just Because','Any'], types:['Wax Melts','Gift Set','Surprise Me!'] },
+  { title:'The Luxury Home Spa', tagline:'Indulgent self-care from the Scottish Borders, straight to their door.', description:'A truly luxurious gift experience. Our rose and oud candle, botanical dried flower arrangement, and rose & jasmine reed diffuser combine to transform any home into a sanctuary.', price:47.99, badge:'Luxury', url:'https://www.craftymousegifts.com/ourshop/prod_8401221-The-Luxury-Home-Spa.html',
+    includes:[
+      { name:'Rose & Oud Soy Candle', url:'https://www.craftymousegifts.com/ourshop' },
+      { name:'Botanical Dried Flower Arrangement', url:'https://www.craftymousegifts.com/ourshop' },
+      { name:'Rose & Jasmine Reed Diffuser', url:'https://www.craftymousegifts.com/ourshop' }
+    ], recipients:['Mum','Partner','Friend','Sister','Grandma','Self','Everyone'], occasions:['Anniversary','Birthday','Christmas','Mothers Day','Valentines','Any'], types:['Wellness & Relaxation','Luxury Gift Box','Candles','Surprise Me!'] },
+  { title:'The Eco Gifting Set', tagline:'Beautiful, sustainable, and thoughtfully made in the Scottish Borders.', description:'For the eco-conscious gift recipient. Our fresh linen candle, a floral wax melt set, and sustainable gift wrap — all made with plant-based and recycled materials. Gorgeous packaging included.', price:24.99, badge:'Eco-Friendly', url:'https://www.craftymousegifts.com/ourshop/prod_8401219-The-Eco-Gifting-Set.html',
+    includes:[
+      { name:'Fresh Linen Soy Candle', url:'https://www.craftymousegifts.com/ourshop' },
+      { name:'Floral Wax Melt Set', url:'https://www.craftymousegifts.com/ourshop' },
+      { name:'Sustainable Gift Wrap', url:'https://www.craftymousegifts.com/ourshop' }
+    ], recipients:['Friend','Neighbour','Colleague','Teacher','Mum','Everyone'], occasions:['Thank You','New Home','Birthday','Just Because','Any'], types:['Eco-Friendly','Gift Set','Candles','Wax Melts','Surprise Me!'] },
+  { title:"The Dad's Treat Box", tagline:"A gift he'll actually love — crisp, clean scents and quality craftsmanship.", description:'A thoughtfully put-together gift for the dads and men in your life. Sea salt and driftwood candle paired with a vanilla caramel wax melt — understated, sophisticated, and genuinely enjoyable.', price:19.99, badge:'Popular', url:'https://www.craftymousegifts.com/ourshop/prod_8401218-The-Dads-Treat-Box.html',
+    includes:[
+      { name:'Sea Salt & Driftwood Soy Candle', url:'https://www.craftymousegifts.com/ourshop' },
+      { name:'Vanilla Caramel Wax Melt Clamshell', url:'https://www.craftymousegifts.com/ourshop' }
+    ], recipients:['Dad','Brother','Grandad','Everyone'], occasions:["Fathers Day",'Birthday','Christmas','Just Because','Any'], types:['Candles','Wax Melts','Gift Set','Surprise Me!'] },
+  { title:'The Grand Occasion Gift Box', tagline:'When only the very best will do — a show-stopping luxury hamper.', description:'Our most indulgent gift offering. The complete Crafty Mouse experience: two luxury candles, a full wax melt collection, hand-poured wax burner — presented in a beautiful keepsake box with botanical dried flowers.', price:74.99, badge:'Premium', url:'https://www.craftymousegifts.com/ourshop/prod_8401220-The-Grand-Occasion-Gift-Box.html',
+    includes:[
+      { name:'Two Luxury Soy Candles', url:'https://www.craftymousegifts.com/ourshop' },
+      { name:'Full Wax Melt Collection (3 scents)', url:'https://www.craftymousegifts.com/ourshop' },
+      { name:'Hand-Poured Wax Burner', url:'https://www.craftymousegifts.com/ourshop' },
+      { name:'Botanical Dried Flowers', url:'https://www.craftymousegifts.com/ourshop' }
+    ], recipients:['Mum','Partner','Friend','Sister','Grandma','Everyone'], occasions:['Wedding','Anniversary','Christmas','Birthday','Mothers Day','Any'], types:['Luxury Gift Box','Gift Set','Candles','Wax Melts','Surprise Me!'] }
 ];
 
 stepData.forEach((step, i) => {
@@ -278,6 +314,12 @@ function matchPackages() {
 
 function renderPackage(pkg) {
   const badgeClass = pkg.badge === 'Eco-Friendly' ? 'badge-eco' : '';
+  const insideHtml = pkg.includes ? `
+    <div class="whats-inside">
+      <div class="inside-label">What's Inside</div>
+      ${pkg.includes.map(item => `
+        <div class="inside-item">${item.name}</div>`).join('')}
+    </div>` : '';
   return `<div class="package-card">
     <div class="package-img-wrap">
       <div class="package-img-placeholder">🎁</div>
@@ -290,7 +332,8 @@ function renderPackage(pkg) {
       </div>
       <div class="package-tagline">${pkg.tagline}</div>
       <p class="package-desc">${pkg.description}</p>
-      <a href="https://www.craftymousegifts.com/ourshop" class="shop-btn" target="_blank">Shop This Package</a>
+      ${insideHtml}
+      <a href="${pkg.url}" class="shop-btn" target="_blank">Shop This Package</a>
     </div>
   </div>`;
 }
