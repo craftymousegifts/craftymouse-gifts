@@ -380,7 +380,7 @@ function byoEnquire() {
   const items = selected.map(el => el.querySelector('.byo-item-name').textContent).join('\n- ');
   const total = selected.reduce((s,e) => s + parseFloat(e.dataset.price||0), 0);
   const subject = encodeURIComponent('Custom Gift Box Enquiry');
-  const body = encodeURIComponent(`Hi Crafty Mouse Gifts,\n\nI'd love to create a custom gift box with the following items:\n\n- ${items}\n\nEstimated total: £${total.toFixed(2)}\n\nPlease let me know how to proceed!\n\nThank you`);
+  const body = encodeURIComponent(`Hi Crafty Mouse Gifts,\n\nI'd love to build a custom gift box and have selected the following items:\n\n- ${items}\n\nEstimated total: £${total.toFixed(2)}\n\n---\n\nTo help you create my perfect gift, here are my preferences:\n\n🎨 Colour / style preferences (e.g. pink, black, neutral):\n[Please type here]\n\n🕯️ Scent preferences (e.g. floral, fresh, warm & spicy, fruity):\n[Please type here]\n\n🎁 Any bespoke requests or personalisation (e.g. gift message, specific scent combinations):\n[Please type here]\n\n👤 Who is this gift for and what's the occasion?\n[Please type here]\n\n---\n\nPlease let me know availability, packaging options, and how to complete my order.\n\nThank you!`);
   window.open(`mailto:craftymousegifts@gmail.com?subject=${subject}&body=${body}`, '_blank');
 }
 
