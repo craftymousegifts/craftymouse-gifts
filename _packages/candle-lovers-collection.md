@@ -5,6 +5,7 @@ description: For the candle enthusiast in your life. Three of our most popular h
 price: 36.99
 badge: Popular
 image:
+url: https://preview.create.net/ourshop/prod_8401097-The-Candle-Lovers-Collection.html
 products:
   - lavender-candle
 recipients:
