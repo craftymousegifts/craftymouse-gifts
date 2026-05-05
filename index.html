@@ -14,7 +14,7 @@
     --text-dark: #2c3440; --text-mid: #5a6478; --text-light: #8a93a8;
     --white: #ffffff; --card-border: #ecdede;
   }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: auto; }
   body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; }
   .logo-wrap { text-align: center; padding: 2.5rem 1rem 1rem; }
   .logo-wrap img { max-width: 280px; width: 90%; border: 1px solid var(--card-border); border-radius: 8px; padding: 0.75rem 1.5rem; background: white; }
@@ -266,7 +266,7 @@ function selectOption(stepNum, value, el) {
     } else {
       showResults();
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try { window.parent.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {} window.scrollTo({ top: 0, behavior: 'smooth' });
   }, 500);
 }
 
@@ -278,7 +278,7 @@ function goBack(current) {
     document.getElementById('step' + current).classList.add('hidden');
     document.getElementById('step' + (current - 1)).classList.remove('hidden');
   }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  try { window.parent.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {} window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function startOver() {
@@ -286,7 +286,7 @@ function startOver() {
   document.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
   document.querySelectorAll('.step-panel').forEach(el => el.classList.add('hidden'));
   document.getElementById('step1').classList.remove('hidden');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  try { window.parent.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {} window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function norm(s) { return (s || '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
@@ -376,7 +376,7 @@ function buildProductUrl(p) {
 
 async function showResults() {
   document.getElementById('results').classList.remove('hidden');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  try { window.parent.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {} window.scrollTo({ top: 0, behavior: 'smooth' });
   document.getElementById('package-cards').innerHTML = matched => matched.map(renderPackage).join('');
   const matched = matchPackages();
   document.getElementById('package-cards').innerHTML = matched.map(renderPackage).join('');
