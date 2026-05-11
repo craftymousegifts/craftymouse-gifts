@@ -35,6 +35,6 @@ description: >-
   It can also relieve stress-induced tension, leaving us in a better position to listen to others and engage with their issues.
 image: https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814474/427x426.png
 category: Reiki Crystal Charged Energy Candles
-sku: "8288421"
+sku: "8279238"
 in_stock: true
 ---
