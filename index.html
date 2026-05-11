@@ -13,6 +13,26 @@
     --teal: #3d9b8f; --teal-dark: #2d7a6f; --teal-light: #e8f5f3;
     --text-dark: #2c3440; --text-mid: #5a6478; --text-light: #8a93a8;
     --white: #ffffff; --card-border: #ecdede;
+   @media (max-width: 768px) {
+
+  .results-actions {
+    flex-direction: column;
+  }
+
+  .start-over-btn,
+  .change-btn {
+    width: 100%;
+  }
+
+  .package-top {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .byo-item {
+    align-items: flex-start;
+  }
+}
   }
   html { scroll-behavior: auto; }
   body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; }
@@ -21,7 +41,11 @@
   .hero { text-align: center; padding: 1.5rem 1.5rem 0.5rem; max-width: 620px; margin: 0 auto; }
   .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 6vw, 3rem); font-weight: 400; color: var(--text-dark); line-height: 1.2; margin-bottom: 0.75rem; }
   .hero p { font-size: 1rem; color: var(--text-mid); line-height: 1.7; font-weight: 300; }
-  .step-container { max-width: 620px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+  .step-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 5rem;
+}
   .step-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
   .step-left { display: flex; align-items: center; gap: 0.75rem; }
   .back-btn { background: none; border: 1.5px solid var(--card-border); border-radius: 50%; width: 34px; height: 34px; cursor: pointer; font-size: 1rem; color: var(--text-mid); display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
@@ -195,11 +219,18 @@ const stepData = [
   { id: 'list1', options: ['Mum','Dad','Partner','Friend','Sister','Brother','Grandma','Grandad','Colleague','Teacher','Neighbour','Treat Yourself'] },
   { id: 'list2', options: ["Birthday","Mother's Day","Father's Day","Christmas","Anniversary","New Home","Thank You","Get Well Soon","Valentine's Day","Just Because","Graduation","Wedding"] },
   { id: 'list3', options: ['Candles','Wax Melts','Home Decor','Wellness & Relaxation','Gift Set','Luxury Gift Box','Eco-Friendly','Surprise Me!'] },
-  { id: 'list4', options: ['Under £15','£15 – £25','£25 – £40','£40 – £60','Over £60'] }
+  { id: 'list4', options: ['Under £15','£15 – £25','£25 – £40','£40 – £60','Over £60','No Budget Limit'] }
 ];
 
 const answers = {};
-const budgetRanges = { 'Under £15':[0,15], '£15 – £25':[15,25], '£25 – £40':[25,40], '£40 – £60':[40,60], 'Over £60':[60,9999] };
+const budgetRanges = { 
+  'Under £15':[0,15], 
+  '£15 – £25':[15,25], 
+  '£25 – £40':[25,40], 
+  '£40 – £60':[40,60], 
+  'Over £60':[60,9999],
+  'No Budget Limit':[0,999999]
+};
 
 const PACKAGES = [
   { title:'The Relaxation Box', tagline:'A soothing retreat in a box — perfect for someone who deserves a moment to themselves.', description:'Treat someone special to the ultimate relaxation gift. This beautifully curated set includes our bestselling lavender candle, a champagne toast wax melt clamshell and a white Nordic Style Wax Melt Warmer — everything needed for a perfect cosy evening in.', price:39.99, badge:'Bestseller', url:'https://www.craftymousegifts.com/ourshop/prod_8401222-The-Relaxation-Box.html',
@@ -256,37 +287,72 @@ stepData.forEach((step, i) => {
 });
 
 function selectOption(stepNum, value, el) {
-  el.closest('.option-list').querySelectorAll('.option-item').forEach(d => d.classList.remove('selected'));
+  el.closest('.option-list')
+    .querySelectorAll('.option-item')
+    .forEach(d => d.classList.remove('selected'));
+
   el.classList.add('selected');
+
   answers['step' + stepNum] = value;
+
   setTimeout(() => {
-    document.getElementById('step' + stepNum).classList.add('hidden');
+    document.getElementById('step' + stepNum)
+      .classList.add('hidden');
+
     if (stepNum < 4) {
-      document.getElementById('step' + (stepNum + 1)).classList.remove('hidden');
+      document.getElementById('step' + (stepNum + 1))
+        .classList.remove('hidden');
     } else {
       showResults();
     }
-    try { window.parent.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {} window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 500);
+  }, 250);
 }
 
 function goBack(current) {
   if (current === 'results') {
-    document.getElementById('results').classList.add('hidden');
-    document.getElementById('step4').classList.remove('hidden');
+    document.getElementById('results')
+      .classList.add('hidden');
+
+    document.getElementById('step4')
+      .classList.remove('hidden');
+
   } else {
-    document.getElementById('step' + current).classList.add('hidden');
-    document.getElementById('step' + (current - 1)).classList.remove('hidden');
+
+    document.getElementById('step' + current)
+      .classList.add('hidden');
+
+    document.getElementById('step' + (current - 1))
+      .classList.remove('hidden');
   }
+}
   try { window.parent.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {} window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function startOver() {
+
   Object.keys(answers).forEach(k => delete answers[k]);
-  document.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
-  document.querySelectorAll('.step-panel').forEach(el => el.classList.add('hidden'));
-  document.getElementById('step1').classList.remove('hidden');
-  try { window.parent.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {} window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  document.querySelectorAll('.option-item')
+    .forEach(el => el.classList.remove('selected'));
+
+  document.querySelectorAll('.step-panel')
+    .forEach(el => el.classList.add('hidden'));
+
+  document.getElementById('step1')
+    .classList.remove('hidden');
+
+  document.getElementById('results')
+    .classList.add('hidden');
+
+  showTab('packages');
+
+  document.getElementById('byo-total')
+    .textContent = '£0.00';
+
+  const btn = document.getElementById('byo-enquire');
+
+  btn.disabled = true;
+  btn.textContent = 'Select products to continue';
 }
 
 function norm(s) { return (s || '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
@@ -375,30 +441,66 @@ function buildProductUrl(p) {
 }
 
 async function showResults() {
-  document.getElementById('results').classList.remove('hidden');
-  try { window.parent.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {} window.scrollTo({ top: 0, behavior: 'smooth' });
-  document.getElementById('package-cards').innerHTML = matched => matched.map(renderPackage).join('');
+
+  document.getElementById('results')
+    .classList.remove('hidden');
+
   const matched = matchPackages();
-  document.getElementById('package-cards').innerHTML = matched.map(renderPackage).join('');
+
+  document.getElementById('package-cards').innerHTML =
+    matched.map(renderPackage).join('');
 
   const byoEl = document.getElementById('byo-products');
-  byoEl.innerHTML = '<div class="loading">Loading products...</div>';
+
+  byoEl.innerHTML =
+    '<div class="loading">Loading products...</div>';
+
   allProducts = await fetchProducts();
-  const [, maxB] = budgetRanges[answers.step4] || [0, 9999];
-  let byoList = allProducts.filter(p => parseFloat(p.price||0) <= maxB);
-  if (byoList.length === 0) byoList = allProducts;
+
+  const [, maxB] =
+    budgetRanges[answers.step4] || [0, 999999];
+
+  let byoList =
+    allProducts.filter(
+      p => parseFloat(p.price || 0) <= maxB
+    );
+
+  if (answers.step4 === 'No Budget Limit') {
+    byoList = allProducts;
+  }
+
+  if (byoList.length === 0) {
+    byoList = allProducts;
+  }
+
   byoEl.innerHTML = byoList.map(p => `
-    <div class="byo-item" data-price="${p.price}" data-url="${buildProductUrl(p)}" onclick="toggleByo(this)">
+    <div class="byo-item"
+         data-price="${p.price}"
+         data-url="${buildProductUrl(p)}"
+         onclick="toggleByo(this)">
+
       <div class="byo-checkbox"></div>
+
       <div class="byo-item-info">
         <div class="byo-item-name">${p.title}</div>
-        <div class="byo-item-cat">${p.category||''}</div>
+        <div class="byo-item-cat">${p.category || ''}</div>
       </div>
+
       <div class="byo-item-right">
-        <div class="byo-item-price">£${parseFloat(p.price||0).toFixed(2)}</div>
-        <a href="${buildProductUrl(p)}" target="_blank" class="byo-view-link" onclick="event.stopPropagation()">View →</a>
+        <div class="byo-item-price">
+          £${parseFloat(p.price || 0).toFixed(2)}
+        </div>
+
+        <a href="${buildProductUrl(p)}"
+           target="_blank"
+           class="byo-view-link"
+           onclick="event.stopPropagation()">
+           View →
+        </a>
       </div>
-    </div>`).join('');
+
+    </div>
+  `).join('');
 }
 
 function toggleByo(el) {
