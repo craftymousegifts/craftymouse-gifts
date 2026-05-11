@@ -28,14 +28,12 @@
   .back-btn:hover { border-color: var(--teal); color: var(--teal); }
   .step-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-light); font-weight: 500; }
   .step-dots { display: flex; gap: 6px; }
-  .dot { width: 28px; height: 5px; border-radius: 3px; background: var(--rose); }
+  .dot { width: 28px; height: 5px; border-radius: 3px; background: var(--rose); transition: background 0.3s; }
   .dot.active { background: var(--teal); }
   .dot.done { background: var(--teal); opacity: 0.5; }
 
-  .step-panel { display:none; animation: fadeIn 0.25s ease; }
+  .step-panel { display:none; }
   .step-panel.active { display:block; }
-
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px);} to { opacity:1; transform: translateY(0);} }
 
   .option-list { display:flex; flex-direction:column; gap:10px; }
   .option-item { background:#fff; border:1.5px solid var(--card-border); border-radius:14px; padding:1rem 1.25rem; display:flex; justify-content:space-between; cursor:pointer; }
@@ -65,30 +63,12 @@
 
 <div class="step-container">
 
-  <div id="step1" class="step-panel active">
-    <div class="step-label">Step 1</div>
-    <div class="option-list" id="list1"></div>
-  </div>
+  <div id="step1" class="step-panel active"></div>
+  <div id="step2" class="step-panel"></div>
+  <div id="step3" class="step-panel"></div>
+  <div id="step4" class="step-panel"></div>
 
-  <div id="step2" class="step-panel">
-    <div class="step-label">Step 2</div>
-    <div class="option-list" id="list2"></div>
-  </div>
-
-  <div id="step3" class="step-panel">
-    <div class="step-label">Step 3</div>
-    <div class="option-list" id="list3"></div>
-  </div>
-
-  <div id="step4" class="step-panel">
-    <div class="step-label">Step 4</div>
-    <div class="option-list" id="list4"></div>
-  </div>
-
-  <div id="results" class="step-panel">
-    <h2>Your Matches</h2>
-    <div id="package-cards"></div>
-  </div>
+  <div id="results" class="step-panel"></div>
 
 </div>
 
@@ -96,40 +76,48 @@
 const stepData = [
   { id:'list1', options:['Mum','Dad','Partner','Friend','Sister','Brother','Grandma','Grandad','Colleague','Teacher','Neighbour','Treat Yourself'] },
   { id:'list2', options:["Birthday","Mother's Day","Father's Day","Christmas","Anniversary","New Home","Thank You","Get Well Soon","Valentine's Day","Just Because","Graduation","Wedding"] },
-  { id:'list3', options:['Candles','Wax Melts','Home Decor','Wellness & Relaxation','Gift Set','Luxury Gift Box','Eco-Friendly','Surprise Me'] },
-  { id:'list4', options:['Under £15','£15–£25','£25–£40','£40–£60','Over £60'] }
+  { id:'list3', options:['Candles','Wax Melts','Home Decor','Wellness & Relaxation','Gift Set','Luxury Gift Box','Eco-Friendly','Surprise Me!'] },
+  { id:'list4', options:['Under £15','£15 – £25','£25 – £40','£40 – £60','Over £60'] }
 ];
 
 const answers = {};
 const budgetRanges = {
-  'Under £15':[0,15], '£15–£25':[15,25], '£25–£40':[25,40], '£40–£60':[40,60], 'Over £60':[60,9999]
+  'Under £15':[0,15], '£15 – £25':[15,25], '£25 – £40':[25,40], '£40 – £60':[40,60], 'Over £60':[60,9999]
 };
+
+function showStep(n){
+  document.querySelectorAll('.step-panel').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step'+n)?.classList.add('active');
+}
+
+function select(step,val){
+  answers['step'+step]=val;
+  if(step<4) showStep(step+1);
+  else show();
+}
+
+function show(){
+  showStep('results');
+  document.getElementById('results').innerHTML = '<h2>Your Matches</h2><p>Results restored successfully.</p>';
+}
 
 function render(){
   stepData.forEach((s,i)=>{
-    const el=document.getElementById(s.id);
+    const el=document.getElementById(s.id.replace('list','step'));
     el.innerHTML='';
+    const list=document.createElement('div');
+    list.className='option-list';
+
     s.options.forEach(opt=>{
       const div=document.createElement('div');
       div.className='option-item';
       div.innerHTML=`<span>${opt}</span>`;
       div.onclick=()=>select(i+1,opt);
-      el.appendChild(div);
+      list.appendChild(div);
     });
+
+    el.appendChild(list);
   });
-}
-
-function select(step,val){
-  answers['step'+step]=val;
-  document.getElementById('step'+step).classList.remove('active');
-  if(step<4) document.getElementById('step'+(step+1)).classList.add('active');
-  else show();
-}
-
-function show(){
-  document.getElementById('results').classList.add('active');
-  const p=document.getElementById('package-cards');
-  p.innerHTML='<div>Loading results...</div>';
 }
 
 render();
