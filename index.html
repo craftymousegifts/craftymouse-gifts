@@ -1,112 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Crafty Mouse Gifts — Gift Builder</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crafty Mouse Gifts — Find the Perfect Gift</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --cream:#f7f3f0; --blush:#f0e8e8; --rose:#e8d5d5;
-    --teal:#3d9b8f; --teal-dark:#2d7a6f;
-    --text:#2c3440; --muted:#5a6478;
-    --white:#fff;
+    --cream: #f7f3f0; --blush: #f0e8e8; --rose: #e8d5d5;
+    --teal: #3d9b8f; --teal-dark: #2d7a6f; --teal-light: #e8f5f3;
+    --text-dark: #2c3440; --text-mid: #5a6478; --text-light: #8a93a8;
+    --white: #ffffff; --card-border: #ecdede;
   }
-  body{font-family:Jost,sans-serif;background:var(--cream);color:var(--text);}
-  .wrap{max-width:720px;margin:0 auto;padding:24px;}
-  h1{font-family:Cormorant Garamond,serif;font-weight:400;text-align:center;margin-bottom:8px;}
-  p{color:var(--muted);text-align:center;margin-bottom:24px;}
+  html { scroll-behavior: auto; }
+  body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; }
+  .logo-wrap { text-align: center; padding: 2.5rem 1rem 1rem; }
+  .logo-wrap img { max-width: 280px; width: 90%; border: 1px solid var(--card-border); border-radius: 8px; padding: 0.75rem 1.5rem; background: white; }
+  .hero { text-align: center; padding: 1.5rem 1.5rem 0.5rem; max-width: 620px; margin: 0 auto; }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 6vw, 3rem); font-weight: 400; color: var(--text-dark); line-height: 1.2; margin-bottom: 0.75rem; }
+  .hero p { font-size: 1rem; color: var(--text-mid); line-height: 1.7; font-weight: 300; }
+  .step-container { max-width: 620px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+  .step-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+  .step-left { display: flex; align-items: center; gap: 0.75rem; }
+  .back-btn { background: none; border: 1.5px solid var(--card-border); border-radius: 50%; width: 34px; height: 34px; cursor: pointer; font-size: 1rem; color: var(--text-mid); display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+  .back-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .step-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-light); font-weight: 500; }
+  .step-dots { display: flex; gap: 6px; }
+  .dot { width: 28px; height: 5px; border-radius: 3px; background: var(--rose); }
+  .dot.active { background: var(--teal); }
+  .dot.done { background: var(--teal); opacity: 0.5; }
 
-  .panel{background:var(--white);border:1px solid var(--rose);border-radius:16px;padding:16px;margin-bottom:16px;}
+  .step-panel { display:none; animation: fadeIn 0.25s ease; }
+  .step-panel.active { display:block; }
 
-  label{font-size:0.9rem;color:var(--muted);display:block;margin-bottom:6px;}
-  select,input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--rose);font-size:1rem;}
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px);} to { opacity:1; transform: translateY(0);} }
 
-  .btn{background:var(--teal);color:#fff;border:none;padding:12px 16px;border-radius:50px;cursor:pointer;width:100%;margin-top:12px;}
-  .btn:disabled{background:#ccc;cursor:not-allowed;}
+  .option-list { display:flex; flex-direction:column; gap:10px; }
+  .option-item { background:#fff; border:1.5px solid var(--card-border); border-radius:14px; padding:1rem 1.25rem; display:flex; justify-content:space-between; cursor:pointer; }
+  .option-item.selected { border-color:var(--teal); background:var(--teal-light); }
 
-  .results{margin-top:20px;}
-  .card{border:1px solid var(--rose);border-radius:14px;padding:14px;margin-bottom:12px;background:#fff;}
-  .title{font-family:Cormorant Garamond,serif;font-size:1.3rem;}
-  .price{font-weight:500;color:var(--teal);}
-  .small{font-size:0.85rem;color:var(--muted);margin-top:6px;}
-  a{color:var(--teal);text-decoration:none;}
+  .results-actions { display:flex; gap:10px; justify-content:center; margin:15px 0; flex-wrap:wrap; }
+  .btn { padding:10px 18px; border-radius:50px; border:1.5px solid var(--card-border); cursor:pointer; background:#fff; }
+  .btn.primary { background:var(--teal); color:#fff; border:none; }
+
+  .package-card { background:#fff; border:1px solid var(--card-border); border-radius:16px; margin-bottom:15px; overflow:hidden; }
+  .package-body { padding:15px; }
+  .package-name { font-family:'Cormorant Garamond',serif; font-size:1.3rem; }
+  .package-price { font-weight:500; color:var(--teal); }
+  .shop-btn { display:block; margin-top:10px; text-align:center; padding:10px; background:var(--teal); color:#fff; border-radius:50px; text-decoration:none; }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-<h1>Find Your Perfect Gift</h1>
-<p>Answer a few simple questions — no page jumping, everything updates instantly.</p>
-
-<div class="panel">
-  <label>Who is the gift for?</label>
-  <select id="recipient">
-    <option value="">Select...</option>
-    <option>Mum</option><option>Dad</option><option>Partner</option><option>Friend</option><option>Sister</option><option>Brother</option><option>Grandma</option><option>Grandad</option><option>Colleague</option><option>Teacher</option><option>Neighbour</option><option>Treat Yourself</option>
-  </select>
+<div class="logo-wrap">
+  <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/6/21869983/1448x1086.png">
 </div>
 
-<div class="panel">
-  <label>Occasion</label>
-  <select id="occasion">
-    <option value="">Select...</option>
-    <option>Birthday</option><option>Mother's Day</option><option>Father's Day</option><option>Christmas</option><option>Anniversary</option><option>New Home</option><option>Thank You</option><option>Get Well Soon</option><option>Valentine's Day</option><option>Just Because</option><option>Graduation</option><option>Wedding</option>
-  </select>
+<div class="hero">
+  <h1>Find the perfect gift</h1>
+  <p>Handmade luxury candles, wax melts, and eco-friendly decor from the Scottish Borders.</p>
 </div>
 
-<div class="panel">
-  <label>Gift type</label>
-  <select id="type">
-    <option value="">Select...</option>
-    <option>Candles</option><option>Wax Melts</option><option>Home Decor</option><option>Wellness & Relaxation</option><option>Gift Set</option><option>Luxury Gift Box</option><option>Eco-Friendly</option><option>Surprise Me</option>
-  </select>
-</div>
+<div class="step-container">
 
-<div class="panel">
-  <label>Budget</label>
-  <select id="budget">
-    <option value="any">No limit / Any budget</option>
-    <option value="15">Under £15</option>
-    <option value="25">£15 - £25</option>
-    <option value="40">£25 - £40</option>
-    <option value="60">£40 - £60</option>
-    <option value="999">Over £60</option>
-  </select>
-</div>
+  <div id="step1" class="step-panel active">
+    <div class="step-label">Step 1</div>
+    <div class="option-list" id="list1"></div>
+  </div>
 
-<button class="btn" onclick="run()">Find Gifts</button>
+  <div id="step2" class="step-panel">
+    <div class="step-label">Step 2</div>
+    <div class="option-list" id="list2"></div>
+  </div>
 
-<div class="results" id="results"></div>
+  <div id="step3" class="step-panel">
+    <div class="step-label">Step 3</div>
+    <div class="option-list" id="list3"></div>
+  </div>
+
+  <div id="step4" class="step-panel">
+    <div class="step-label">Step 4</div>
+    <div class="option-list" id="list4"></div>
+  </div>
+
+  <div id="results" class="step-panel">
+    <h2>Your Matches</h2>
+    <div id="package-cards"></div>
+  </div>
 
 </div>
 
 <script>
-const PACKAGES = [
-  {title:"Relaxation Box", price:39.99, desc:"Lavender candle + melts + warmer", url:"https://www.craftymousegifts.com"},
-  {title:"Candle Lover's Collection", price:36.99, desc:"Three soy candles", url:"https://www.craftymousegifts.com"},
-  {title:"Wax Melt Treat", price:19.99, desc:"6 wax melt bars", url:"https://www.craftymousegifts.com"},
-  {title:"Luxury Home Spa", price:47.99, desc:"Candle + diffuser + flowers", url:"https://www.craftymousegifts.com"}
+const stepData = [
+  { id:'list1', options:['Mum','Dad','Partner','Friend','Sister','Brother','Grandma','Grandad','Colleague','Teacher','Neighbour','Treat Yourself'] },
+  { id:'list2', options:["Birthday","Mother's Day","Father's Day","Christmas","Anniversary","New Home","Thank You","Get Well Soon","Valentine's Day","Just Because","Graduation","Wedding"] },
+  { id:'list3', options:['Candles','Wax Melts','Home Decor','Wellness & Relaxation','Gift Set','Luxury Gift Box','Eco-Friendly','Surprise Me'] },
+  { id:'list4', options:['Under £15','£15–£25','£25–£40','£40–£60','Over £60'] }
 ];
 
-function run(){
-  const budget = document.getElementById('budget').value;
-  const max = budget === 'any' ? 9999 : parseFloat(budget);
+const answers = {};
+const budgetRanges = {
+  'Under £15':[0,15], '£15–£25':[15,25], '£25–£40':[25,40], '£40–£60':[40,60], 'Over £60':[60,9999]
+};
 
-  const results = PACKAGES.filter(p => p.price <= max);
-
-  const html = results.map(p => `
-    <div class="card">
-      <div class="title">${p.title}</div>
-      <div class="price">£${p.price.toFixed(2)}</div>
-      <div class="small">${p.desc}</div>
-      <a href="${p.url}" target="_blank">View product</a>
-    </div>
-  `).join('');
-
-  document.getElementById('results').innerHTML = html || '<p>No matches found</p>';
+function render(){
+  stepData.forEach((s,i)=>{
+    const el=document.getElementById(s.id);
+    el.innerHTML='';
+    s.options.forEach(opt=>{
+      const div=document.createElement('div');
+      div.className='option-item';
+      div.innerHTML=`<span>${opt}</span>`;
+      div.onclick=()=>select(i+1,opt);
+      el.appendChild(div);
+    });
+  });
 }
+
+function select(step,val){
+  answers['step'+step]=val;
+  document.getElementById('step'+step).classList.remove('active');
+  if(step<4) document.getElementById('step'+(step+1)).classList.add('active');
+  else show();
+}
+
+function show(){
+  document.getElementById('results').classList.add('active');
+  const p=document.getElementById('package-cards');
+  p.innerHTML='<div>Loading results...</div>';
+}
+
+render();
 </script>
 
 </body>
