@@ -31,6 +31,6 @@ description: >-
   Its energising properties keep us present and awake to our surroundings, connecting us to ourselves.
 image: https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814469/427x426.png
 category: Reiki Crystal Charged Energy Candles
-sku: "8288418"
+sku: "8279240"
 in_stock: true
 ---
