@@ -146,8 +146,14 @@ function showTab(name){document.querySelectorAll('.tab-content').forEach(functio
 document.getElementById('tabQuiz').addEventListener('click',function(){showTab('Quiz');});
 document.getElementById('tabPackages').addEventListener('click',function(){showTab('Packages');});
 document.getElementById('tabProducts').addEventListener('click',function(){showTab('Products');});
-document.getElementById('heroStartBtn').addEventListener('click',function(){showTab('Quiz');setTimeout(function(){document.getElementById('quiz-section').scrollIntoView({behavior:'smooth'});},50);});
-document.querySelectorAll('.chip').forEach(function(chip){chip.addEventListener('click',function(){var group=this.getAttribute('data-group'),val=this.getAttribute('data-val');if(group==='budget'){document.querySelectorAll('[data-group="budget"]').forEach(function(c){c.classList.remove('on');});sel.budget=val;chip.classList.add('on');}else{var arr=sel[group],idx=arr.indexOf(val);if(idx>-1){arr.splice(idx,1);chip.classList.remove('on');}else{arr.push(val);chip.classList.add('on');}}});});
+document.getElementById('heroStartBtn').addEventListener('click',function(){showTab('Quiz');});
+document.querySelectorAll('.chip').forEach(function(chip){chip.addEventListener('click',function(){var group=this.getAttribute('data-group'),val=this.getAttribute('data-val');if(group==='budget'){document.querySelectorAll('[data-group="budget"]').forEach(function(c){c.classList.remove('on');});sel.budget=val;chip.classList.add('on');}else{var arr=sel[group],idx=arr.indexOf(val);if(idx>-1){arr.splice(idx,1);chip.classList.remove('on');}else{arr.push(val);chip.classList.add('on');}}
+    // Scroll to next quiz block after a short delay
+    var blocks=document.querySelectorAll('.quiz-block');
+    var currentBlock=chip.closest('.quiz-block');
+    var found=false;
+    blocks.forEach(function(block){if(found){block.scrollIntoView({behavior:'smooth',block:'start'});found=false;}if(block===currentBlock)found=true;});
+  });});
 document.getElementById('findBtn').addEventListener('click',function(){
   var sp=packages.map(function(pkg){var s=0;if(!sel.recipient.length||sel.recipient.some(function(r){return pkg.recipients&&pkg.recipients.indexOf(r)>-1;}))s+=3;if(!sel.occasion.length||sel.occasion.some(function(o){return pkg.occasions&&pkg.occasions.indexOf(o)>-1;}))s+=2;if(budgetOk(pkg.price))s+=2;return{pkg:pkg,score:s};}).filter(function(x){return x.score>0;}).sort(function(a,b){return b.score-a.score;}).map(function(x){return x.pkg;});
   var sp2=products.map(function(prod){var s=0;if(budgetOk(prod.price))s+=2;if(!sel.scent.length||sel.scent.some(function(sc){return prod.scents&&prod.scents.indexOf(sc)>-1;}))s+=2;return{prod:prod,score:s};}).filter(function(x){return x.score>0;}).sort(function(a,b){return b.score-a.score;}).slice(0,12).map(function(x){return x.prod;});
