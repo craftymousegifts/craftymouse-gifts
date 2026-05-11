@@ -151,7 +151,7 @@ header{background:#fff;border-bottom:1px solid var(--border);padding:14px 24px;d
       <div class="site-sub">Scottish Borders · Handmade with love</div>
     </div>
   </div>
-  <button class="admin-btn" id="adminToggleBtn">Admin</button>
+  
 </header>
 
 <div id="shop-view" style="display:block;">
@@ -730,10 +730,7 @@ document.getElementById('modal-overlay').addEventListener('click', function(e) {
 });
 
 // ---- ADMIN ----
-document.getElementById('adminToggleBtn').addEventListener('click', function() {
-  document.getElementById('shop-view').style.display = 'none';
-  document.getElementById('admin-view').style.display = 'block';
-});
+// Admin button removed from public page
 document.getElementById('exitAdminBtn').addEventListener('click', function() {
   document.getElementById('admin-view').style.display = 'none';
   document.getElementById('shop-view').style.display = '';
@@ -886,6 +883,18 @@ function renderAdmPkgs() {
 }
 
 })();
+</script>
+
+<script>
+// Hide header and adjust layout when embedded in iframe
+if (window.self !== window.top) {
+  document.addEventListener('DOMContentLoaded', function() {
+    var header = document.querySelector('header');
+    if (header) header.style.display = 'none';
+    // Remove sticky positioning so content flows naturally
+    document.body.style.paddingTop = '0';
+  });
+}
 </script>
 </body>
 </html>
