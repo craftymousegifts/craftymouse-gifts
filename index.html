@@ -4,177 +4,195 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Crafty Mouse Gifts — Find the Perfect Gift</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --cream:#f7f3f0;
+  --blush:#f0e8e8;
+  --rose:#e8d5d5;
+  --teal:#3d9b8f;
+  --teal-dark:#2d7a6f;
+  --teal-light:#e8f5f3;
+  --text-dark:#2c3440;
+  --text-mid:#5a6478;
+  --card-border:#ecdede;
+  --white:#fff;
+}
 
-  html, body {
-    height: 100%;
-  }
+*{box-sizing:border-box;margin:0;padding:0}
 
-  body {
-    font-family: 'Jost', sans-serif;
-    background: var(--cream);
-    color: var(--text-dark);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+body{
+  font-family:Jost,sans-serif;
+  background:var(--cream);
+  color:var(--text-dark);
+  overflow-x:hidden;
+}
 
-  :root {
-    --cream: #f7f3f0;
-    --blush: #f0e8e8;
-    --rose: #e8d5d5;
-    --teal: #3d9b8f;
-    --teal-dark: #2d7a6f;
-    --teal-light: #e8f5f3;
-    --text-dark: #2c3440;
-    --text-mid: #5a6478;
-    --text-light: #8a93a8;
-    --white: #ffffff;
-    --card-border: #ecdede;
-  }
+.logo-wrap{text-align:center;padding:2rem}
+.logo-wrap img{max-width:260px;background:#fff;padding:10px;border-radius:8px;border:1px solid var(--card-border)}
 
-  .logo-wrap { text-align:center; padding:2.5rem 1rem 1rem; }
-  .logo-wrap img { max-width:280px; width:90%; border:1px solid var(--card-border); border-radius:8px; padding:0.75rem 1.5rem; background:#fff; }
+.hero{text-align:center;max-width:600px;margin:0 auto;padding:10px 20px}
+.hero h1{font-family:"Cormorant Garamond",serif;font-size:2.5rem}
+.hero p{color:var(--text-mid)}
 
-  .hero { text-align:center; padding:1.5rem 1.5rem 0.5rem; max-width:620px; margin:0 auto; }
-  .hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,6vw,3rem); font-weight:400; }
-  .hero p { color:var(--text-mid); line-height:1.7; }
+.step-container{max-width:620px;margin:0 auto;padding:20px}
 
-  .step-container { max-width:620px; margin:0 auto; padding:1.5rem 1.25rem 4rem; }
+.step-panel{display:none}
+.step-panel.active{display:block}
 
-  .step-panel { display:none; }
-  .step-panel.active { display:block; animation:fadeIn .25s ease; }
+.option-list{display:flex;flex-direction:column;gap:10px}
 
-  @keyframes fadeIn {
-    from {opacity:0; transform:translateY(10px)}
-    to {opacity:1; transform:translateY(0)}
-  }
+.option-item{
+  background:#fff;
+  border:1px solid var(--card-border);
+  padding:14px;
+  border-radius:12px;
+  cursor:pointer;
+}
 
-  .step-title { font-family:'Cormorant Garamond',serif; text-align:center; margin-bottom:1rem; }
+.option-item.selected{
+  border-color:var(--teal);
+  background:var(--teal-light);
+}
 
-  .option-list { display:flex; flex-direction:column; gap:10px; }
+.package-card{
+  background:#fff;
+  border:1px solid var(--card-border);
+  border-radius:14px;
+  margin-bottom:15px;
+}
 
-  .option-item {
-    background:#fff;
-    border:1.5px solid var(--card-border);
-    border-radius:14px;
-    padding:1rem 1.25rem;
-    cursor:pointer;
-    display:flex;
-    justify-content:space-between;
-  }
+.package-body{padding:15px}
 
-  .option-item.selected { border-color:var(--teal); background:var(--teal-light); }
-
-  .package-card {
-    background:#fff;
-    border:1px solid var(--card-border);
-    border-radius:16px;
-    margin-bottom:15px;
-    overflow:hidden;
-  }
-
-  .package-body { padding:15px; }
-  .package-name { font-family:'Cormorant Garamond',serif; font-size:1.4rem; }
-  .package-price { color:var(--teal); font-weight:500; }
-
-  .shop-btn {
-    display:block;
-    margin-top:10px;
-    padding:10px;
-    background:var(--teal);
-    color:#fff;
-    text-align:center;
-    border-radius:50px;
-    text-decoration:none;
-  }
-
+.shop-btn{
+  display:block;
+  text-align:center;
+  background:var(--teal);
+  color:#fff;
+  padding:10px;
+  border-radius:50px;
+  text-decoration:none;
+}
 </style>
 </head>
+
 <body>
 
 <div class="logo-wrap">
-  <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/6/21869983/1448x1086.png">
+<img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/6/21869983/1448x1086.png">
 </div>
 
 <div class="hero">
-  <h1>Find the perfect gift</h1>
-  <p>Handmade luxury candles, wax melts, and eco-friendly decor from the Scottish Borders.</p>
+<h1>Find the perfect gift</h1>
+<p>Handmade luxury candles, wax melts, and eco-friendly decor from the Scottish Borders.</p>
 </div>
 
 <div class="step-container">
 
-  <!-- STEP PANELS RESTORED FULL SYSTEM -->
-  <div id="step1" class="step-panel active"></div>
-  <div id="step2" class="step-panel"></div>
-  <div id="step3" class="step-panel"></div>
-  <div id="step4" class="step-panel"></div>
-
-  <div id="results" class="step-panel"></div>
+<div id="step1" class="step-panel active"></div>
+<div id="step2" class="step-panel"></div>
+<div id="step3" class="step-panel"></div>
+<div id="step4" class="step-panel"></div>
+<div id="results" class="step-panel"></div>
 
 </div>
 
 <script>
 
-// FULL STATE SYSTEM RESTORED
+/* ---------------- STATE ---------------- */
+const answers = {};
 const stepData = [
-  { id:'list1', options:['Mum','Dad','Partner','Friend','Sister','Brother','Grandma','Grandad','Colleague','Teacher','Neighbour','Treat Yourself'] },
-  { id:'list2', options:["Birthday","Mother's Day","Father's Day","Christmas","Anniversary","New Home","Thank You","Get Well Soon","Valentine's Day","Just Because","Graduation","Wedding"] },
-  { id:'list3', options:['Candles','Wax Melts','Home Decor','Wellness & Relaxation','Gift Set','Luxury Gift Box','Eco-Friendly','Surprise Me!'] },
-  { id:'list4', options:['Under £15','£15 – £25','£25 – £40','£40 – £60','Over £60'] }
+  { id:'step1', options:['Mum','Dad','Partner','Friend','Sister','Brother','Grandma','Grandad','Colleague','Teacher','Neighbour','Treat Yourself'] },
+  { id:'step2', options:["Birthday","Mother's Day","Father's Day","Christmas","Anniversary","New Home","Thank You","Get Well Soon","Valentine's Day","Just Because","Graduation","Wedding"] },
+  { id:'step3', options:['Candles','Wax Melts','Home Decor','Wellness & Relaxation','Gift Set','Luxury Gift Box','Eco-Friendly','Surprise Me!'] },
+  { id:'step4', options:['Under £15','£15 – £25','£25 – £40','£40 – £60','Over £60'] }
 ];
 
-const answers = {};
-
-const budgetRanges = {
-  'Under £15':[0,15],
-  '£15 – £25':[15,25],
-  '£25 – £40':[25,40],
-  '£40 – £60':[40,60],
-  'Over £60':[60,9999]
+const budgetRanges={
+'Under £15':[0,15],
+'£15 – £25':[15,25],
+'£25 – £40':[25,40],
+'£40 – £60':[40,60],
+'Over £60':[60,9999]
 };
 
-function showStep(n){
-  document.querySelectorAll('.step-panel').forEach(s=>s.classList.remove('active'));
-  document.getElementById('step'+n).classList.add('active');
+/* ---------------- PACKAGES (RESTORED CORE) ---------------- */
+const PACKAGES=[
+{
+title:"Relaxation Box",
+price:39.99,
+recipients:["Mum","Friend","Partner","Sister","Grandma","Treat Yourself"],
+occasions:["Birthday","Mother's Day","Get Well Soon","Just Because"],
+types:["Candles","Wax Melts","Wellness & Relaxation","Gift Set"],
+url:"https://www.craftymousegifts.com/"
+},
+{
+title:"Wax Melt Treat",
+price:19.99,
+recipients:["Friend","Colleague","Teacher","Everyone"],
+occasions:["Thank You","Birthday","Just Because"],
+types:["Wax Melts","Gift Set"],
+url:"https://www.craftymousegifts.com/"
+}
+];
+
+/* ---------------- NAV ---------------- */
+function show(step){
+document.querySelectorAll('.step-panel').forEach(e=>e.classList.remove('active'));
+document.getElementById(step).classList.add('active');
 }
 
+/* ---------------- SELECT ---------------- */
 function select(step,val){
-  answers['step'+step]=val;
-  if(step<4) showStep(step+1);
-  else showResults();
+answers[step]=val;
+if(step<4) show('step'+(step+1));
+else renderResults();
 }
 
-function showResults(){
-  showStep('results');
-
-  const el=document.getElementById('results');
-  el.innerHTML='<h2>Your Matches</h2><div>Loading results...</div>';
-
-  // FULL MATCHING SYSTEM HOOK (restored from original logic)
+/* ---------------- MATCH ENGINE ---------------- */
+function match(){
+const [min,max]=budgetRanges[answers.step4]||[0,9999];
+return PACKAGES.filter(p=>{
+if(p.price<min||p.price>max)return false;
+return true;
+});
 }
 
-function renderOptions(){
-  stepData.forEach((s,i)=>{
-    const container=document.getElementById('step'+(i+1));
-    const list=document.createElement('div');
-    list.className='option-list';
-
-    s.options.forEach(opt=>{
-      const div=document.createElement('div');
-      div.className='option-item';
-      div.innerHTML='<span>'+opt+'</span>';
-      div.onclick=()=>select(i+1,opt);
-      list.appendChild(div);
-    });
-
-    container.appendChild(list);
-  });
+/* ---------------- RESULTS ---------------- */
+function renderResults(){
+show('results');
+const data=match();
+document.getElementById('results').innerHTML=
+data.map(p=>`
+<div class="package-card">
+<div class="package-body">
+<h3>${p.title}</h3>
+<p>£${p.price}</p>
+<a class="shop-btn" href="${p.url}" target="_blank">View</a>
+</div>
+</div>
+`).join('');
 }
 
-renderOptions();
+/* ---------------- BUILD UI ---------------- */
+stepData.forEach((s,i)=>{
+const el=document.getElementById(s.id);
+const wrap=document.createElement('div');
+wrap.className='option-list';
+
+s.options.forEach(o=>{
+const div=document.createElement('div');
+div.className='option-item';
+div.textContent=o;
+div.onclick=()=>select(s.id,o);
+wrap.appendChild(div);
+});
+
+el.appendChild(wrap);
+});
 
 </script>
 
