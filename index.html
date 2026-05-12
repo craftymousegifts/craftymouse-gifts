@@ -47,7 +47,7 @@ header{background:#fff;border-bottom:1px solid var(--border);padding:14px 24px;d
 .rtabs-inner{display:flex;border:1.5px solid var(--border);border-radius:28px;overflow:hidden;}
 .rtab{background:none;border:none;padding:9px 26px;font-family:'Jost',system-ui,sans-serif;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mid);cursor:pointer;transition:all .2s;}
 .rtab.active{background:var(--teal);color:#fff;}
-.pkg-grid{display:flex;flex-wrap:wrap;gap:22px;justify-content:center;align-items:flex-start;}.pkg-wrap{flex:0 0 calc(50% - 11px);min-width:300px;max-width:480px;}.pkg-wrap .modal{flex-basis:100%;width:100%;}.modal{background:#fff;border-radius:14px;border:1px solid var(--border);padding:24px;margin-top:16px;box-shadow:0 8px 32px rgba(0,0,0,.12);}@media(max-width:700px){.pkg-wrap{flex:0 0 100%;}}
+.pkg-grid{display:flex;flex-wrap:wrap;gap:22px;justify-content:center;align-items:flex-start;}.pkg-wrap{flex:0 0 calc(50% - 11px);min-width:300px;max-width:480px;}.pkg-wrap .modal{flex-basis:100%;width:100%;}.modal{background:#fff;border-radius:14px;border:1px solid var(--border);padding:24px;margin-top:16px;box-shadow:0 8px 32px rgba(0,0,0,.12);text-align:left;}@media(max-width:700px){.pkg-wrap{flex:0 0 100%;}}
 .pkg-card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--border);transition:transform .2s,box-shadow .2s;}
 .pkg-card:hover{transform:translateY(-3px);box-shadow:0 10px 32px rgba(0,0,0,.09);}
 .pkg-img{width:100%;height:190px;object-fit:cover;display:block;}
@@ -88,7 +88,7 @@ header{background:#fff;border-bottom:1px solid var(--border);padding:14px 24px;d
 .modal-tag{color:var(--mid);font-size:.86rem;margin-bottom:7px;}
 .modal-price{font-size:1.5rem;font-weight:500;margin-bottom:16px;}
 .modal-desc{color:var(--mid);font-size:.84rem;line-height:1.7;margin-bottom:18px;}
-.modal-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:20px;}
+.modal-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:20px;text-align:left;}
 .modal-item{border:1px solid var(--border);border-radius:10px;overflow:hidden;}
 .modal-item-body{padding:9px 11px;}
 .modal-item-name{font-family:'Cormorant Garamond',Georgia,serif;font-size:.92rem;margin-bottom:3px;}
@@ -183,7 +183,7 @@ document.getElementById('findBtn').addEventListener('click',function(){
   var sp2=products.map(function(prod){
     var sc=0;
     if(budgetOk(prod.price))sc+=2;
-    if(!sel.scent.length||sel.scent.some(function(s){return prod.scents&&prod.scents.indexOf(s)>-1;}))sc+=2;
+    if(!sel.scent.length||!prod.scents||!prod.scents.length||sel.scent.some(function(s){return prod.scents.indexOf(s)>-1;}))sc+=2;
     return{prod:prod,score:sc};
   }).filter(function(x){return x.score>0;}).sort(function(a,b){return b.score-a.score;}).slice(0,12).map(function(x){return x.prod;});
 
