@@ -338,7 +338,13 @@ function openModal(idx,triggerBtn){
     var sb=document.createElement('a');sb.href=pkg.url;sb.target='_blank';
     sb.className='modal-shop-btn';sb.textContent='Shop This Package';modal.appendChild(sb);
   }
-  var targetCard=triggerBtn?triggerBtn.closest('.pkg-card'):null;if(targetCard){targetCard.parentNode.insertBefore(modal,targetCard.nextSibling);}else{document.getElementById('panels').appendChild(modal);}
+  var targetCard=triggerBtn?triggerBtn.closest('.pkg-card'):null;
+  var pkgGrid=targetCard?targetCard.closest('.pkg-grid'):null;
+  if(pkgGrid){
+    pkgGrid.parentNode.insertBefore(modal,pkgGrid.nextSibling);
+  } else {
+    document.getElementById('panels').appendChild(modal);
+  }
   setTimeout(function(){
     var absTop=0;var node=modal;
     while(node){absTop+=node.offsetTop;node=node.offsetParent;}
