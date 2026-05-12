@@ -157,6 +157,7 @@ document.getElementById('findBtn').addEventListener('click',function(){
   renderProdGrid(document.getElementById('results-prod-grid'),sp2.length?sp2:products.slice(0,12));
   document.getElementById('quiz-section').style.display='none';
   document.getElementById('results-section').style.display='block';
+  try{window.parent.postMessage({type:'cmg-scroll-top'},'*');}catch(e){}
   window.scrollTo({top:0,behavior:'smooth'});
   
 });
