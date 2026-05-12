@@ -31,7 +31,7 @@ description: >-
   Patchouli - Patchouli is said to draw a person’s energy down through the body, anchoring it at the root chakra. It has been found to improve low mood and ease anxieties, helping us to feel more grounded and at peace.
    
   Ylang Ylang - Rich, floral and delicate, ylang ylang is known for soothing stress and boosting confidence.
-image: https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21811438/1024x1023.png
+image: https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21811439/1024x1023.png?1773142276
 category: Reiki Crystal Charged Energy Candles
 sku: "8288424"
 in_stock: true
