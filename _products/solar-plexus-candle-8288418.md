@@ -29,7 +29,7 @@ description: >-
   Lemon - Like most citrus oils, lemon is known to be uplifting and invigorating, helping us to shake off low moods.
    
   Its energising properties keep us present and awake to our surroundings, connecting us to ourselves.
-image: https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814469/427x426.png
+image: https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814462/427x426.png?1773142354
 category: Reiki Crystal Charged Energy Candles
 sku: "8279240"
 in_stock: true
