@@ -156,7 +156,7 @@ document.querySelectorAll('.chip').forEach(function(chip){chip.addEventListener(
         if(el){
           el.scrollIntoView({behavior:'smooth',block:'start'});
           // Also notify parent to scroll if in iframe
-          try{window.parent.postMessage({type:'cmg-scroll',id:nextId},'*');}catch(e){}
+          try{window.parent.postMessage({type:'cmg-scroll',offset:el.offsetTop},'*');}catch(e){}
         }
       },200);
     }
@@ -170,7 +170,7 @@ document.getElementById('findBtn').addEventListener('click',function(){
   renderProdGrid(document.getElementById('results-prod-grid'),sp2.length?sp2:products.slice(0,12));
   document.getElementById('quiz-section').style.display='none';
   document.getElementById('results-section').style.display='block';
-  setTimeout(function(){var el=document.getElementById('results-section');el.scrollIntoView({behavior:'smooth',block:'start'});try{window.parent.postMessage({type:'cmg-scroll',id:'results-section'},'*');}catch(e){}},200);
+  setTimeout(function(){var el=document.getElementById('results-section');el.scrollIntoView({behavior:'smooth',block:'start'});try{window.parent.postMessage({type:'cmg-scroll',offset:el.offsetTop},'*');}catch(e){}},200);
 });
 document.getElementById('resetBtn').addEventListener('click',function(){sel.recipient=[];sel.occasion=[];sel.budget=null;sel.scent=[];document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on');});document.getElementById('results-section').style.display='none';document.getElementById('quiz-section').style.display='';window.scrollTo({top:0,behavior:'smooth'});try{window.parent.postMessage({type:'cmg-scroll-top'},'*');}catch(e){}});
 document.getElementById('rtabPkg').addEventListener('click',function(){document.getElementById('results-pkg-grid').style.display='';document.getElementById('results-prod-grid').style.display='none';this.classList.add('active');document.getElementById('rtabProd').classList.remove('active');});
