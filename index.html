@@ -178,7 +178,18 @@ document.getElementById('findBtn').addEventListener('click',function(){
     if(!sel.occasion.length||sel.occasion.some(function(o){return pkg.occasions&&pkg.occasions.indexOf(o)>-1;}))sc+=2;
     if(budgetOk(pkg.price))sc+=2;
     return{pkg:pkg,score:sc};
-  }).filter(function(x){return x.score>0;}).sort(function(a,b){return b.score-a.score||packages.indexOf(a.pkg)-packages.indexOf(b.pkg);}).map(function(x){return x.pkg;});
+  }).filter(function(x){
+    if(x.score===0)return false;
+    // If recipient selected, package must match recipient
+    if(sel.recipient.length&&x.pkg.recipients&&x.pkg.recipients.length){
+      if(!sel.recipient.some(function(r){return x.pkg.recipients.indexOf(r)>-1;}))return false;
+    }
+    // If occasion selected, package must match occasion
+    if(sel.occasion.length&&x.pkg.occasions&&x.pkg.occasions.length){
+      if(!sel.occasion.some(function(o){return x.pkg.occasions.indexOf(o)>-1;}))return false;
+    }
+    return true;
+  }).sort(function(a,b){return b.score-a.score||packages.indexOf(a.pkg)-packages.indexOf(b.pkg);}).map(function(x){return x.pkg;});
 
   var sp2=products.map(function(prod){
     var sc=0;
