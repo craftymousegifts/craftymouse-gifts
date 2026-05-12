@@ -339,8 +339,7 @@ function openModal(idx){
   }
   var cards=document.querySelectorAll('.pkg-card');
   var targetCard=cards[idx];
-  var pkgGrid=targetCard?targetCard.closest('.pkg-grid'):null;
-  if(pkgGrid){pkgGrid.parentNode.insertBefore(modal,pkgGrid.nextSibling);}
+  if(targetCard){targetCard.parentNode.insertBefore(modal,targetCard.nextSibling);}
   else{document.getElementById('panels').appendChild(modal);}
   setTimeout(function(){
     var absTop=0;var node=modal;
