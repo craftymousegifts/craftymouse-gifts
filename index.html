@@ -234,9 +234,10 @@ function makePkgCard(pkg){
   var pr=document.createElement('div');pr.className='pkg-price';pr.textContent=fmt(pkg.price);body.appendChild(pr);
   var ac=document.createElement('div');ac.className='pkg-actions';
   var vb=document.createElement('button');vb.className='btn-outline';vb.textContent='View Items';
+  card.setAttribute('data-pkg-idx',idx);
   (function(i){vb.addEventListener('click',function(){openModal(i);});})(idx);
   ac.appendChild(vb);
-  if(pkg.url){var a=document.createElement('a');a.href=pkg.url;a.target='_blank';a.className='btn-solid';a.textContent='Shop Now';ac.appendChild(a);}
+  if(pkg.url){var a=document.createElement('a');a.href='https://www.craftymousegifts.com/ourshop/';a.target='_blank';a.className='btn-solid';a.textContent='Shop Main Menu';ac.appendChild(a);}
   body.appendChild(ac);card.appendChild(body);return card;
 }
 
@@ -337,10 +338,7 @@ function openModal(idx){
     var sb=document.createElement('a');sb.href=pkg.url;sb.target='_blank';
     sb.className='modal-shop-btn';sb.textContent='Shop This Package';modal.appendChild(sb);
   }
-  var cards=document.querySelectorAll('.pkg-card');
-  var targetCard=cards[idx];
-  if(targetCard){targetCard.parentNode.insertBefore(modal,targetCard.nextSibling);}
-  else{document.getElementById('panels').appendChild(modal);}
+  var allCards=document.querySelectorAll('.pkg-card[data-pkg-idx]');var targetCard=null;for(var ci=0;ci<allCards.length;ci++){if(allCards[ci].getAttribute('data-pkg-idx')===String(idx)&&allCards[ci].offsetParent!==null){targetCard=allCards[ci];break;}}if(targetCard){targetCard.parentNode.insertBefore(modal,targetCard.nextSibling);}else{document.getElementById('panels').appendChild(modal);}
   setTimeout(function(){
     var absTop=0;var node=modal;
     while(node){absTop+=node.offsetTop;node=node.offsetParent;}
