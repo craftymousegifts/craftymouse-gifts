@@ -33,7 +33,7 @@ description: >-
   Spearmint - Uplifting and mood-boosting, spearmint helps us to speak with compassion and purpose.
 
   It can also relieve stress-induced tension, leaving us in a better position to listen to others and engage with their issues.
-image: https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814474/427x426.png
+image: https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814465/427x426.png?1773142431
 category: Reiki Crystal Charged Energy Candles
 sku: "8279238"
 in_stock: true
