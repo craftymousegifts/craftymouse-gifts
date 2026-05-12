@@ -147,16 +147,16 @@ document.getElementById('tabPackages').addEventListener('click',function(){showT
 document.getElementById('tabProducts').addEventListener('click',function(){showTab('Products');});
 
 document.querySelectorAll('.chip').forEach(function(chip){chip.addEventListener('click',function(){var group=this.getAttribute('data-group'),val=this.getAttribute('data-val');if(group==='budget'||group==='recipient'){document.querySelectorAll('[data-group="'+group+'"]').forEach(function(c){c.classList.remove('on');});if(group==='budget'){sel.budget=val;}else{sel[group]=[val];}chip.classList.add('on');}else{var arr=sel[group],idx=arr.indexOf(val);if(idx>-1){arr.splice(idx,1);chip.classList.remove('on');}else{arr.push(val);chip.classList.add('on');}}
-    // Scroll to next quiz block using ID map
+    // Scroll parent page to show next section
     var nextMap={'recipient':'q-occasion','occasion':'q-budget','budget':'q-scent'};
     var nextId=nextMap[group];
     if(nextId){
       setTimeout(function(){
         var el=document.getElementById(nextId);
         if(el){
-          var rect=el.getBoundingClientRect();
-          var scrollTop=window.pageYOffset||document.documentElement.scrollTop;
-          window.scrollTo({top:rect.top+scrollTop-80,behavior:'smooth'});
+          el.scrollIntoView({behavior:'smooth',block:'start'});
+          // Also notify parent to scroll if in iframe
+          try{window.parent.postMessage({type:'cmg-scroll',id:nextId},'*');}catch(e){}
         }
       },200);
     }
@@ -170,9 +170,9 @@ document.getElementById('findBtn').addEventListener('click',function(){
   renderProdGrid(document.getElementById('results-prod-grid'),sp2.length?sp2:products.slice(0,12));
   document.getElementById('quiz-section').style.display='none';
   document.getElementById('results-section').style.display='block';
-  setTimeout(function(){var el=document.getElementById('results-section');var rect=el.getBoundingClientRect();var scrollTop=window.pageYOffset||document.documentElement.scrollTop;window.scrollTo({top:rect.top+scrollTop-80,behavior:'smooth'});},200);
+  setTimeout(function(){var el=document.getElementById('results-section');el.scrollIntoView({behavior:'smooth',block:'start'});try{window.parent.postMessage({type:'cmg-scroll',id:'results-section'},'*');}catch(e){}},200);
 });
-document.getElementById('resetBtn').addEventListener('click',function(){sel.recipient=[];sel.occasion=[];sel.budget=null;sel.scent=[];document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on');});document.getElementById('results-section').style.display='none';document.getElementById('quiz-section').style.display='';window.scrollTo({top:0,behavior:'smooth'});});
+document.getElementById('resetBtn').addEventListener('click',function(){sel.recipient=[];sel.occasion=[];sel.budget=null;sel.scent=[];document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on');});document.getElementById('results-section').style.display='none';document.getElementById('quiz-section').style.display='';window.scrollTo({top:0,behavior:'smooth'});try{window.parent.postMessage({type:'cmg-scroll-top'},'*');}catch(e){}});
 document.getElementById('rtabPkg').addEventListener('click',function(){document.getElementById('results-pkg-grid').style.display='';document.getElementById('results-prod-grid').style.display='none';this.classList.add('active');document.getElementById('rtabProd').classList.remove('active');});
 document.getElementById('rtabProd').addEventListener('click',function(){document.getElementById('results-pkg-grid').style.display='none';document.getElementById('results-prod-grid').style.display='';this.classList.add('active');document.getElementById('rtabPkg').classList.remove('active');});
 function makePkgCard(pkg){var idx=packages.indexOf(pkg);var card=document.createElement('div');card.className='pkg-card';if(pkg.image){var img=document.createElement('img');img.src=pkg.image;img.alt=pkg.title;img.className='pkg-img';img.onerror=function(){this.style.display='none';};card.appendChild(img);}else{var ph=document.createElement('img');
