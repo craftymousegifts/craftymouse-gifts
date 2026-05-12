@@ -154,7 +154,7 @@ document.querySelectorAll('.chip').forEach(function(chip){chip.addEventListener(
     blocks.forEach(function(block){
       if(found){
         setTimeout(function(){
-          var top=block.getBoundingClientRect().top+window.pageYOffset-20;
+          var top=block.getBoundingClientRect().top+window.pageYOffset-130;
           window.scrollTo({top:top,behavior:'smooth'});
         },150);
         found=false;
@@ -171,7 +171,7 @@ document.getElementById('findBtn').addEventListener('click',function(){
   renderProdGrid(document.getElementById('results-prod-grid'),sp2.length?sp2:products.slice(0,12));
   document.getElementById('quiz-section').style.display='none';
   document.getElementById('results-section').style.display='block';
-  setTimeout(function(){var top=document.getElementById('results-section').getBoundingClientRect().top+window.pageYOffset-20;window.scrollTo({top:top,behavior:'smooth'});},100);
+  setTimeout(function(){var top=document.getElementById('results-section').getBoundingClientRect().top+window.pageYOffset-130;window.scrollTo({top:top,behavior:'smooth'});},100);
 });
 document.getElementById('resetBtn').addEventListener('click',function(){sel.recipient=[];sel.occasion=[];sel.budget=null;sel.scent=[];document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on');});document.getElementById('results-section').style.display='none';document.getElementById('quiz-section').style.display='';window.scrollTo({top:0,behavior:'smooth'});});
 document.getElementById('rtabPkg').addEventListener('click',function(){document.getElementById('results-pkg-grid').style.display='';document.getElementById('results-prod-grid').style.display='none';this.classList.add('active');document.getElementById('rtabProd').classList.remove('active');});
