@@ -15,7 +15,7 @@ description: >-
 
   This scent is described as intense and sophisticated, making it suitable for creating a cosy, warm atmosphere.
 image: https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761132/1024x1280.PNG
-category: "Wax Melts Selections â¨ Bestseller"
+category: Wax Melts Selections Bestseller
 sku: "8364510"
 in_stock: true
 ---
