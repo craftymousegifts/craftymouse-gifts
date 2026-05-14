@@ -1,6 +1,6 @@
 ---
 title: The Grand Occasion Gift Box
-tagline: When only the very best will do — a show-stopping luxury hamper.
+tagline: When only the very best will do - a show-stopping luxury hamper.
 description: Our most indulgent gift offering. The complete Crafty Mouse
   experience — two luxury candles, three wax melt clamshells and a hand-poured
   wax burner, presented beautifully.
