@@ -1,10 +1,11 @@
 ---
 title: The Luxury Home Spa
 tagline: Indulgent self-care from the Scottish Borders, straight to their door.
-description: A truly luxurious gift experience. Our rose and oud candle, botanical dried flower arrangement, and rose & jasmine reed diffuser combine to transform any home into a sanctuary.
-price: 47.99
+description: A truly luxurious gift experience. Transform any home into a
+  sanctuary with this indulgent collection.
+price: 59.99
 badge: Luxury
-image:
+image: null
 products: []
 recipients:
   - Mum
