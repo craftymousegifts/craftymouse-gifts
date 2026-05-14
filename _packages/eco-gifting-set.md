@@ -1,7 +1,7 @@
 ---
 title: The Eco Gifting Set
 tagline: Beautiful, sustainable and thoughtfully made in the Scottish Borders.
-description: "Beautiful eco-friendly gifts made with sustainable materials and gorgeous packaging."
+description: "For the eco-conscious gift recipient. All made with plant-based and recycled materials. Gorgeous packaging included."
 price: 41.99
 badge: Eco-Friendly
 image: null
