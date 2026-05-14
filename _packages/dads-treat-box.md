@@ -1,10 +1,11 @@
 ---
 title: The Dad's Treat Box
 tagline: A gift he'll actually love — crisp, clean scents and quality craftsmanship.
-description: A thoughtfully put-together gift for the dads and men in your life. Sea salt and driftwood candle paired with a vanilla caramel wax melt — understated, sophisticated, and genuinely enjoyable.
+description: A thoughtfully put-together gift for the dads and men in your life.
+  Understated, sophisticated, and genuinely enjoyable.
 price: 19.99
 badge: Popular
-image:
+image: null
 products: []
 recipients:
   - Dad
