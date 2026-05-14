@@ -358,7 +358,7 @@ function openModal(idx,triggerBtn){
     });
     modal.appendChild(itemGrid);
   }
-  var pl=document.createElement('p');pl.style.cssText='font-size:.82rem;color:var(--mid);margin:12px 0 16px;font-style:italic;';pl.textContent='\U0001f381 Presented with love: shredded tissue, luxury gift box and branded ribbon.';modal.appendChild(pl);
+  var pl=document.createElement('p');pl.style.cssText='font-size:.82rem;color:var(--mid);margin:12px 0 16px;font-style:italic;';pl.textContent='\Presented with love: shredded tissue, luxury gift box and branded ribbon.';modal.appendChild(pl);
   if(pkg.url){
     var sb=document.createElement('a');sb.href=pkg.url;sb.target='_blank';
     sb.className='modal-shop-btn';sb.textContent='Shop This Package';modal.appendChild(sb);
@@ -368,7 +368,7 @@ function openModal(idx,triggerBtn){
   if(wrap){wrap.appendChild(modal);}else{document.getElementById('panels').appendChild(modal);}
   setTimeout(function(){
     var absTop=0;var node=modal;
-    while(node){absTop+=node.offsetTop;node=node.offsetParent;}
+    while(node){absTop+=node.offsetTop;nfode=node.offsetParent;}
     window.scrollTo({top:Math.max(0,absTop-100),behavior:'smooth'});
     try{window.parent.postMessage({type:'cmg-scroll',offset:absTop},'*');}catch(e){}
   },100);
