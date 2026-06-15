@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Build your own personalised gift from Crafty Mouse Gifts — choose your candles, wax melts and extras.">
-  <title>Gift Builder | Crafty Mouse Gifts</title>
+  <meta name="description" content="Get in touch with Crafty Mouse Gifts — we'd love to hear from you.">
+  <title>Contact Us | Crafty Mouse Gifts</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
+    
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{--blush:#f3e8e6;--blush-mid:#edddd9;--blush-dark:#d9c9c5;--rose:#e46d69;--charcoal:#1e1e1e;--mid:#555;--light:#faf5f3;--white:#fff;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Lato',Arial,sans-serif;}
+    :root{--blush:#f3e8e6;--blush-mid:#edddd9;--blush-dark:#d9c9c5;--rose:#e46d69;--rose-dark:#c4524e;--charcoal:#1e1e1e;--mid:#555;--light:#faf5f3;--white:#fff;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Lato',Arial,sans-serif;}
     html{scroll-behavior:smooth;}
     body{font-family:var(--sans);color:var(--charcoal);background:var(--white);line-height:1.6;}
     a{color:inherit;text-decoration:none;}
@@ -53,7 +54,6 @@
     .mobile-nav a:hover{color:var(--rose);}
     .breadcrumb{padding:12px 32px;font-size:12px;color:var(--mid);border-bottom:1px solid var(--blush);background:var(--light);}
     .breadcrumb a{color:var(--rose);}
-    .page-content{max-width:1200px;margin:0 auto;padding:40px 32px;}
     footer{background:var(--charcoal);color:rgba(255,255,255,.8);padding:48px 32px 24px;margin-top:64px;}
     .footer-grid{max-width:1100px;margin:0 auto 40px;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;}
     .footer-brand img{width:80px;height:80px;border-radius:50%;object-fit:cover;margin-bottom:16px;background:var(--blush);padding:3px;}
@@ -68,8 +68,36 @@
     .footer-bottom p{font-size:12px;opacity:.5;}
     .payment-icons{display:flex;gap:8px;align-items:center;}
     .payment-icons img{height:20px;opacity:.6;filter:brightness(10);}
-    @media(max-width:900px){.nav-list{display:none;}.hamburger{display:flex;}.header-top{padding:10px 20px;}.footer-grid{grid-template-columns:1fr 1fr;}.page-content{padding:24px 20px;}}
+    @media(max-width:900px){.nav-list{display:none;}.hamburger{display:flex;}.header-top{padding:10px 20px;}.footer-grid{grid-template-columns:1fr 1fr;}}
     @media(max-width:480px){.footer-grid{grid-template-columns:1fr;}}
+
+    .contact-hero { background: var(--blush); padding: 64px 32px; text-align: center; }
+    .contact-hero h1 { font-family: var(--serif); font-size: clamp(2rem,4vw,3rem); font-weight: 400; margin-bottom: 12px; }
+    .contact-hero p { color: var(--mid); font-size: 15px; max-width: 500px; margin: 0 auto; }
+    .contact-body { max-width: 900px; margin: 0 auto; padding: 64px 32px; display: grid; grid-template-columns: 1fr 1.4fr; gap: 56px; }
+    .contact-info h2 { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; margin-bottom: 24px; }
+    .contact-detail { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px; }
+    .contact-detail-icon { font-size: 20px; margin-top: 2px; }
+    .contact-detail-text h4 { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--mid); margin-bottom: 4px; }
+    .contact-detail-text p { font-size: 14px; color: var(--charcoal); }
+    .contact-detail-text a { color: var(--rose); }
+    .contact-detail-text a:hover { text-decoration: underline; }
+    .social-contact { margin-top: 32px; }
+    .social-contact h4 { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--mid); margin-bottom: 14px; }
+    .social-contact-links { display: flex; gap: 12px; }
+    .social-contact-links a { width: 40px; height: 40px; border-radius: 50%; background: var(--blush); display: flex; align-items: center; justify-content: center; color: var(--charcoal); transition: background .2s, color .2s; }
+    .social-contact-links a:hover { background: var(--rose); color: #fff; }
+    .contact-form h2 { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; margin-bottom: 24px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); margin-bottom: 6px; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px 14px; border: 1px solid var(--blush-dark); font-size: 14px; font-family: var(--sans); color: var(--charcoal); background: var(--light); outline: none; border-radius: 2px; transition: border-color .2s; }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--rose); }
+    .form-group textarea { height: 140px; resize: vertical; }
+    .submit-btn { width: 100%; background: var(--charcoal); color: #fff; border: none; padding: 14px; font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; font-family: var(--sans); border-radius: 2px; transition: background .2s; }
+    .submit-btn:hover { background: var(--rose); }
+    .form-note { font-size: 12px; color: var(--mid); margin-top: 10px; text-align: center; }
+    .success-msg { display: none; background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 14px; border-radius: 2px; margin-top: 16px; text-align: center; font-size: 14px; }
+    @media(max-width:768px) { .contact-body { grid-template-columns:1fr; padding:40px 20px; } }
   </style>
 </head>
 <body>
@@ -94,12 +122,12 @@
     <nav class="site-nav">
       <ul class="nav-list">
         <li><a href="/home.html">Home</a></li>
-        <li><a href="/shop.html">Shop</a><ul class="dropdown"><li class="has-sub"><a href="/shop.html#candles">Candles</a><ul class="sub-drop"><li><a href="/shop.html#classic-candles">Classic Candles</a></li><li><a href="/shop.html#handmade-candles">Handmade Container &amp; Handpoured</a></li><li><a href="/shop.html#reiki-candles">Reiki Crystal Candles</a></li></ul></li><li><a href="/shop.html#gift-packages">Gift Packages</a></li><li><a href="/shop.html#individual-gifts">Individual Gifts</a></li><li class="has-sub"><a href="/shop.html#wax-melts">Wax Melt Home Living</a><ul class="sub-drop"><li><a href="/shop.html#wax-melt-bouquets">Wax Melt Bouquets</a></li><li><a href="/shop.html#wax-melt-burners">Wax Melt Burners</a></li><li><a href="/shop.html#wax-melt-selections">Selections ✨</a></li><li><a href="/shop.html#wax-melt-hearts">5 Hearts in a Box</a></li></ul></li></ul></li>
+        <li><a href="/shop.html">Shop</a><ul class="dropdown"><li class="has-sub"><a href="/shop.html#candles">Candles</a><ul class="sub-drop"><li><a href="/shop.html#classic-candles">Classic Candles</a></li><li><a href="/shop.html#handmade-candles">Handmade Container</a></li><li><a href="/shop.html#reiki-candles">Reiki Crystal Candles</a></li></ul></li><li><a href="/shop.html#gift-packages">Gift Packages</a></li><li><a href="/shop.html#individual-gifts">Individual Gifts</a></li><li class="has-sub"><a href="/shop.html#wax-melts">Wax Melt Home Living</a><ul class="sub-drop"><li><a href="/shop.html#wax-melt-bouquets">Wax Melt Bouquets</a></li><li><a href="/shop.html#wax-melt-burners">Wax Melt Burners</a></li><li><a href="/shop.html#wax-melt-selections">Selections ✨</a></li><li><a href="/shop.html#wax-melt-hearts">5 Hearts in a Box</a></li></ul></li></ul></li>
         <li><a href="/gift-builder.html">Gift Builder</a></li>
-        <li ><a href="/wellness.html">Wellness</a></li>
+        <li><a href="/wellness.html">Wellness</a></li>
         <li><a href="/scent-finder.html">Scent Finder</a></li>
-        <li><a href="/about.html">About</a></li>
-        <li><a href="/contact.html">Contact Us</a></li>
+        <li ><a href="/about.html">About</a></li>
+        <li class='active'><a href="/contact.html">Contact Us</a></li>
       </ul>
     </nav>
     <div class="mobile-nav" id="mob-nav">
@@ -115,26 +143,87 @@
       <a href="/contact.html">Contact Us</a>
     </div>
   </header>
-  <div class="breadcrumb"><a href="/home.html">Home</a> &rsaquo; Gift Builder</div>
-  <div class="page-content">
-    <script>
-window.addEventListener('message', function(e) {
-  if (!e.data || !e.data.type) return;
-  var iframe = document.querySelector('iframe[src*="craftymousegifts.github.io"]');
-  if (!iframe) return;
-  if (e.data.type === 'cmg-scroll-top') {
-    window.scrollTo({top: iframe.offsetTop - 20, behavior: 'smooth'});
-  }
-});
-</script>
-<iframe
-  src="https://craftymousegifts.github.io/craftymouse-gifts/"
-  width="100%"
-  height="2500px"
-  frameborder="0"
-  style="border:none;border-radius:8px;overflow:hidden;">
-</iframe>
+  <div class="breadcrumb"><a href="/home.html">Home</a> &rsaquo; Contact Us</div>
+
+  <div class="contact-hero">
+    <h1>Get in Touch</h1>
+    <p>We'd love to hear from you — whether it's a question about an order, a custom request or just to say hello!</p>
   </div>
+
+  <div class="contact-body">
+    <div class="contact-info">
+      <h2>How to Reach Us</h2>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📧</div>
+        <div class="contact-detail-text">
+          <h4>Email</h4>
+          <p><a href="mailto:craftymousegifts@gmail.com">craftymousegifts@gmail.com</a></p>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📍</div>
+        <div class="contact-detail-text">
+          <h4>Location</h4>
+          <p>Scottish Borders, Scotland, UK</p>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">⏰</div>
+        <div class="contact-detail-text">
+          <h4>Response Time</h4>
+          <p>We aim to reply within 24–48 hours.</p>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">🚚</div>
+        <div class="contact-detail-text">
+          <h4>Dispatch Time</h4>
+          <p>Orders dispatched within 3–5 working days.</p>
+        </div>
+      </div>
+      <div class="social-contact">
+        <h4>Follow Us</h4>
+        <div class="social-contact-links">
+          <a href="https://www.facebook.com/share/1C1mTyJjAo/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="https://www.instagram.com/crafty_mouse_gifts" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg></a>
+          <a href="https://www.tiktok.com/@crafty.mouse" target="_blank" rel="noopener" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.37 6.37 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.53V6.75a4.85 4.85 0 01-1.03-.06z"/></svg></a>
+          <a href="https://www.youtube.com/@CraftyMouseGifts1" target="_blank" rel="noopener" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon fill="#fff" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <h2>Send a Message</h2>
+      <form id="contact-form" action="https://formspree.io/f/craftymousegifts" method="POST">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="Michaela Feeley" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="hello@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <select id="subject" name="subject">
+            <option value="General Enquiry">General Enquiry</option>
+            <option value="Order Query">Order Query</option>
+            <option value="Custom Gift Request">Custom Gift Request</option>
+            <option value="Wholesale Enquiry">Wholesale Enquiry</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Your message here..." required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send Message</button>
+        <p class="form-note">All fields are required. Please click send once only.</p>
+        <div class="success-msg" id="success-msg">✅ Thank you! Your message has been sent. We'll be in touch within 24–48 hours.</div>
+      </form>
+    </div>
+  </div>
+
   <footer>
     <div class="footer-grid">
       <div class="footer-brand">
@@ -181,5 +270,21 @@ window.addEventListener('message', function(e) {
       </div>
     </div>
   </footer>
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const form = this;
+      const data = new FormData(form);
+      fetch(form.action, { method: 'POST', body: data, headers: {'Accept': 'application/json'} })
+        .then(r => {
+          if (r.ok) {
+            form.reset();
+            document.getElementById('success-msg').style.display = 'block';
+          }
+        }).catch(() => {
+          window.location.href = 'mailto:craftymousegifts@gmail.com';
+        });
+    });
+  </script>
 </body>
 </html>

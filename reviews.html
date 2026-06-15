@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Build your own personalised gift from Crafty Mouse Gifts — choose your candles, wax melts and extras.">
-  <title>Gift Builder | Crafty Mouse Gifts</title>
+  <meta name="description" content="Read what our customers say about Crafty Mouse Gifts — handmade candles and gifts from the Scottish Borders.">
+  <title>Reviews | Crafty Mouse Gifts</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
+    
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{--blush:#f3e8e6;--blush-mid:#edddd9;--blush-dark:#d9c9c5;--rose:#e46d69;--charcoal:#1e1e1e;--mid:#555;--light:#faf5f3;--white:#fff;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Lato',Arial,sans-serif;}
+    :root{--blush:#f3e8e6;--blush-mid:#edddd9;--blush-dark:#d9c9c5;--rose:#e46d69;--rose-dark:#c4524e;--charcoal:#1e1e1e;--mid:#555;--light:#faf5f3;--white:#fff;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Lato',Arial,sans-serif;}
     html{scroll-behavior:smooth;}
     body{font-family:var(--sans);color:var(--charcoal);background:var(--white);line-height:1.6;}
     a{color:inherit;text-decoration:none;}
@@ -53,7 +54,6 @@
     .mobile-nav a:hover{color:var(--rose);}
     .breadcrumb{padding:12px 32px;font-size:12px;color:var(--mid);border-bottom:1px solid var(--blush);background:var(--light);}
     .breadcrumb a{color:var(--rose);}
-    .page-content{max-width:1200px;margin:0 auto;padding:40px 32px;}
     footer{background:var(--charcoal);color:rgba(255,255,255,.8);padding:48px 32px 24px;margin-top:64px;}
     .footer-grid{max-width:1100px;margin:0 auto 40px;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;}
     .footer-brand img{width:80px;height:80px;border-radius:50%;object-fit:cover;margin-bottom:16px;background:var(--blush);padding:3px;}
@@ -68,8 +68,31 @@
     .footer-bottom p{font-size:12px;opacity:.5;}
     .payment-icons{display:flex;gap:8px;align-items:center;}
     .payment-icons img{height:20px;opacity:.6;filter:brightness(10);}
-    @media(max-width:900px){.nav-list{display:none;}.hamburger{display:flex;}.header-top{padding:10px 20px;}.footer-grid{grid-template-columns:1fr 1fr;}.page-content{padding:24px 20px;}}
+    @media(max-width:900px){.nav-list{display:none;}.hamburger{display:flex;}.header-top{padding:10px 20px;}.footer-grid{grid-template-columns:1fr 1fr;}}
     @media(max-width:480px){.footer-grid{grid-template-columns:1fr;}}
+
+    .reviews-hero { background: var(--blush); padding: 64px 32px; text-align: center; }
+    .reviews-hero h1 { font-family: var(--serif); font-size: clamp(2rem,4vw,3rem); font-weight: 400; margin-bottom: 12px; }
+    .reviews-hero .stars { font-size: 28px; color: #f5c842; margin-bottom: 12px; letter-spacing: 4px; }
+    .reviews-hero p { color: var(--mid); font-size: 15px; }
+    .reviews-body { max-width: 1100px; margin: 0 auto; padding: 64px 32px; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-bottom: 56px; }
+    .review-card { background: var(--white); border: 1px solid var(--blush-dark); border-radius: 4px; padding: 28px 24px; display: flex; flex-direction: column; }
+    .review-stars { color: #f5c842; font-size: 16px; margin-bottom: 12px; letter-spacing: 2px; }
+    .review-text { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: var(--charcoal); line-height: 1.7; flex: 1; margin-bottom: 16px; }
+    .review-author { font-size: 12px; color: var(--mid); letter-spacing: .06em; text-transform: uppercase; }
+    .instagram-section { background: var(--light); border-radius: 4px; padding: 40px; text-align: center; margin-bottom: 40px; }
+    .instagram-section img { width: 100%; max-width: 360px; border-radius: 8px; margin: 0 auto 20px; box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+    .instagram-section h2 { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; margin-bottom: 8px; }
+    .instagram-section p { color: var(--mid); font-size: 14px; margin-bottom: 16px; }
+    .instagram-btn { display: inline-block; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; padding: 12px 28px; border-radius: 4px; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .leave-review { text-align: center; background: var(--blush); padding: 48px 32px; border-radius: 4px; }
+    .leave-review h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 400; margin-bottom: 12px; }
+    .leave-review p { color: var(--mid); font-size: 14px; margin-bottom: 24px; }
+    .leave-review a { display: inline-block; background: var(--charcoal); color: #fff; padding: 13px 32px; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border-radius: 2px; transition: background .2s; }
+    .leave-review a:hover { background: var(--rose); }
+    @media(max-width:900px) { .reviews-grid { grid-template-columns:1fr 1fr; } }
+    @media(max-width:560px) { .reviews-grid { grid-template-columns:1fr; } .reviews-body { padding:40px 20px; } }
   </style>
 </head>
 <body>
@@ -94,12 +117,12 @@
     <nav class="site-nav">
       <ul class="nav-list">
         <li><a href="/home.html">Home</a></li>
-        <li><a href="/shop.html">Shop</a><ul class="dropdown"><li class="has-sub"><a href="/shop.html#candles">Candles</a><ul class="sub-drop"><li><a href="/shop.html#classic-candles">Classic Candles</a></li><li><a href="/shop.html#handmade-candles">Handmade Container &amp; Handpoured</a></li><li><a href="/shop.html#reiki-candles">Reiki Crystal Candles</a></li></ul></li><li><a href="/shop.html#gift-packages">Gift Packages</a></li><li><a href="/shop.html#individual-gifts">Individual Gifts</a></li><li class="has-sub"><a href="/shop.html#wax-melts">Wax Melt Home Living</a><ul class="sub-drop"><li><a href="/shop.html#wax-melt-bouquets">Wax Melt Bouquets</a></li><li><a href="/shop.html#wax-melt-burners">Wax Melt Burners</a></li><li><a href="/shop.html#wax-melt-selections">Selections ✨</a></li><li><a href="/shop.html#wax-melt-hearts">5 Hearts in a Box</a></li></ul></li></ul></li>
+        <li><a href="/shop.html">Shop</a><ul class="dropdown"><li class="has-sub"><a href="/shop.html#candles">Candles</a><ul class="sub-drop"><li><a href="/shop.html#classic-candles">Classic Candles</a></li><li><a href="/shop.html#handmade-candles">Handmade Container</a></li><li><a href="/shop.html#reiki-candles">Reiki Crystal Candles</a></li></ul></li><li><a href="/shop.html#gift-packages">Gift Packages</a></li><li><a href="/shop.html#individual-gifts">Individual Gifts</a></li><li class="has-sub"><a href="/shop.html#wax-melts">Wax Melt Home Living</a><ul class="sub-drop"><li><a href="/shop.html#wax-melt-bouquets">Wax Melt Bouquets</a></li><li><a href="/shop.html#wax-melt-burners">Wax Melt Burners</a></li><li><a href="/shop.html#wax-melt-selections">Selections ✨</a></li><li><a href="/shop.html#wax-melt-hearts">5 Hearts in a Box</a></li></ul></li></ul></li>
         <li><a href="/gift-builder.html">Gift Builder</a></li>
-        <li ><a href="/wellness.html">Wellness</a></li>
+        <li><a href="/wellness.html">Wellness</a></li>
         <li><a href="/scent-finder.html">Scent Finder</a></li>
-        <li><a href="/about.html">About</a></li>
-        <li><a href="/contact.html">Contact Us</a></li>
+        <li ><a href="/about.html">About</a></li>
+        <li ><a href="/contact.html">Contact Us</a></li>
       </ul>
     </nav>
     <div class="mobile-nav" id="mob-nav">
@@ -115,26 +138,69 @@
       <a href="/contact.html">Contact Us</a>
     </div>
   </header>
-  <div class="breadcrumb"><a href="/home.html">Home</a> &rsaquo; Gift Builder</div>
-  <div class="page-content">
-    <script>
-window.addEventListener('message', function(e) {
-  if (!e.data || !e.data.type) return;
-  var iframe = document.querySelector('iframe[src*="craftymousegifts.github.io"]');
-  if (!iframe) return;
-  if (e.data.type === 'cmg-scroll-top') {
-    window.scrollTo({top: iframe.offsetTop - 20, behavior: 'smooth'});
-  }
-});
-</script>
-<iframe
-  src="https://craftymousegifts.github.io/craftymouse-gifts/"
-  width="100%"
-  height="2500px"
-  frameborder="0"
-  style="border:none;border-radius:8px;overflow:hidden;">
-</iframe>
+  <div class="breadcrumb"><a href="/home.html">Home</a> &rsaquo; Reviews</div>
+
+  <div class="reviews-hero">
+    <div class="stars">★★★★★</div>
+    <h1>Customer Reviews</h1>
+    <p>Read what our wonderful customers have to say about their Crafty Mouse Gifts experience.</p>
   </div>
+
+  <div class="reviews-body">
+
+    <div class="instagram-section">
+      <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21821131/720x1260.jpeg" alt="Customer review from Instagram">
+      <h2>Love from Instagram 💕</h2>
+      <p>Our customers share their unboxing moments and reviews on Instagram — follow us to see the latest!</p>
+      <a href="https://www.instagram.com/crafty_mouse_gifts" target="_blank" rel="noopener" class="instagram-btn">Follow @crafty_mouse_gifts</a>
+    </div>
+
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Presents are beautiful and such nice packaging thanks again!"</p>
+        <p class="review-author">— Verified Customer</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Just received my amazing order. The items are perfect, thank you so much, I will definitely be ordering more."</p>
+        <p class="review-author">— Verified Customer</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Thank you so much for my gorgeous keyring, love it and will wear it with pride."</p>
+        <p class="review-author">— Verified Customer</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Love love it, you are soooooo clever Michaela, thank you for allowing me to buy this beautiful bag, you've made my day"</p>
+        <p class="review-author">— Verified Customer</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Just received 5 masks in tartan. Great quality, great service and very well made. Extremely happy. Thank you very much."</p>
+        <p class="review-author">— Verified Customer</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I purchased some cards from CMG and was so pleased with them, the design and quality was amazing. So much nicer to have these unique, quality handmade cards than shop bought ones."</p>
+        <p class="review-author">— Verified Customer</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Very excited to try out my new wax burner and melts from the Crafty Mouse Gifts 🥰 They smell soooooo good and I love all the new packaging too!! Thank you Michaela ❤️"</p>
+        <p class="review-author">— Verified Customer</p>
+      </div>
+    </div>
+
+    <div class="leave-review">
+      <h2>Enjoyed your order?</h2>
+      <p>We'd love to hear from you! Leave us a review and let others know about your experience.</p>
+      <a href="mailto:craftymousegifts@gmail.com?subject=My Review&body=Hi Crafty Mouse Gifts, I'd like to leave a review...">Leave a Review</a>
+    </div>
+
+  </div>
+
   <footer>
     <div class="footer-grid">
       <div class="footer-brand">
