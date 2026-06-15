@@ -874,6 +874,23 @@
         c.style.display = (!q || c.querySelector('h3').textContent.toLowerCase().includes(q)) ? '' : 'none';
       });
     }
+
+    // Force Snipcart to load on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        if (window.LoadSnipcart) {
+          window.LoadSnipcart();
+        }
+      }, 500);
+    });
+
+    // Ensure cart opens on button click
+    document.addEventListener('click', function(e) {
+      const btn = e.target.closest('.btn-cart');
+      if (btn && window.Snipcart) {
+        window.Snipcart.api.cart.open();
+      }
+    });
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
         const t = document.querySelector(a.getAttribute('href'));
