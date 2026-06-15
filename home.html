@@ -55,20 +55,14 @@
 
     /* ── HEADER ── */
     header {
-      background: var(--white);
+      background: var(--blush);
       border-bottom: 1px solid var(--blush-dark);
       position: sticky;
       top: 0;
       z-index: 100;
     }
 
-    .header-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 32px;
-      border-bottom: 1px solid var(--blush);
-    }
+    .header-top { display: flex; align-items: center; justify-content: space-between; padding: 12px 32px; }
 
     .social-links {
       display: flex;
@@ -90,16 +84,7 @@
       text-decoration: none;
     }
 
-    .header-logo img {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: center;
-      background: #f3e8e6;
-      padding: 4px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-    }
+    .logo-link img, .header-logo img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; background: var(--blush); }
 
     .header-actions {
       display: flex;
@@ -723,7 +708,7 @@
       .usp-inner { grid-template-columns: 1fr; }
       .gallery-grid { grid-template-columns: repeat(3, 1fr); }
       .reviews-grid { grid-template-columns: 1fr; }
-      .header-top { padding: 10px 20px; }
+      .header-top { display: flex; align-items: center; justify-content: space-between; padding: 12px 32px; }
     }
 
     @media (max-width: 560px) {
