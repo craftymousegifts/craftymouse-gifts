@@ -3,1065 +3,848 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Handcrafted eco-friendly candles, wax melts and unique gifts made with care, creativity and beautiful fragrance. Shop Crafty Mouse Gifts.">
-  <meta property="og:image" content="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/9/21892313/1000x560.png">
+  <meta name="description" content="Shop handcrafted eco-friendly candles, wax melts and unique gifts from Crafty Mouse Gifts, Scottish Borders.">
   <title>Shop | Crafty Mouse Gifts</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.7.3/default/snipcart.css">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --blush:      #f3e8e6;
-      --blush-mid:  #edddd9;
-      --blush-dark: #d9c9c5;
-      --rose:       #e46d69;
-      --rose-dark:  #c4524e;
-      --charcoal:   #1e1e1e;
-      --mid:        #555555;
-      --light:      #faf5f3;
-      --white:      #ffffff;
-      --serif:      'Cormorant Garamond', Georgia, serif;
-      --sans:       'Lato', Arial, sans-serif;
+      --blush: #f3e8e6; --blush-mid: #edddd9; --blush-dark: #d9c9c5;
+      --rose: #e46d69; --rose-dark: #c4524e; --charcoal: #1e1e1e;
+      --mid: #555; --light: #faf5f3; --white: #fff;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Lato', Arial, sans-serif;
     }
     html { scroll-behavior: smooth; }
-    body { font-family: var(--sans); color: var(--charcoal); background: var(--white); font-size: 15px; line-height: 1.6; }
+    body { font-family: var(--sans); color: var(--charcoal); background: var(--white); line-height: 1.6; }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
 
-    /* ── PROMO BAR ── */
-    .promo-bar { background: var(--charcoal); color: var(--white); text-align: center; font-size: 12px; letter-spacing: 0.08em; padding: 9px 16px; }
+    /* PROMO */
+    .promo { background: var(--charcoal); color: #fff; text-align: center; font-size: 14px; letter-spacing: .06em; padding: 11px 16px; }
 
-    /* ── HEADER ── */
-    header { background: var(--white); border-bottom: 1px solid var(--blush-dark); position: sticky; top: 0; z-index: 100; }
+    /* HEADER */
+    .site-header { background: #fff; border-bottom: 1px solid var(--blush-dark); position: sticky; top: 0; z-index: 100; }
     .header-top { display: flex; align-items: center; justify-content: space-between; padding: 10px 32px; border-bottom: 1px solid var(--blush); }
     .social-links { display: flex; gap: 14px; align-items: center; }
-    .social-links a { color: var(--mid); font-size: 18px; transition: color 0.2s; }
+    .social-links a { color: var(--mid); transition: color .2s; }
     .social-links a:hover { color: var(--rose); }
-    .header-logo img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; object-position: center; image-rendering: -webkit-optimize-contrast; background: #f3e8e6; padding: 3px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .logo-link img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; background: var(--blush); padding: 3px; box-shadow: 0 2px 10px rgba(0,0,0,.12); }
     .header-actions { display: flex; gap: 20px; align-items: center; }
-    .header-actions a { color: var(--mid); font-size: 13px; letter-spacing: 0.04em; transition: color 0.2s; }
+    .header-actions a { color: var(--mid); font-size: 13px; letter-spacing: .04em; transition: color .2s; }
     .header-actions a:hover { color: var(--rose); }
-    .cart-icon { position: relative; cursor: pointer; color: var(--mid); }
-    .cart-count { position: absolute; top: -6px; right: -8px; background: var(--rose); color: var(--white); font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
-
-    /* ── NAV ── */
-    nav { background: var(--white); }
-    .nav-inner { display: flex; align-items: center; justify-content: center; padding: 0 32px; flex-wrap: wrap; }
-    .nav-item { position: relative; }
-    .nav-item > a { display: block; padding: 14px 16px; font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--charcoal); transition: color 0.2s; white-space: nowrap; }
-    .nav-item > a:hover, .nav-item:hover > a { color: var(--rose); }
-    .nav-item.active > a { color: var(--rose); border-bottom: 2px solid var(--rose); }
-    .dropdown { display: none; position: absolute; top: 100%; left: 0; background: var(--white); border: 1px solid var(--blush-dark); border-top: 2px solid var(--rose); min-width: 220px; z-index: 200; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
-    .nav-item:hover .dropdown { display: block; }
-    .dropdown a { display: block; padding: 10px 18px; font-size: 13px; color: var(--mid); border-bottom: 1px solid var(--blush); transition: background 0.15s, color 0.15s; }
-    .dropdown a:last-child { border-bottom: none; }
-    .dropdown a:hover { background: var(--light); color: var(--rose); }
-    .sub-dropdown { display: none; position: absolute; top: 0; left: 100%; background: var(--white); border: 1px solid var(--blush-dark); border-top: 2px solid var(--rose); min-width: 200px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
-    .dropdown .has-sub:hover .sub-dropdown { display: block; }
-    .has-sub { position: relative; }
-    .has-sub > a::after { content: ' ›'; }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 10px; }
+    .cart-btn { background: none; border: none; cursor: pointer; color: var(--mid); position: relative; display: flex; align-items: center; padding: 0; transition: color .2s; }
+    .cart-btn:hover { color: var(--rose); }
+    .snipcart-items-count { position: absolute; top: -6px; right: -8px; background: var(--rose); color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 6px; }
     .hamburger span { display: block; width: 24px; height: 2px; background: var(--charcoal); border-radius: 2px; }
 
-    /* ── BREADCRUMB ── */
-    .breadcrumb { padding: 14px 32px; font-size: 12px; color: var(--mid); border-bottom: 1px solid var(--blush); background: var(--light); }
+    /* NAV */
+    .site-nav { background: #fff; }
+    .nav-list { display: flex; align-items: center; justify-content: center; list-style: none; padding: 0 32px; flex-wrap: wrap; }
+    .nav-list > li { position: relative; }
+    .nav-list > li > a { display: block; padding: 14px 16px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--charcoal); transition: color .2s; white-space: nowrap; }
+    .nav-list > li > a:hover, .nav-list > li.active > a { color: var(--rose); }
+    .nav-list > li.active > a { border-bottom: 2px solid var(--rose); }
+    .dropdown { display: none; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid var(--blush-dark); border-top: 2px solid var(--rose); min-width: 220px; z-index: 200; box-shadow: 0 4px 16px rgba(0,0,0,.08); list-style: none; }
+    .nav-list > li:hover .dropdown { display: block; }
+    .dropdown li a { display: block; padding: 10px 18px; font-size: 13px; color: var(--mid); border-bottom: 1px solid var(--blush); transition: background .15s, color .15s; }
+    .dropdown li:last-child a { border-bottom: none; }
+    .dropdown li a:hover { background: var(--light); color: var(--rose); }
+    .has-sub { position: relative; }
+    .has-sub > a::after { content: ' ›'; }
+    .sub-drop { display: none; position: absolute; top: 0; left: 100%; background: #fff; border: 1px solid var(--blush-dark); border-top: 2px solid var(--rose); min-width: 200px; list-style: none; box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+    .has-sub:hover .sub-drop { display: block; }
+    .sub-drop li a { display: block; padding: 10px 18px; font-size: 13px; color: var(--mid); border-bottom: 1px solid var(--blush); }
+    .sub-drop li a:hover { background: var(--light); color: var(--rose); }
+
+    /* MOBILE NAV */
+    .mobile-nav { display: none; background: #fff; border-top: 1px solid var(--blush); }
+    .mobile-nav.open { display: block; }
+    .mobile-nav a { display: block; padding: 11px 28px; font-size: 14px; color: var(--charcoal); border-bottom: 1px solid var(--blush); }
+    .mobile-nav a.sub { padding-left: 44px; font-size: 13px; color: var(--mid); }
+    .mobile-nav a:hover { color: var(--rose); }
+
+    /* BREADCRUMB */
+    .breadcrumb { padding: 12px 32px; font-size: 12px; color: var(--mid); border-bottom: 1px solid var(--blush); background: var(--light); }
     .breadcrumb a { color: var(--rose); }
-    .breadcrumb a:hover { text-decoration: underline; }
 
-    /* ── SHOP HERO ── */
-    .shop-hero { background: var(--blush); padding: 48px 32px; text-align: center; position: relative; overflow: hidden; }
-    .shop-hero::before { content: ''; position: absolute; inset: 0; background: url('https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/9/21892313/1000x560.png') center/cover no-repeat; opacity: 0.18; }
-    .shop-hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
-    .shop-hero h1 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; margin-bottom: 14px; }
-    .shop-hero p { color: var(--mid); font-size: 15px; line-height: 1.7; }
+    /* SHOP HERO */
+    .shop-hero { background: var(--blush); padding: 48px 32px; text-align: center; }
+    .shop-hero h1 { font-family: var(--serif); font-size: clamp(2rem,4vw,3rem); font-weight: 400; margin-bottom: 12px; }
+    .shop-hero p { color: var(--mid); font-size: 14px; max-width: 700px; margin: 0 auto; line-height: 1.7; }
 
-    /* ── SHOP LAYOUT ── */
-    .shop-wrapper { display: grid; grid-template-columns: 220px 1fr; gap: 0; max-width: 1200px; margin: 0 auto; padding: 40px 32px; align-items: start; }
+    /* SHOP LAYOUT */
+    .shop-layout { display: grid; grid-template-columns: 220px 1fr; gap: 0; max-width: 1200px; margin: 0 auto; padding: 40px 32px; align-items: start; }
 
-    /* ── SIDEBAR ── */
-    .shop-sidebar { position: sticky; top: 120px; padding-right: 32px; }
-    .sidebar-title { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--blush-dark); }
-    .sidebar-nav a { display: block; padding: 9px 0; font-size: 13px; color: var(--charcoal); border-bottom: 1px solid var(--blush); transition: color 0.2s, padding 0.2s; }
-    .sidebar-nav a:hover { color: var(--rose); padding-left: 6px; }
-    .sidebar-nav .sidebar-sub a { padding-left: 14px; font-size: 12px; color: var(--mid); }
-    .sidebar-nav .sidebar-sub a:hover { color: var(--rose); padding-left: 20px; }
-    .sidebar-search { margin-bottom: 24px; }
-    .sidebar-search input { width: 100%; padding: 9px 12px; border: 1px solid var(--blush-dark); font-size: 13px; font-family: var(--sans); background: var(--light); color: var(--charcoal); outline: none; }
+    /* SIDEBAR */
+    .sidebar { position: sticky; top: 120px; padding-right: 32px; border-right: 1px solid var(--blush); }
+    .sidebar-search input { width: 100%; padding: 9px 12px; border: 1px solid var(--blush-dark); font-size: 13px; font-family: var(--sans); background: var(--light); color: var(--charcoal); outline: none; margin-bottom: 24px; }
     .sidebar-search input:focus { border-color: var(--rose); }
+    .sidebar-title { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--mid); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--blush-dark); }
+    .sidebar-nav a { display: block; padding: 9px 0; font-size: 13px; color: var(--charcoal); border-bottom: 1px solid var(--blush); transition: color .2s, padding .2s; }
+    .sidebar-nav a:hover { color: var(--rose); padding-left: 6px; }
+    .sidebar-nav a.sub { padding-left: 14px; font-size: 12px; color: var(--mid); }
+    .sidebar-nav a.sub:hover { padding-left: 20px; }
 
-    /* ── SHOP SECTIONS ── */
-    .shop-content { min-width: 0; }
+    /* SHOP CONTENT */
+    .shop-content { padding-left: 32px; min-width: 0; }
     .shop-section { margin-bottom: 56px; }
-    .shop-section:last-child { margin-bottom: 0; }
 
-    /* Category headers */
-    .cat-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--blush); }
-    .cat-header h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 400; margin-bottom: 6px; }
-    .cat-header p { font-size: 13px; color: var(--mid); line-height: 1.6; max-width: 680px; }
-
-    /* Category banner */
-    .cat-banner { position: relative; height: 180px; overflow: hidden; border-radius: 2px; margin-bottom: 28px; }
+    /* CAT BANNER */
+    .cat-banner { position: relative; height: 160px; overflow: hidden; border-radius: 4px; margin-bottom: 24px; }
     .cat-banner img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
-    .cat-banner-text { position: absolute; inset: 0; background: linear-gradient(to right, rgba(30,30,30,0.7) 0%, rgba(30,30,30,0.2) 60%, transparent 100%); display: flex; flex-direction: column; justify-content: center; padding: 24px 32px; color: var(--white); }
-    .cat-banner-text h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 400; margin-bottom: 6px; }
-    .cat-banner-text p { font-size: 13px; opacity: 0.85; max-width: 400px; }
+    .cat-banner-text { position: absolute; inset: 0; background: linear-gradient(to right, rgba(30,30,30,.7) 0%, transparent 70%); display: flex; flex-direction: column; justify-content: center; padding: 24px 28px; color: #fff; }
+    .cat-banner-text h2 { font-family: var(--serif); font-size: 1.7rem; font-weight: 400; margin-bottom: 4px; }
+    .cat-banner-text p { font-size: 13px; opacity: .85; max-width: 380px; }
+    .section-label { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--rose); background: var(--blush); padding: 4px 10px; margin-bottom: 16px; border-radius: 2px; }
+    .section-gap { margin-top: 40px; }
 
-    /* Section divider label */
-    .section-label { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rose); background: var(--blush); padding: 4px 10px; margin-bottom: 16px; }
+    /* PRODUCT GRID */
+    .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
-    /* ── PRODUCT GRID ── */
-    .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-
-    /* ── PRODUCT CARD ── */
-    .product-card { background: var(--white); border: 1px solid var(--blush-dark); border-radius: 4px; overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; display: flex; flex-direction: column; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-    .product-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
-    .product-img-wrap { position: relative; aspect-ratio: 1; overflow: hidden; background: var(--light); }
-    .product-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
-    .product-card:hover .product-img-wrap img { transform: scale(1.05); }
-    .product-badge { position: absolute; top: 10px; left: 10px; background: var(--rose); color: var(--white); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; z-index: 1; }
-    .product-info { padding: 14px; flex: 1; display: flex; flex-direction: column; }
-    .product-info h3 { font-family: var(--serif); font-size: 1rem; font-weight: 500; margin-bottom: 5px; line-height: 1.3; }
-    .product-info h3 a:hover { color: var(--rose); }
-    .product-desc { font-size: 12px; color: var(--mid); line-height: 1.5; flex: 1; margin-bottom: 12px; }
-    .product-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; }
-    .product-price { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--charcoal); }
-    .btn-cart { background: var(--charcoal); color: var(--white); border: none; padding: 8px 14px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; font-family: var(--sans); transition: background 0.2s; white-space: nowrap; }
+    /* PRODUCT CARD */
+    .product-card { background: var(--white); border: 1px solid var(--blush-dark); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; transition: box-shadow .2s, transform .2s; }
+    .product-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.1); transform: translateY(-2px); }
+    .product-img { height: 220px; overflow: hidden; background: var(--light); }
+    .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .product-card:hover .product-img img { transform: scale(1.05); }
+    .product-info { padding: 14px; display: flex; flex-direction: column; flex: 1; }
+    .product-info h3 { font-family: var(--serif); font-size: 1rem; font-weight: 500; margin-bottom: 5px; line-height: 1.3; color: var(--charcoal); }
+    .desc { font-size: 12px; color: var(--mid); line-height: 1.5; flex: 1; margin-bottom: 12px; }
+    .footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; }
+    .price { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; }
+    .btn-cart { background: var(--charcoal); color: #fff; border: none; padding: 8px 12px; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; font-family: var(--sans); transition: background .2s; white-space: nowrap; border-radius: 2px; }
     .btn-cart:hover { background: var(--rose); }
 
-    /* ── FOOTER ── */
-    footer { background: var(--charcoal); color: rgba(255,255,255,0.8); padding: 48px 32px 24px; margin-top: 64px; }
-    .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-    .footer-brand img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 16px; opacity: 0.9; background: #f3e8e6; padding: 3px; }
-    .footer-brand p { font-size: 13px; line-height: 1.7; opacity: 0.7; margin-bottom: 16px; }
+    /* FOOTER */
+    .site-footer { background: var(--charcoal); color: rgba(255,255,255,.8); padding: 48px 32px 24px; margin-top: 64px; }
+    .footer-grid { max-width: 1100px; margin: 0 auto 40px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; }
+    .footer-brand img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 16px; background: var(--blush); padding: 3px; }
+    .footer-brand p { font-size: 13px; line-height: 1.7; opacity: .7; margin-bottom: 16px; }
     .footer-social { display: flex; gap: 12px; }
-    .footer-social a { color: rgba(255,255,255,0.6); font-size: 16px; transition: color 0.2s; }
-    .footer-social a:hover { color: var(--white); }
-    .footer-col h5 { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white); margin-bottom: 16px; }
-    .footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 8px; transition: color 0.2s; }
-    .footer-col a:hover { color: var(--white); }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; max-width: 1100px; margin: 0 auto; }
-    .footer-bottom p { font-size: 12px; opacity: 0.5; }
-    .payment-icons { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    .payment-icons img { height: 20px; opacity: 0.6; filter: brightness(10); }
+    .footer-social a { color: rgba(255,255,255,.6); transition: color .2s; }
+    .footer-social a:hover { color: #fff; }
+    .footer-col h5 { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #fff; margin-bottom: 16px; }
+    .footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,.65); margin-bottom: 8px; transition: color .2s; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.1); padding-top: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; max-width: 1100px; margin: 0 auto; }
+    .footer-bottom p { font-size: 12px; opacity: .5; }
+    .payment-icons { display: flex; gap: 8px; align-items: center; }
+    .payment-icons img { height: 20px; opacity: .6; filter: brightness(10); }
 
-    /* ── MOBILE NAV ── */
-    .mobile-menu { display: none; background: var(--white); border-top: 1px solid var(--blush); padding: 16px 0; }
-    .mobile-menu.open { display: block; }
-    .mobile-menu a { display: block; padding: 11px 28px; font-size: 14px; color: var(--charcoal); border-bottom: 1px solid var(--blush); }
-    .mobile-menu a:hover { color: var(--rose); }
-    .mobile-menu .mobile-sub a { padding-left: 44px; font-size: 13px; color: var(--mid); }
+    /* SNIPCART */
+    #snipcart { --color-default: #1e1e1e; --color-alt: #e46d69; --color-badge-active: #e46d69; }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .nav-inner { display: none; }
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .nav-list { display: none; }
       .hamburger { display: flex; }
-      .shop-wrapper { grid-template-columns: 1fr; padding: 24px 20px; }
-      .shop-sidebar { display: none; }
+      .shop-layout { grid-template-columns: 1fr; padding: 24px 20px; }
+      .sidebar { display: none; }
+      .shop-content { padding-left: 0; }
       .product-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-      .footer-inner { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .header-top { padding: 10px 20px; }
     }
     @media (max-width: 480px) {
-      .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-      .btn-cart { padding: 7px 10px; font-size: 10px; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .product-img { height: 160px; }
+      .btn-cart { padding: 7px 8px; font-size: 10px; }
+      .footer-grid { grid-template-columns: 1fr; }
     }
-
-    /* Snipcart overrides */
-    #snipcart { --color-default: #1e1e1e; --color-alt: #e46d69; --color-badge-active: #e46d69; }
-    .cart-btn { background: none; border: none; cursor: pointer; color: var(--mid); position: relative; transition: color 0.2s; padding: 0; display: flex; align-items: center; }
-    .cart-btn:hover { color: var(--rose); }
-    .snipcart-items-count { position: absolute; top: -6px; right: -8px; background: var(--rose); color: var(--white); font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: var(--sans); }
   </style>
-  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.7.3/default/snipcart.css">
 </head>
 <body>
 
-  <div class="promo-bar">
-    10% off your first order – use code <strong>WELCOME10</strong> &nbsp;•&nbsp; Free UK Delivery on orders over £30
-  </div>
+  <div class="promo">10% off your first order – use code <strong>WELCOME10</strong> &nbsp;•&nbsp; Free UK Delivery on orders over £30</div>
 
-  <header>
+  <header class="site-header">
     <div class="header-top">
       <div class="social-links">
-        <a href="https://www.facebook.com/share/1C1mTyJjAo/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-        </a>
-        <a href="mailto:craftymousegifts@gmail.com" aria-label="Email">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
-        </a>
-        <a href="https://www.instagram.com/crafty_mouse_gifts" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
-        </a>
-        <a href="https://www.youtube.com/@CraftyMouseGifts1" target="_blank" rel="noopener" aria-label="YouTube">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon fill="#fff" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
-        </a>
-        <a href="https://www.tiktok.com/@crafty.mouse" target="_blank" rel="noopener" aria-label="TikTok">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.37 6.37 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.53V6.75a4.85 4.85 0 01-1.03-.06z"/></svg>
-        </a>
+        <a href="https://www.facebook.com/share/1C1mTyJjAo/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+        <a href="mailto:craftymousegifts@gmail.com" aria-label="Email"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></a>
+        <a href="https://www.instagram.com/crafty_mouse_gifts" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg></a>
+        <a href="https://www.youtube.com/@CraftyMouseGifts1" target="_blank" rel="noopener" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon fill="#fff" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+        <a href="https://www.tiktok.com/@crafty.mouse" target="_blank" rel="noopener" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.37 6.37 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.53V6.75a4.85 4.85 0 01-1.03-.06z"/></svg></a>
       </div>
-      <a href="/" class="header-logo">
-        <img src="/logo.png" alt="Crafty Mouse Gifts">
-      </a>
+      <a href="/home.html" class="logo-link"><img src="/logo.png" alt="Crafty Mouse Gifts"></a>
       <div class="header-actions">
-        <a href="/reviews">Reviews</a>
-        <a href="/account">Account</a>
-        <button class="cart-btn snipcart-checkout" aria-label="Open basket">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-          <span class="snipcart-items-count"></span>
-        </button>
-        <div class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <a href="/reviews.html">Reviews</a>
+        <a href="/account.html">Account</a>
+        <button class="cart-btn snipcart-checkout" aria-label="Open basket"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span class="snipcart-items-count"></span></button>
+        <button class="hamburger" onclick="document.getElementById('mob-nav').classList.toggle('open')" aria-label="Menu">
           <span></span><span></span><span></span>
-        </div>
+        </button>
       </div>
     </div>
-    <nav>
-      <div class="nav-inner">
-        <div class="nav-item"><a href="/">Home</a></div>
-        <div class="nav-item active">
-          <a href="/shop">Shop</a>
-          <div class="dropdown">
-            <div class="has-sub"><a href="/shop/candles">Candles</a>
-              <div class="sub-dropdown">
-                <a href="/shop/candles/classic">Classic Candles</a>
-                <a href="/shop/candles/handmade">Handmade Container &amp; Handpoured</a>
-                <a href="/shop/candles/reiki">Reiki Crystal Candles</a>
-              </div>
-            </div>
-            <a href="/shop/gift-packages">Gift Packages</a>
-            <div class="has-sub"><a href="/shop/individual-gifts">Individual Gifts</a>
-              <div class="sub-dropdown">
-                <a href="/shop/individual-gifts/fridge-magnets">Fridge Magnets</a>
-                <a href="/shop/individual-gifts/hamsa">Hamsa Tealight Holder</a>
-                <a href="/shop/individual-gifts/keyring">OceanKind Keyring</a>
-              </div>
-            </div>
-            <div class="has-sub"><a href="/shop/wax-melts">Wax Melt Home Living</a>
-              <div class="sub-dropdown">
-                <a href="/shop/wax-melts/bouquets">Wax Melt Bouquets</a>
-                <a href="/shop/wax-melts/burners">Wax Melt Burners</a>
-                <a href="/shop/wax-melts/selections">Wax Melt Selections ✨</a>
-                <a href="/shop/wax-melts/hearts">Wax Melts 5 Hearts in a Box</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="nav-item"><a href="/gift-builder">Gift Builder</a></div>
-        <div class="nav-item"><a href="/wellness">Wellness</a></div>
-        <div class="nav-item"><a href="/scent-finder">Scent Finder</a></div>
-        <div class="nav-item"><a href="/about">About</a></div>
-        <div class="nav-item"><a href="/contact">Contact Us</a></div>
-      </div>
+    <nav class="site-nav">
+      <ul class="nav-list">
+        <li><a href="/home.html">Home</a></li>
+        <li class="active">
+          <a href="/shop.html">Shop</a>
+          <ul class="dropdown">
+            <li class="has-sub"><a href="#candles">Candles</a>
+              <ul class="sub-drop">
+                <li><a href="#classic-candles">Classic Candles</a></li>
+                <li><a href="#handmade-candles">Handmade Container &amp; Handpoured</a></li>
+                <li><a href="#reiki-candles">Reiki Crystal Candles</a></li>
+              </ul>
+            </li>
+            <li><a href="#gift-packages">Gift Packages</a></li>
+            <li><a href="#individual-gifts">Individual Gifts</a></li>
+            <li class="has-sub"><a href="#wax-melts">Wax Melt Home Living</a>
+              <ul class="sub-drop">
+                <li><a href="#wax-melt-bouquets">Wax Melt Bouquets</a></li>
+                <li><a href="#wax-melt-burners">Wax Melt Burners</a></li>
+                <li><a href="#wax-melt-selections">Selections ✨ Bestseller</a></li>
+                <li><a href="#wax-melt-hearts">5 Hearts in a Box</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="/gift-builder.html">Gift Builder</a></li>
+        <li><a href="/wellness.html">Wellness</a></li>
+        <li><a href="/scent-finder.html">Scent Finder</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/contact.html">Contact Us</a></li>
+      </ul>
     </nav>
-    <div class="mobile-menu" id="mobile-menu">
-      <a href="/">Home</a>
-      <a href="/shop">Shop</a>
-      <div class="mobile-sub">
-        <a href="/shop/candles">— Candles</a>
-        <a href="/shop/gift-packages">— Gift Packages</a>
-        <a href="/shop/individual-gifts">— Individual Gifts</a>
-        <a href="/shop/wax-melts">— Wax Melt Home Living</a>
-      </div>
-      <a href="/gift-builder">Gift Builder</a>
-      <a href="/wellness">Wellness</a>
-      <a href="/scent-finder">Scent Finder</a>
-      <a href="/about">About</a>
-      <a href="/contact">Contact Us</a>
+    <div class="mobile-nav" id="mob-nav">
+      <a href="/home.html">Home</a>
+      <a href="/shop.html">Shop</a>
+      <a href="#candles" class="sub">— Candles</a>
+      <a href="#gift-packages" class="sub">— Gift Packages</a>
+      <a href="#individual-gifts" class="sub">— Individual Gifts</a>
+      <a href="#wax-melts" class="sub">— Wax Melt Home Living</a>
+      <a href="/gift-builder.html">Gift Builder</a>
+      <a href="/wellness.html">Wellness</a>
+      <a href="/scent-finder.html">Scent Finder</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact Us</a>
     </div>
   </header>
 
-  <div class="breadcrumb">
-    <a href="/">Home</a> &rsaquo; Shop
-  </div>
+  <div class="breadcrumb"><a href="/home.html">Home</a> &rsaquo; Shop</div>
 
   <div class="shop-hero">
-    <div class="shop-hero-inner">
-      <h1>Shop</h1>
-      <p>Handcrafted eco-friendly candles, wax melts and unique gifts made with care, creativity and beautiful fragrance.<br>Each product is carefully hand-poured and individually crafted, reflecting the time, attention and dedication that goes into every piece.</p>
-    </div>
+    <h1>Shop</h1>
+    <p>Handcrafted eco-friendly candles, wax melts and unique gifts made with care, creativity and beautiful fragrance. Each product is carefully hand-poured and individually crafted in the Scottish Borders.</p>
   </div>
 
-  <div class="shop-wrapper">
-
-    <!-- SIDEBAR -->
-    <aside class="shop-sidebar">
+  <div class="shop-layout">
+    <aside class="sidebar">
       <div class="sidebar-search">
-        <input type="text" placeholder="Search the shop..." id="shop-search" oninput="filterProducts(this.value)">
+        <input type="text" placeholder="Search the shop..." oninput="filterProducts(this.value)">
       </div>
       <p class="sidebar-title">Categories</p>
       <nav class="sidebar-nav">
         <a href="#candles">Candles</a>
-        <div class="sidebar-sub">
-          <a href="#classic-candles">Classic Candles</a>
-          <a href="#handmade-candles">Handmade Container</a>
-          <a href="#reiki-candles">Reiki Crystal Candles</a>
-        </div>
+        <a href="#classic-candles" class="sub">Classic Candles</a>
+        <a href="#handmade-candles" class="sub">Handmade Container</a>
+        <a href="#reiki-candles" class="sub">Reiki Crystal Candles</a>
         <a href="#gift-packages">Gift Packages</a>
         <a href="#individual-gifts">Individual Gifts</a>
         <a href="#wax-melts">Wax Melt Home Living</a>
-        <div class="sidebar-sub">
-          <a href="#wax-melt-bouquets">Wax Melt Bouquets</a>
-          <a href="#wax-melt-burners">Wax Melt Burners</a>
-          <a href="#wax-melt-selections">Selections ✨ Bestseller</a>
-          <a href="#wax-melt-hearts">5 Hearts in a Box</a>
-        </div>
+        <a href="#wax-melt-bouquets" class="sub">Wax Melt Bouquets</a>
+        <a href="#wax-melt-burners" class="sub">Wax Melt Burners</a>
+        <a href="#wax-melt-selections" class="sub">Selections ✨ Bestseller</a>
+        <a href="#wax-melt-hearts" class="sub">5 Hearts in a Box</a>
       </nav>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <main class="shop-content">
 
-      <!-- CANDLES SECTION -->
       <section class="shop-section" id="candles">
         <div class="cat-banner">
           <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820557/1536x1024.png" alt="Candles">
-          <div class="cat-banner-text">
-            <h2>Candles</h2>
-            <p>Hand-poured soy candles made with natural fragrance oils in the Scottish Borders.</p>
-          </div>
+          <div class="cat-banner-text"><h2>Candles</h2><p>Hand-poured soy candles made with natural fragrance oils in the Scottish Borders.</p></div>
         </div>
-
-        <div class="section-label">Classic Candles</div>
-        <div class="product-grid" id="classic-candles">
+        <p class="section-label" id="classic-candles">Classic Candles</p>
+              <div class="product-grid">
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677047/1369x1825.png" alt="Autumn Emporium" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677047/1369x1825.png" alt="Autumn Emporium" loading="lazy"></div>
           <div class="product-info">
             <h3>Autumn Emporium</h3>
-            <p class="product-desc">Autumn Emporium Soy Wax Candle</p>
-            <div class="product-footer">
-              <span class="product-price">£16.00</span>
+            <p class="desc">Autumn Emporium Soy Wax Candle</p>
+            <div class="footer">
+              <span class="price">£16.00</span>
               <button class="btn-cart snipcart-add-item" data-item-id="autumn-emporium" data-item-name="Autumn Emporium" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677047/1369x1825.png" data-item-description="Autumn Emporium Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677030/1369x1825.png" alt="Snowflake Kisses" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677030/1369x1825.png" alt="Snowflake Kisses" loading="lazy"></div>
           <div class="product-info">
             <h3>Snowflake Kisses</h3>
-            <p class="product-desc">Snowflake Kisses Soy Wax Candle</p>
-            <div class="product-footer">
-              <span class="product-price">£16.00</span>
+            <p class="desc">Snowflake Kisses Soy Wax Candle</p>
+            <div class="footer">
+              <span class="price">£16.00</span>
               <button class="btn-cart snipcart-add-item" data-item-id="snowflake-kisses" data-item-name="Snowflake Kisses" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677030/1369x1825.png" data-item-description="Snowflake Kisses Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677026/1369x1825.png" alt="Cinnamon Bark & White Ginger" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677026/1369x1825.png" alt="Cinnamon Bark & White Ginger" loading="lazy"></div>
           <div class="product-info">
             <h3>Cinnamon Bark & White Ginger</h3>
-            <p class="product-desc">Cinnamon Bark & White Ginger Soy Wax Candle</p>
-            <div class="product-footer">
-              <span class="product-price">£16.00</span>
+            <p class="desc">Cinnamon Bark & White Ginger Soy Wax Candle</p>
+            <div class="footer">
+              <span class="price">£16.00</span>
               <button class="btn-cart snipcart-add-item" data-item-id="cinnamon-bark-white-ginger" data-item-name="Cinnamon Bark & White Ginger" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677026/1369x1825.png" data-item-description="Cinnamon Bark & White Ginger Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677017/1825x1369.png" alt="Cosmic Plum & Saffron" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677017/1825x1369.png" alt="Cosmic Plum & Saffron" loading="lazy"></div>
           <div class="product-info">
             <h3>Cosmic Plum & Saffron</h3>
-            <p class="product-desc">Cosmic Plum & Saffron Soy Wax Candle</p>
-            <div class="product-footer">
-              <span class="product-price">£16.00</span>
+            <p class="desc">Cosmic Plum & Saffron Soy Wax Candle</p>
+            <div class="footer">
+              <span class="price">£16.00</span>
               <button class="btn-cart snipcart-add-item" data-item-id="cosmic-plum-saffron" data-item-name="Cosmic Plum & Saffron" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677017/1825x1369.png" data-item-description="Cosmic Plum & Saffron Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677015/1825x1369.png" alt="Crimson Berry & Clementine" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677015/1825x1369.png" alt="Crimson Berry & Clementine" loading="lazy"></div>
           <div class="product-info">
             <h3>Crimson Berry & Clementine</h3>
-            <p class="product-desc">Crimson Berry & Clementine Soy Wax Candle</p>
-            <div class="product-footer">
-              <span class="product-price">£16.00</span>
+            <p class="desc">Crimson Berry & Clementine Soy Wax Candle</p>
+            <div class="footer">
+              <span class="price">£16.00</span>
               <button class="btn-cart snipcart-add-item" data-item-id="crimson-berry-clementine" data-item-name="Crimson Berry & Clementine" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677015/1825x1369.png" data-item-description="Crimson Berry & Clementine Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676959/1825x1369.png" alt="Meditation" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676959/1825x1369.png" alt="Meditation" loading="lazy"></div>
           <div class="product-info">
             <h3>Meditation</h3>
-            <p class="product-desc">Meditation Soy Wax Candle</p>
-            <div class="product-footer">
-              <span class="product-price">£16.00</span>
+            <p class="desc">Meditation Soy Wax Candle</p>
+            <div class="footer">
+              <span class="price">£16.00</span>
               <button class="btn-cart snipcart-add-item" data-item-id="meditation" data-item-name="Meditation" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676959/1825x1369.png" data-item-description="Meditation Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676956/1825x1369.png" alt="Me Time" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676956/1825x1369.png" alt="Me Time" loading="lazy"></div>
           <div class="product-info">
             <h3>Me Time</h3>
-            <p class="product-desc">Me Time Soy Wax Candle</p>
-            <div class="product-footer">
-              <span class="product-price">£16.00</span>
+            <p class="desc">Me Time Soy Wax Candle</p>
+            <div class="footer">
+              <span class="price">£16.00</span>
               <button class="btn-cart snipcart-add-item" data-item-id="me-time" data-item-name="Me Time" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676956/1825x1369.png" data-item-description="Me Time Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676941/1825x1369.png" alt="Recharge Black Pepper" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676941/1825x1369.png" alt="Recharge Black Pepper" loading="lazy"></div>
           <div class="product-info">
             <h3>Recharge Black Pepper</h3>
-            <p class="product-desc">Recharge Black Pepper Soy Wax Candle</p>
-            <div class="product-footer">
-              <span class="product-price">£16.00</span>
+            <p class="desc">Recharge Black Pepper Soy Wax Candle</p>
+            <div class="footer">
+              <span class="price">£16.00</span>
               <button class="btn-cart snipcart-add-item" data-item-id="recharge-black-pepper" data-item-name="Recharge Black Pepper" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676941/1825x1369.png" data-item-description="Recharge Black Pepper Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676938/1825x1369.png" alt="Birthday Cake" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676938/1825x1369.png" alt="Birthday Cake" loading="lazy"></div>
           <div class="product-info">
             <h3>Birthday Cake</h3>
-            <p class="product-desc">Birthday Cake Soy Wax Candle</p>
-            <div class="product-footer">
-              <span class="product-price">£16.00</span>
+            <p class="desc">Birthday Cake Soy Wax Candle</p>
+            <div class="footer">
+              <span class="price">£16.00</span>
               <button class="btn-cart snipcart-add-item" data-item-id="birthday-cake" data-item-name="Birthday Cake" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676938/1825x1369.png" data-item-description="Birthday Cake Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676935/1825x1369.png" alt="Pink Rhubarb" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676935/1825x1369.png" alt="Pink Rhubarb" loading="lazy"></div>
           <div class="product-info">
             <h3>Pink Rhubarb</h3>
-            <p class="product-desc">Pink Rhubarb Soy Wax Candle</p>
-            <div class="product-footer">
-              <span class="product-price">£16.00</span>
+            <p class="desc">Pink Rhubarb Soy Wax Candle</p>
+            <div class="footer">
+              <span class="price">£16.00</span>
               <button class="btn-cart snipcart-add-item" data-item-id="pink-rhubarb" data-item-name="Pink Rhubarb" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676935/1825x1369.png" data-item-description="Pink Rhubarb Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676920/1825x1369.png" alt="Shimmering Star" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676920/1825x1369.png" alt="Shimmering Star" loading="lazy"></div>
           <div class="product-info">
             <h3>Shimmering Star</h3>
-            <p class="product-desc">Shimmering Star Soy Wax Candle</p>
-            <div class="product-footer">
-              <span class="product-price">£16.00</span>
+            <p class="desc">Shimmering Star Soy Wax Candle</p>
+            <div class="footer">
+              <span class="price">£16.00</span>
               <button class="btn-cart snipcart-add-item" data-item-id="shimmering-star" data-item-name="Shimmering Star" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676920/1825x1369.png" data-item-description="Shimmering Star Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676907/1825x1369.png" alt="Charming Oasis" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676907/1825x1369.png" alt="Charming Oasis" loading="lazy"></div>
           <div class="product-info">
             <h3>Charming Oasis</h3>
-            <p class="product-desc">Charming Oasis Soy Wax Candle</p>
-            <div class="product-footer">
-              <span class="product-price">£16.00</span>
+            <p class="desc">Charming Oasis Soy Wax Candle</p>
+            <div class="footer">
+              <span class="price">£16.00</span>
               <button class="btn-cart snipcart-add-item" data-item-id="charming-oasis" data-item-name="Charming Oasis" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676907/1825x1369.png" data-item-description="Charming Oasis Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676904/1825x1369.png" alt="Intergalactic" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676904/1825x1369.png" alt="Intergalactic" loading="lazy"></div>
           <div class="product-info">
             <h3>Intergalactic</h3>
-            <p class="product-desc">Intergalactic Soy Wax Candle</p>
-            <div class="product-footer">
-              <span class="product-price">£16.00</span>
+            <p class="desc">Intergalactic Soy Wax Candle</p>
+            <div class="footer">
+              <span class="price">£16.00</span>
               <button class="btn-cart snipcart-add-item" data-item-id="intergalactic" data-item-name="Intergalactic" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676904/1825x1369.png" data-item-description="Intergalactic Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21675978/2000x1500.png" alt="Amethyst" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21675978/2000x1500.png" alt="Amethyst" loading="lazy"></div>
           <div class="product-info">
             <h3>Amethyst</h3>
-            <p class="product-desc">Amethyst Soy Wax Candle</p>
-            <div class="product-footer">
-              <span class="product-price">£16.00</span>
+            <p class="desc">Amethyst Soy Wax Candle</p>
+            <div class="footer">
+              <span class="price">£16.00</span>
               <button class="btn-cart snipcart-add-item" data-item-id="amethyst" data-item-name="Amethyst" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21675978/2000x1500.png" data-item-description="Amethyst Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
-        </div>
+      </div>
 
-        <div style="margin-top:40px;"></div>
-        <div class="section-label">Handmade Container &amp; Handpoured</div>
-        <div class="product-grid" id="handmade-candles">
+        <div class="section-gap"></div>
+        <p class="section-label" id="handmade-candles">Handmade Container &amp; Handpoured</p>
+              <div class="product-grid">
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820888/1024x1536.png" alt="Eco-Friendly Jesmonite Candle" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820888/1024x1536.png" alt="Eco-Friendly Jesmonite Candle" loading="lazy"></div>
           <div class="product-info">
             <h3>Eco-Friendly Jesmonite Candle</h3>
-            <p class="product-desc">Handmade eco-friendly Jesmonite container candle, hand-poured in the Scottish Borders.</p>
-            <div class="product-footer">
-              <span class="product-price">£26.99</span>
-              <button class="btn-cart snipcart-add-item" data-item-id="eco-friendly-jesmonite-candle" data-item-name="Eco-Friendly Jesmonite Candle" data-item-price="26.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820888/1024x1536.png" data-item-description="" data-item-custom1-name="Eco-Friendly Jesmonite Candle" data-item-custom1-options="Bergamot & Patchouli|Coconut & Vanilla|Peony & Blush Suede|Rose & Oud|Vanilla & Sandalwood" data-item-custom1-required="true">Add to Basket</button>
+            <p class="desc">Eco-Friendly Jesmonite Candle</p>
+            <div class="footer">
+              <span class="price">£26.99</span>
+              <button class="btn-cart snipcart-add-item" data-item-id="eco-friendly-jesmonite-candle" data-item-name="Eco-Friendly Jesmonite Candle" data-item-price="26.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820888/1024x1536.png" data-item-description="Eco-Friendly Jesmonite Candle" data-item-custom1-name="Eco-Friendly Jesmonite Candle" data-item-custom1-options="Bergamot & Patchouli|Coconut & Vanilla|Peony & Blush Suede|Rose & Oud|Vanilla & Sandalwood" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
-        </div>
+      </div>
 
-        <div style="margin-top:40px;"></div>
-        <div class="section-label">Reiki Crystal Candles</div>
-        <div class="cat-header" style="border:none; padding:0; margin-bottom:16px;">
-          <p style="font-size:13px;color:var(--mid);">Infused with intention and Reiki energy. Each chakra candle is crafted to support balance and wellbeing.</p>
-        </div>
-        <div class="product-grid" id="reiki-candles">
+        <div class="section-gap"></div>
+        <p class="section-label" id="reiki-candles">Reiki Crystal Candles</p>
+        <p style="font-size:13px;color:var(--mid);margin-bottom:16px;">Infused with intention and Reiki energy — each chakra candle is crafted to support balance and wellbeing.</p>
+              <div class="product-grid">
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21811439/1024x1023.png" alt="Root Chakra Candle" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21811439/1024x1023.png" alt="Root Chakra Candle" loading="lazy"></div>
           <div class="product-info">
             <h3>Root Chakra Candle</h3>
-            <p class="product-desc">Root Chakra Candle</p>
-            <div class="product-footer">
-              <span class="product-price">£24.99</span>
+            <p class="desc">Root Chakra Candle</p>
+            <div class="footer">
+              <span class="price">£24.99</span>
               <button class="btn-cart snipcart-add-item" data-item-id="root-chakra-candle" data-item-name="Root Chakra Candle" data-item-price="24.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21811439/1024x1023.png" data-item-description="Root Chakra Candle" data-item-custom1-name="Reiki Candles" data-item-custom1-options="Root Chakra - Black Pepper|Root Chakra - Sandalwood" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888021/427x640.png" alt="Sacral Chakra" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888021/427x640.png" alt="Sacral Chakra" loading="lazy"></div>
           <div class="product-info">
             <h3>Sacral Chakra</h3>
-            <p class="product-desc">Sacral Chakra</p>
-            <div class="product-footer">
-              <span class="product-price">£24.99</span>
+            <p class="desc">Sacral Chakra</p>
+            <div class="footer">
+              <span class="price">£24.99</span>
               <button class="btn-cart snipcart-add-item" data-item-id="sacral-chakra" data-item-name="Sacral Chakra" data-item-price="24.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888021/427x640.png" data-item-description="Sacral Chakra" data-item-custom1-name="Reiki Candles" data-item-custom1-options="Solar Plexus Chakra - Black Pepper|Solar Plexus Chakra - Eucalyptus|Solar Plexus Chakra - Peppermint" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814462/427x426.png" alt="Solar Plexus Chakra" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814462/427x426.png" alt="Solar Plexus Chakra" loading="lazy"></div>
           <div class="product-info">
             <h3>Solar Plexus Chakra</h3>
-            <p class="product-desc">Solar Plexus Chakra</p>
-            <div class="product-footer">
-              <span class="product-price">£24.99</span>
+            <p class="desc">Solar Plexus Chakra</p>
+            <div class="footer">
+              <span class="price">£24.99</span>
               <button class="btn-cart snipcart-add-item" data-item-id="solar-plexus-chakra" data-item-name="Solar Plexus Chakra" data-item-price="24.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814462/427x426.png" data-item-description="Solar Plexus Chakra" data-item-custom1-name="Reiki Candles" data-item-custom1-options="Solar Plexus Chakra - Black Pepper|Solar Plexus Chakra - Eucalyptus|Solar Plexus Chakra - Peppermint" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814460/427x426.png" alt="Heart Chakra" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814460/427x426.png" alt="Heart Chakra" loading="lazy"></div>
           <div class="product-info">
             <h3>Heart Chakra</h3>
-            <p class="product-desc">Heart Chakra</p>
-            <div class="product-footer">
-              <span class="product-price">£24.99</span>
+            <p class="desc">Heart Chakra</p>
+            <div class="footer">
+              <span class="price">£24.99</span>
               <button class="btn-cart snipcart-add-item" data-item-id="heart-chakra" data-item-name="Heart Chakra" data-item-price="24.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814460/427x426.png" data-item-description="Heart Chakra" data-item-custom1-name="Reiki Candles" data-item-custom1-options="Heart Chakra - Geranium & Willow Moss|Heart Chakra - Jasmine|Heart Chakra - Ylang Ylang" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814465/427x426.png" alt="Throat Chakra" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814465/427x426.png" alt="Throat Chakra" loading="lazy"></div>
           <div class="product-info">
             <h3>Throat Chakra</h3>
-            <p class="product-desc">Throat Chakra</p>
-            <div class="product-footer">
-              <span class="product-price">£24.99</span>
+            <p class="desc">Throat Chakra</p>
+            <div class="footer">
+              <span class="price">£24.99</span>
               <button class="btn-cart snipcart-add-item" data-item-id="throat-chakra" data-item-name="Throat Chakra" data-item-price="24.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814465/427x426.png" data-item-description="Throat Chakra" data-item-custom1-name="Reiki Candles" data-item-custom1-options="Throat Chakra - Lemongrass|Throat Chakra - Peppermint|Throat Chakra - Tea Tree" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814463/427x426.png" alt="Third Eye Chakra" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814463/427x426.png" alt="Third Eye Chakra" loading="lazy"></div>
           <div class="product-info">
             <h3>Third Eye Chakra</h3>
-            <p class="product-desc">Third Eye Chakra</p>
-            <div class="product-footer">
-              <span class="product-price">£24.99</span>
+            <p class="desc">Third Eye Chakra</p>
+            <div class="footer">
+              <span class="price">£24.99</span>
               <button class="btn-cart snipcart-add-item" data-item-id="third-eye-chakra" data-item-name="Third Eye Chakra" data-item-price="24.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21814463/427x426.png" data-item-description="Third Eye Chakra" data-item-custom1-name="Reiki Candles" data-item-custom1-options="Third Eye Chakra  - Cedarwood & Vanilla|Third Eye Chakra - Clary Sage|Third Eye Chakra - Rosemary" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21887975/427x640.png" alt="Crown Chakra" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21887975/427x640.png" alt="Crown Chakra" loading="lazy"></div>
           <div class="product-info">
             <h3>Crown Chakra</h3>
-            <p class="product-desc">Crown Chakra</p>
-            <div class="product-footer">
-              <span class="product-price">£24.99</span>
+            <p class="desc">Crown Chakra</p>
+            <div class="footer">
+              <span class="price">£24.99</span>
               <button class="btn-cart snipcart-add-item" data-item-id="crown-chakra" data-item-name="Crown Chakra" data-item-price="24.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21887975/427x640.png" data-item-description="Crown Chakra" data-item-custom1-name="Reiki Candles" data-item-custom1-options="Crown Chakra - Cedarwood & Vanilla|Crown Chakra - Lavender|Crown Chakra - Sandalwood|Crown Chakra - Lemon, Neroli, Sandalwood & Myrrh" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
-        </div>
+      </div>
       </section>
 
-      <!-- GIFT PACKAGES -->
       <section class="shop-section" id="gift-packages">
         <div class="cat-banner">
           <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/9/21892317/730x1000.jpeg" alt="Gift Packages">
-          <div class="cat-banner-text">
-            <h2>Gift Packages</h2>
-            <p>Thoughtfully curated gift boxes — beautifully packaged and ready to delight.</p>
-          </div>
+          <div class="cat-banner-text"><h2>Gift Packages</h2><p>Thoughtfully curated gift boxes, beautifully packaged and ready to delight.</p></div>
         </div>
-        <div class="product-grid">
+              <div class="product-grid">
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888811/667x1000.JPG" alt="The Candle Lover's Collection" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888811/784x1176.JPG" alt="The Candle Lover's Collection" loading="lazy"></div>
           <div class="product-info">
             <h3>The Candle Lover's Collection</h3>
-            <p class="product-desc">Three handcrafted soy candles for every mood.</p>
-            <div class="product-footer">
-              <span class="product-price">£36.99</span>
+            <p class="desc">Three handcrafted soy candles for every mood — morning, midday, and evening.</p>
+            <div class="footer">
+              <span class="price">£36.99</span>
               <button class="btn-cart snipcart-add-item" data-item-id="the-candle-lover-s-collection" data-item-name="The Candle Lover's Collection" data-item-price="36.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888811/784x1176.JPG" data-item-description="Three handcrafted soy candles for every mood — morning, midday, and evening.">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888812/667x1000.JPG" alt="The Dad's Treat Box" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888812/784x1176.JPG" alt="The Dad's Treat Box" loading="lazy"></div>
           <div class="product-info">
             <h3>The Dad's Treat Box</h3>
-            <p class="product-desc">A gift he'll actually love — crisp, clean scents and quality.</p>
-            <div class="product-footer">
-              <span class="product-price">£18.99</span>
+            <p class="desc">A gift he'll actually love — crisp, clean scents and quality craftsmanship.</p>
+            <div class="footer">
+              <span class="price">£18.99</span>
               <button class="btn-cart snipcart-add-item" data-item-id="the-dad-s-treat-box" data-item-name="The Dad's Treat Box" data-item-price="18.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888812/784x1176.JPG" data-item-description="A gift he'll actually love — crisp, clean scents and quality craftsmanship.">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888814/667x1000.JPG" alt="The Eco Gifting Set" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888814/784x1176.JPG" alt="The Eco Gifting Set" loading="lazy"></div>
           <div class="product-info">
             <h3>The Eco Gifting Set</h3>
-            <p class="product-desc">Beautiful, sustainable, and thoughtfully made in the Scottish Borders.</p>
-            <div class="product-footer">
-              <span class="product-price">£41.99</span>
+            <p class="desc">Beautiful, sustainable, and thoughtfully made in the Scottish Borders.</p>
+            <div class="footer">
+              <span class="price">£41.99</span>
               <button class="btn-cart snipcart-add-item" data-item-id="the-eco-gifting-set" data-item-name="The Eco Gifting Set" data-item-price="41.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888814/784x1176.JPG" data-item-description="Beautiful, sustainable, and thoughtfully made in the Scottish Borders.">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            <span class="product-badge">Luxury</span>
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888816/667x1000.JPG" alt="The Grand Occasion Gift Box" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888816/784x1176.JPG" alt="The Grand Occasion Gift Box" loading="lazy"></div>
           <div class="product-info">
             <h3>The Grand Occasion Gift Box</h3>
-            <p class="product-desc">When only the very best will do — a show-stopping luxury hamper.</p>
-            <div class="product-footer">
-              <span class="product-price">£59.99</span>
+            <p class="desc">When only the very best will do — a show-stopping luxury hamper.</p>
+            <div class="footer">
+              <span class="price">£59.99</span>
               <button class="btn-cart snipcart-add-item" data-item-id="the-grand-occasion-gift-box" data-item-name="The Grand Occasion Gift Box" data-item-price="59.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888816/784x1176.JPG" data-item-description="When only the very best will do — a show-stopping luxury hamper.">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888818/667x1000.JPG" alt="The Luxury Home Spa" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888818/784x1176.JPG" alt="The Luxury Home Spa" loading="lazy"></div>
           <div class="product-info">
             <h3>The Luxury Home Spa</h3>
-            <p class="product-desc">Indulgent self-care from the Scottish Borders.</p>
-            <div class="product-footer">
-              <span class="product-price">£59.99</span>
+            <p class="desc">Indulgent self-care from the Scottish Borders, straight to their door.</p>
+            <div class="footer">
+              <span class="price">£59.99</span>
               <button class="btn-cart snipcart-add-item" data-item-id="the-luxury-home-spa" data-item-name="The Luxury Home Spa" data-item-price="59.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888818/784x1176.JPG" data-item-description="Indulgent self-care from the Scottish Borders, straight to their door.">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888819/667x1000.JPG" alt="The Relaxation Box" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888819/784x1176.JPG" alt="The Relaxation Box" loading="lazy"></div>
           <div class="product-info">
             <h3>The Relaxation Box</h3>
-            <p class="product-desc">Unwind and relax with calming treats.</p>
-            <div class="product-footer">
-              <span class="product-price">£46.99</span>
+            <p class="desc">Unwind and relax with calming treats</p>
+            <div class="footer">
+              <span class="price">£46.99</span>
               <button class="btn-cart snipcart-add-item" data-item-id="the-relaxation-box" data-item-name="The Relaxation Box" data-item-price="46.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888819/784x1176.JPG" data-item-description="Unwind and relax with calming treats">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888821/667x1000.JPG" alt="The Wax Melt Treat" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888821/784x1176.JPG" alt="The Wax Melt Treat" loading="lazy"></div>
           <div class="product-info">
             <h3>The Wax Melt Treat</h3>
-            <p class="product-desc">A gorgeous little gift that fills every room with warmth.</p>
-            <div class="product-footer">
-              <span class="product-price">£18.99</span>
+            <p class="desc">A gorgeous little gift that fills every room with warmth and fragrance.</p>
+            <div class="footer">
+              <span class="price">£18.99</span>
               <button class="btn-cart snipcart-add-item" data-item-id="the-wax-melt-treat" data-item-name="The Wax Melt Treat" data-item-price="18.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888821/784x1176.JPG" data-item-description="A gorgeous little gift that fills every room with warmth and fragrance.">Add to Basket</button>
             </div>
           </div>
         </div>
-        </div>
+      </div>
       </section>
 
-      <!-- INDIVIDUAL GIFTS -->
       <section class="shop-section" id="individual-gifts">
         <div class="cat-banner">
-          <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/9/21893545/1000x1000.png" alt="Individual Gifts">
-          <div class="cat-banner-text">
-            <h2>Individual Gifts</h2>
-            <p>Thoughtful, meaningful gifts designed to bring a little joy to everyday life.</p>
-          </div>
+          <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/5/21859450/1024x1536.png" alt="Individual Gifts">
+          <div class="cat-banner-text"><h2>Individual Gifts</h2><p>Thoughtful, meaningful gifts designed to bring a little joy to everyday life.</p></div>
         </div>
-        <div class="product-grid">
+              <div class="product-grid">
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/5/21859451/1024x1536.png" alt="Seashell Keyring" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/5/21859451/1024x1536.png" alt="Seashell Keyring" loading="lazy"></div>
           <div class="product-info">
             <h3>Seashell Keyring</h3>
-            <p class="product-desc">A sustainable seaside keepsake, inspired by shells from the Scottish coast.</p>
-            <div class="product-footer">
-              <span class="product-price">£4.99</span>
-              <button class="btn-cart snipcart-add-item" data-item-id="seashell-keyring" data-item-name="Seashell Keyring" data-item-price="4.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/5/21859451/1024x1536.png" data-item-description="A sustainable seaside keepsake, inspired by shells from the Scottish and Northumberland coast—made without shell harvest" data-item-custom1-name="Choose Your Beach" data-item-custom1-options="Bamburgh Beach|Berwick Beach|Coldingham Bay|Eyemouth Beach|Seahouses|St Abbs" data-item-custom1-required="true">Add to Basket</button>
+            <p class="desc">A sustainable seaside keepsake, inspired by shells from the Scottish and Northumberland coast—made w</p>
+            <div class="footer">
+              <span class="price">£4.99</span>
+              <button class="btn-cart snipcart-add-item" data-item-id="seashell-keyring" data-item-name="Seashell Keyring" data-item-price="4.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/5/21859451/1024x1536.png" data-item-description="A sustainable seaside keepsake, inspired by shells from the Scottish and Northumberland coast—made w" data-item-custom1-name="Choose Your Beach" data-item-custom1-options="Bamburgh Beach|Berwick Beach|Coldingham Bay|Eyemouth Beach|Seahouses|St Abbs" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820500/1536x1024.png" alt="Eco Resin Hamsa Tealight Holder" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820500/1536x1024.png" alt="Eco Resin Hamsa Tealight Holder" loading="lazy"></div>
           <div class="product-info">
             <h3>Eco Resin Hamsa Tealight Holder</h3>
-            <p class="product-desc">Beautifully crafted eco resin Hamsa tealight holder.</p>
-            <div class="product-footer">
-              <span class="product-price">£19.99</span>
-              <button class="btn-cart snipcart-add-item" data-item-id="eco-resin-hamsa-tealight-holder" data-item-name="Eco Resin Hamsa Tealight Holder" data-item-price="19.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820500/1536x1024.png" data-item-description="" data-item-custom1-name="Wax Melt Burner" data-item-custom1-options="Black|Blush Pink Marble|Grey Marble|Terracotta|Terracotta Marble|White" data-item-custom1-required="true">Add to Basket</button>
+            <p class="desc">Eco Resin Hamsa Tealight Holder</p>
+            <div class="footer">
+              <span class="price">£19.99</span>
+              <button class="btn-cart snipcart-add-item" data-item-id="eco-resin-hamsa-tealight-holder" data-item-name="Eco Resin Hamsa Tealight Holder" data-item-price="19.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820500/1536x1024.png" data-item-description="Eco Resin Hamsa Tealight Holder" data-item-custom1-name="Wax Melt Burner" data-item-custom1-options="Black|Blush Pink Marble|Grey Marble|Terracotta|Terracotta Marble|White" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21811018/1025x1024.png" alt="Celtic & Pagan Symbol Fridge Magnets" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21811018/1025x1024.png" alt="Celtic & Pagan Symbol Fridge Magnets" loading="lazy"></div>
           <div class="product-info">
             <h3>Celtic & Pagan Symbol Fridge Magnets</h3>
-            <p class="product-desc">Celtic & Pagan symbol fridge magnets.</p>
-            <div class="product-footer">
-              <span class="product-price">£3.99</span>
-              <button class="btn-cart snipcart-add-item" data-item-id="celtic-pagan-symbol-fridge-magnets" data-item-name="Celtic & Pagan Symbol Fridge Magnets" data-item-price="3.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21811018/1025x1024.png" data-item-description="" data-item-custom1-name="Fridge Magnets" data-item-custom1-options="Pentacle ? symbolising the five elements and protection|Triple Moon ? representing the cycles of the moon and feminine energy|Triquetra (Celtic Trinity Knot) ? symbolising unity and interconnectedness|Triskelion (Triple Spiral) ? representing motion, balance and growth" data-item-custom1-required="true">Add to Basket</button>
+            <p class="desc">Celtic & Pagan Symbol Fridge Magnets</p>
+            <div class="footer">
+              <span class="price">£3.99</span>
+              <button class="btn-cart snipcart-add-item" data-item-id="celtic-pagan-symbol-fridge-magnets" data-item-name="Celtic & Pagan Symbol Fridge Magnets" data-item-price="3.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21811018/1025x1024.png" data-item-description="Celtic & Pagan Symbol Fridge Magnets" data-item-custom1-name="Fridge Magnets" data-item-custom1-options="Pentacle ? symbolising the five elements and protection|Triple Moon ? representing the cycles of the moon and feminine energy|Triquetra (Celtic Trinity Knot) ? symbolising unity and interconnectedness|Triskelion (Triple Spiral) ? representing motion, balance and growth" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21811012/1363x1024.png" alt="Moon Face Fridge Magnets" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21811012/1363x1024.png" alt="Moon Face Fridge Magnets" loading="lazy"></div>
           <div class="product-info">
             <h3>Moon Face Fridge Magnets</h3>
-            <p class="product-desc">Moon face fridge magnets.</p>
-            <div class="product-footer">
-              <span class="product-price">£4.99</span>
-              <button class="btn-cart snipcart-add-item" data-item-id="moon-face-fridge-magnets" data-item-name="Moon Face Fridge Magnets" data-item-price="4.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21811012/1363x1024.png" data-item-description="" data-item-custom1-name="Moon Face Fridge Magnets" data-item-custom1-options="Dark Blue|Dark Blue with Stars|Dark Grey|Light Brown|Light Grey|Pastel Lemon" data-item-custom1-required="true">Add to Basket</button>
+            <p class="desc">Moon Face Fridge Magnets</p>
+            <div class="footer">
+              <span class="price">£4.99</span>
+              <button class="btn-cart snipcart-add-item" data-item-id="moon-face-fridge-magnets" data-item-name="Moon Face Fridge Magnets" data-item-price="4.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21811012/1363x1024.png" data-item-description="Moon Face Fridge Magnets" data-item-custom1-name="Moon Face Fridge Magnets" data-item-custom1-options="Dark Blue|Dark Blue with Stars|Dark Grey|Light Brown|Light Grey|Pastel Lemon" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
-        </div>
+      </div>
       </section>
 
-      <!-- WAX MELT HOME LIVING -->
       <section class="shop-section" id="wax-melts">
         <div class="cat-banner">
           <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/9/21890181/1600x896.png" alt="Wax Melt Home Living">
-          <div class="cat-banner-text">
-            <h2>Wax Melt Home Living</h2>
-            <p>Plant-based wax melts crafted with care and intention.</p>
-          </div>
+          <div class="cat-banner-text"><h2>Wax Melt Home Living</h2><p>Plant-based wax melts crafted with care and intention.</p></div>
         </div>
 
-        <div class="section-label">Wax Melt Bouquets</div>
-        <div class="product-grid" id="wax-melt-bouquets">
+        <p class="section-label" id="wax-melt-bouquets">Wax Melt Bouquets</p>
+              <div class="product-grid">
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/4/21743326/1500x2000.jpg" alt="Rose Floral Bouquet" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/4/21743326/1500x2000.jpg" alt="Rose Floral Bouquet" loading="lazy"></div>
           <div class="product-info">
             <h3>Rose Floral Bouquet</h3>
-            <p class="product-desc">Scented wax melt bouquet — rose floral.</p>
-            <div class="product-footer">
-              <span class="product-price">£29.99</span>
+            <p class="desc">Scented Wax Melt Bouquet Elements</p>
+            <div class="footer">
+              <span class="price">£29.99</span>
               <button class="btn-cart snipcart-add-item" data-item-id="rose-floral-bouquet" data-item-name="Rose Floral Bouquet" data-item-price="29.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/4/21743326/1500x2000.jpg" data-item-description="Scented Wax Melt Bouquet Elements" data-item-custom1-name="Floral Wax Melts" data-item-custom1-options="No Place Like Home|Cedarwood & Jasmine|Champagne Toast|Peony Blush Suede" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21815487/360x359.jpg" alt="Mother's Day Bouquet" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21815487/360x359.jpg" alt="Mother's Day Bouquet" loading="lazy"></div>
           <div class="product-info">
             <h3>Mother's Day Bouquet</h3>
-            <p class="product-desc">Beautiful wax melt bouquet perfect for Mother's Day.</p>
-            <div class="product-footer">
-              <span class="product-price">£29.99</span>
-              <button class="btn-cart snipcart-add-item" data-item-id="mother-s-day-bouquet" data-item-name="Mother's Day Bouquet" data-item-price="29.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21815487/360x359.jpg" data-item-description="">Add to Basket</button>
+            <p class="desc">Mother's Day Bouquet</p>
+            <div class="footer">
+              <span class="price">£29.99</span>
+              <button class="btn-cart snipcart-add-item" data-item-id="mother-s-day-bouquet" data-item-name="Mother's Day Bouquet" data-item-price="29.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21815487/360x359.jpg" data-item-description="Mother's Day Bouquet">Add to Basket</button>
             </div>
           </div>
         </div>
-        </div>
+      </div>
 
-        <div style="margin-top:40px;"></div>
-        <div class="section-label">Wax Melt Burners</div>
-        <div class="product-grid" id="wax-melt-burners">
+        <div class="section-gap"></div>
+        <p class="section-label" id="wax-melt-burners">Wax Melt Burners</p>
+              <div class="product-grid">
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820499/1024x1536.png" alt="Cylinder Style Wax Melt Warmer" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820499/1024x1536.png" alt="Cylinder Style Wax Melt Warmer" loading="lazy"></div>
           <div class="product-info">
             <h3>Cylinder Style Wax Melt Warmer</h3>
-            <p class="product-desc">Cylinder style wax melt warmer.</p>
-            <div class="product-footer">
-              <span class="product-price">£16.99</span>
-              <button class="btn-cart snipcart-add-item" data-item-id="cylinder-style-wax-melt-warmer" data-item-name="Cylinder Style Wax Melt Warmer" data-item-price="16.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820499/1024x1536.png" data-item-description="" data-item-custom1-name="Wax Melt Burner" data-item-custom1-options="Black|Blush Pink Marble|Grey Marble|Terracotta Marble|Terracotta|White" data-item-custom1-required="true">Add to Basket</button>
+            <p class="desc">Cylinder Style Wax Melt Warmer</p>
+            <div class="footer">
+              <span class="price">£16.99</span>
+              <button class="btn-cart snipcart-add-item" data-item-id="cylinder-style-wax-melt-warmer" data-item-name="Cylinder Style Wax Melt Warmer" data-item-price="16.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820499/1024x1536.png" data-item-description="Cylinder Style Wax Melt Warmer" data-item-custom1-name="Wax Melt Burner" data-item-custom1-options="Black|Blush Pink Marble|Grey Marble|Terracotta Marble|Terracotta|White" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820498/1024x1536.png" alt="Nordic Style Wax Melt Warmer" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820498/1024x1536.png" alt="Nordic Style Wax Melt Warmer" loading="lazy"></div>
           <div class="product-info">
             <h3>Nordic Style Wax Melt Warmer</h3>
-            <p class="product-desc">Nordic style wax melt warmer.</p>
-            <div class="product-footer">
-              <span class="product-price">£16.99</span>
-              <button class="btn-cart snipcart-add-item" data-item-id="nordic-style-wax-melt-warmer" data-item-name="Nordic Style Wax Melt Warmer" data-item-price="16.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820498/1024x1536.png" data-item-description="" data-item-custom1-name="Wax Melt Burner" data-item-custom1-options="Black|Blush Pink Marble|Grey Marble|Terracotta Marble|Terracotta|White" data-item-custom1-required="true">Add to Basket</button>
+            <p class="desc">Nordic Style Wax Melt Warmer</p>
+            <div class="footer">
+              <span class="price">£16.99</span>
+              <button class="btn-cart snipcart-add-item" data-item-id="nordic-style-wax-melt-warmer" data-item-name="Nordic Style Wax Melt Warmer" data-item-price="16.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820498/1024x1536.png" data-item-description="Nordic Style Wax Melt Warmer" data-item-custom1-name="Wax Melt Burner" data-item-custom1-options="Black|Blush Pink Marble|Grey Marble|Terracotta Marble|Terracotta|White" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820491/1024x1024.png" alt="Handmade Arch Jesmonite Wax Melt Warmer" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820491/1024x1024.png" alt="Handmade Arch Jesmonite Wax Melt Warmer" loading="lazy"></div>
           <div class="product-info">
             <h3>Handmade Arch Jesmonite Wax Melt Warmer</h3>
-            <p class="product-desc">Handmade arch Jesmonite wax melt warmer.</p>
-            <div class="product-footer">
-              <span class="product-price">£16.99</span>
-              <button class="btn-cart snipcart-add-item" data-item-id="handmade-arch-jesmonite-wax-melt-warmer" data-item-name="Handmade Arch Jesmonite Wax Melt Warmer" data-item-price="16.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820491/1024x1024.png" data-item-description="" data-item-custom1-name="Wax Melt Burner" data-item-custom1-options="Black|Blush Pink Marble|Grey Marble|Terracotta Marble|Terracotta|White" data-item-custom1-required="true">Add to Basket</button>
+            <p class="desc">Handmade Arch Jesmonite Wax Melt Warmer</p>
+            <div class="footer">
+              <span class="price">£16.99</span>
+              <button class="btn-cart snipcart-add-item" data-item-id="handmade-arch-jesmonite-wax-melt-warmer" data-item-name="Handmade Arch Jesmonite Wax Melt Warmer" data-item-price="16.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820491/1024x1024.png" data-item-description="Handmade Arch Jesmonite Wax Melt Warmer" data-item-custom1-name="Wax Melt Burner" data-item-custom1-options="Black|Blush Pink Marble|Grey Marble|Terracotta Marble|Terracotta|White" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
-        </div>
+      </div>
 
-        <div style="margin-top:40px;"></div>
-        <div class="section-label">Wax Melt Selections ✨ Bestseller</div>
-        <div class="product-grid" id="wax-melt-selections">
+        <div class="section-gap"></div>
+        <p class="section-label" id="wax-melt-selections">Wax Melt Selections ✨ Bestseller</p>
+              <div class="product-grid">
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761144/1024x1280.PNG" alt="Passionfruit Martini & Coconut" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761144/1024x1280.PNG" alt="Passionfruit Martini & Coconut" loading="lazy"></div>
           <div class="product-info">
             <h3>Passionfruit Martini & Coconut</h3>
-            <p class="product-desc">6 cell clamshell wax melt.</p>
-            <div class="product-footer">
-              <span class="product-price">£3.50</span>
-              <button class="btn-cart snipcart-add-item" data-item-id="passionfruit-martini-coconut" data-item-name="Passionfruit Martini & Coconut" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761144/1024x1280.PNG" data-item-description="" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
+            <p class="desc">Passionfruit Martini & Coconut</p>
+            <div class="footer">
+              <span class="price">£3.50</span>
+              <button class="btn-cart snipcart-add-item" data-item-id="passionfruit-martini-coconut" data-item-name="Passionfruit Martini & Coconut" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761144/1024x1280.PNG" data-item-description="Passionfruit Martini & Coconut" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761138/1024x1280.PNG" alt="Passionfruit Martini" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761138/1024x1280.PNG" alt="Passionfruit Martini" loading="lazy"></div>
           <div class="product-info">
             <h3>Passionfruit Martini</h3>
-            <p class="product-desc">6 cell clamshell wax melt.</p>
-            <div class="product-footer">
-              <span class="product-price">£3.50</span>
-              <button class="btn-cart snipcart-add-item" data-item-id="passionfruit-martini" data-item-name="Passionfruit Martini" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761138/1024x1280.PNG" data-item-description="" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
+            <p class="desc">Passionfruit Martini</p>
+            <div class="footer">
+              <span class="price">£3.50</span>
+              <button class="btn-cart snipcart-add-item" data-item-id="passionfruit-martini" data-item-name="Passionfruit Martini" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761138/1024x1280.PNG" data-item-description="Passionfruit Martini" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761132/1024x1280.PNG" alt="Cosmic Plum & Saffron" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677017/1825x1369.png" alt="Cosmic Plum & Saffron" loading="lazy"></div>
           <div class="product-info">
             <h3>Cosmic Plum & Saffron</h3>
-            <p class="product-desc">6 cell clamshell wax melt.</p>
-            <div class="product-footer">
-              <span class="product-price">£3.50</span>
-              <button class="btn-cart snipcart-add-item" data-item-id="cosmic-plum-saffron" data-item-name="Cosmic Plum & Saffron" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677017/1825x1369.png" data-item-description="Cosmic Plum & Saffron Soy Wax Candle">Add to Basket</button>
+            <p class="desc">Cosmic Plum & Saffron Soy Wax Candle</p>
+            <div class="footer">
+              <span class="price">£16.00</span>
+              <button class="btn-cart snipcart-add-item" data-item-id="cosmic-plum-saffron" data-item-name="Cosmic Plum & Saffron" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677017/1825x1369.png" data-item-description="Cosmic Plum & Saffron Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761129/1600x2000.PNG" alt="Champagne Toast" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761129/1600x2000.PNG" alt="Champagne Toast" loading="lazy"></div>
           <div class="product-info">
             <h3>Champagne Toast</h3>
-            <p class="product-desc">6 cell clamshell wax melt.</p>
-            <div class="product-footer">
-              <span class="product-price">£3.50</span>
-              <button class="btn-cart snipcart-add-item" data-item-id="champagne-toast" data-item-name="Champagne Toast" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761129/1600x2000.PNG" data-item-description="" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
+            <p class="desc">Champagne Toast</p>
+            <div class="footer">
+              <span class="price">£3.50</span>
+              <button class="btn-cart snipcart-add-item" data-item-id="champagne-toast" data-item-name="Champagne Toast" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761129/1600x2000.PNG" data-item-description="Champagne Toast" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761128/1024x1280.PNG" alt="Champagne Grapes & Roses" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761128/1024x1280.PNG" alt="Champagne Grapes & Roses" loading="lazy"></div>
           <div class="product-info">
             <h3>Champagne Grapes & Roses</h3>
-            <p class="product-desc">6 cell clamshell wax melt.</p>
-            <div class="product-footer">
-              <span class="product-price">£3.50</span>
-              <button class="btn-cart snipcart-add-item" data-item-id="champagne-grapes-roses" data-item-name="Champagne Grapes & Roses" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761128/1024x1280.PNG" data-item-description="" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
+            <p class="desc">Champagne Grapes & Roses</p>
+            <div class="footer">
+              <span class="price">£3.50</span>
+              <button class="btn-cart snipcart-add-item" data-item-id="champagne-grapes-roses" data-item-name="Champagne Grapes & Roses" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761128/1024x1280.PNG" data-item-description="Champagne Grapes & Roses" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
-        </div>
+      </div>
 
-        <div style="margin-top:40px;"></div>
-        <div class="section-label">Wax Melts — 5 Hearts in a Box</div>
-        <div class="product-grid" id="wax-melt-hearts">
+        <div class="section-gap"></div>
+        <p class="section-label" id="wax-melt-hearts">Wax Melts — 5 Hearts in a Box</p>
+              <div class="product-grid">
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761156/1922x1134.jpeg" alt="Champagne Toast" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761129/1600x2000.PNG" alt="Champagne Toast" loading="lazy"></div>
           <div class="product-info">
             <h3>Champagne Toast</h3>
-            <p class="product-desc">5 hearts wax melt box — Champagne Toast.</p>
-            <div class="product-footer">
-              <span class="product-price">£2.99</span>
-              <button class="btn-cart snipcart-add-item" data-item-id="champagne-toast" data-item-name="Champagne Toast" data-item-price="2.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761129/1600x2000.PNG" data-item-description="" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
+            <p class="desc">Champagne Toast</p>
+            <div class="footer">
+              <span class="price">£3.50</span>
+              <button class="btn-cart snipcart-add-item" data-item-id="champagne-toast" data-item-name="Champagne Toast" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761129/1600x2000.PNG" data-item-description="Champagne Toast" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
         <div class="product-card">
-          <div class="product-img-wrap">
-            
-            <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761152/1922x1134.jpeg" alt="Champagne Grapes & Roses" loading="lazy">
-          </a>
+          <div class="product-img"><img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761128/1024x1280.PNG" alt="Champagne Grapes & Roses" loading="lazy"></div>
           <div class="product-info">
             <h3>Champagne Grapes & Roses</h3>
-            <p class="product-desc">5 hearts wax melt box — Champagne Grapes & Roses.</p>
-            <div class="product-footer">
-              <span class="product-price">£2.99</span>
-              <button class="btn-cart snipcart-add-item" data-item-id="champagne-grapes-roses" data-item-name="Champagne Grapes & Roses" data-item-price="2.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761128/1024x1280.PNG" data-item-description="" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
+            <p class="desc">Champagne Grapes & Roses</p>
+            <div class="footer">
+              <span class="price">£3.50</span>
+              <button class="btn-cart snipcart-add-item" data-item-id="champagne-grapes-roses" data-item-name="Champagne Grapes & Roses" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761128/1024x1280.PNG" data-item-description="Champagne Grapes & Roses" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
-        </div>
+      </div>
       </section>
 
     </main>
   </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
+  <footer class="site-footer">
+    <div class="footer-grid">
       <div class="footer-brand">
-        <img src="/logo.png" alt="CMG Logo">
+        <img src="/logo.png" alt="Crafty Mouse Gifts">
         <p>Handmade eco-friendly soy candles, wax melts and Reiki crystal gifts — made with love in the Scottish Borders.</p>
         <div class="footer-social">
-          <a href="https://www.facebook.com/share/1C1mTyJjAo/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
-          <a href="https://www.instagram.com/crafty_mouse_gifts" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg></a>
-          <a href="https://www.tiktok.com/@crafty.mouse" target="_blank" rel="noopener" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.37 6.37 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.53V6.75a4.85 4.85 0 01-1.03-.06z"/></svg></a>
-          <a href="https://www.youtube.com/@CraftyMouseGifts1" target="_blank" rel="noopener" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon fill="#fff" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+          <a href="https://www.facebook.com/share/1C1mTyJjAo/?mibextid=wwXIfr" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="https://www.instagram.com/crafty_mouse_gifts" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg></a>
+          <a href="https://www.tiktok.com/@crafty.mouse" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.37 6.37 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.53V6.75a4.85 4.85 0 01-1.03-.06z"/></svg></a>
+          <a href="https://www.youtube.com/@CraftyMouseGifts1" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon fill="#fff" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
         </div>
       </div>
-      <div class="footer-col">
-        <h5>Shop</h5>
-        <a href="/shop/candles">Candles</a>
-        <a href="/shop/wax-melts">Wax Melt Home Living</a>
-        <a href="/shop/gift-packages">Gift Packages</a>
-        <a href="/shop/individual-gifts">Individual Gifts</a>
-        <a href="/gift-builder">Gift Builder</a>
+      <div class="footer-col"><h5>Shop</h5>
+        <a href="#candles">Candles</a><a href="#wax-melts">Wax Melt Home Living</a>
+        <a href="#gift-packages">Gift Packages</a><a href="#individual-gifts">Individual Gifts</a>
+        <a href="/gift-builder.html">Gift Builder</a>
       </div>
-      <div class="footer-col">
-        <h5>Wellness</h5>
-        <a href="/wellness/calming-tool">Calming Tool</a>
-        <a href="/wellness/reiki">Reiki</a>
-        <a href="/wellness/reiki/chakra">Chakra Healing</a>
-        <a href="/scent-finder">Scent Finder</a>
+      <div class="footer-col"><h5>Wellness</h5>
+        <a href="/wellness.html">Wellness</a><a href="/scent-finder.html">Scent Finder</a>
       </div>
-      <div class="footer-col">
-        <h5>Info</h5>
-        <a href="/about">About</a>
-        <a href="/contact">Contact Us</a>
-        <a href="/reviews">Reviews</a>
-        <a href="/returns-refunds-policy">Returns &amp; Refunds</a>
-        <a href="/account">My Account</a>
+      <div class="footer-col"><h5>Info</h5>
+        <a href="/about.html">About</a><a href="/contact.html">Contact Us</a>
+        <a href="/reviews.html">Reviews</a><a href="/returns.html">Returns &amp; Refunds</a>
+        <a href="/account.html">My Account</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -1077,30 +860,21 @@
     </div>
   </footer>
 
+  <div hidden id="snipcart" data-api-key="bd963815-fc26-4a20-b222-17a566d9d1c9639170948139509604" data-currency="gbp" data-country-restrictions="gb"></div>
+  <script async src="https://cdn.snipcart.com/themes/v3.7.3/default/snipcart.js"></script>
   <script>
-    function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('open'); }
-
-    function filterProducts(query) {
-      const q = query.toLowerCase().trim();
-      document.querySelectorAll('.product-card').forEach(card => {
-        const title = card.querySelector('h3').textContent.toLowerCase();
-        card.style.display = (!q || title.includes(q)) ? '' : 'none';
+    function filterProducts(q) {
+      q = q.toLowerCase().trim();
+      document.querySelectorAll('.product-card').forEach(c => {
+        c.style.display = (!q || c.querySelector('h3').textContent.toLowerCase().includes(q)) ? '' : 'none';
       });
     }
-
-    // Smooth scroll offset for sticky header
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          const offset = 100;
-          window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
-        }
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' }); }
       });
     });
   </script>
-  <div hidden id="snipcart" data-api-key="bd963815-fc26-4a20-b222-17a566d9d1c9639170948139509604" data-currency="gbp" data-country-restrictions="gb"></div>
-  <script async src="https://cdn.snipcart.com/themes/v3.7.3/default/snipcart.js"></script>
 </body>
 </html>
