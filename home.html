@@ -740,7 +740,14 @@
     @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
   </style>
-  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.7.3/default/snipcart.css">
+  
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-Cxk8PXNpeptW3BnTK8Zyt.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+<script src="/cmg-cart.js"></script>
 </head>
 <body>
 
@@ -780,9 +787,9 @@
       <div class="header-actions">
         <a href="/reviews">Reviews</a>
         <a href="/account">Account</a>
-        <button class="cart-btn snipcart-checkout" aria-label="Open basket">
+        <button class="cart-btn" id="cmg-cart-btn" onclick="openCart()" aria-label="Open basket">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-          <span class="snipcart-items-count"></span>
+          <span id="cmg-cart-badge" style="position:absolute;top:-6px;right:-8px;background:#e46d69;color:white;font-size:10px;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;font-weight:700;"></span>
       </button>
         <div class="hamburger" onclick="toggleMenu()" aria-label="Menu">
           <span></span><span></span><span></span>
@@ -1139,7 +1146,7 @@
       imgs.forEach(img => observer.observe(img));
     }
   </script>
-  <div hidden id="snipcart" data-api-key="80ba5737-f96e-4fd9-87a0-5a3bf0b8a757639170948139509604" data-currency="gbp" data-country-restrictions="gb"></div>
-  <script async src="https://cdn.snipcart.com/themes/v3.7.3/default/snipcart.js"></script>
+  
+  
 </body>
 </html>
