@@ -205,7 +205,8 @@ async function cmgCheckout() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        items: cart.map(i => ({ price_id: i.id, quantity: i.qty }))
+        items: cart.map(i => ({ price_id: i.id, quantity: i.qty })),
+        subtotal: cartTotal(),
       }),
     });
 
