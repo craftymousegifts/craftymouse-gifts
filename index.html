@@ -1252,42 +1252,46 @@
 
     // ── SOUND ────────────────────────────────────────────────
     let soundPlayed = false;
-    function playBlower() {
+    window.playSound = function playSound() {
       if (soundPlayed) return;
       soundPlayed = true;
       try {
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         const actx = new AudioCtx();
-        function toot(startTime, startFreq, endFreq, vol) {
+        const notes = [523.25, 659.25, 783.99, 1046.5, 1318.5];
+        notes.forEach((freq, i) => {
           const osc = actx.createOscillator();
           const gain = actx.createGain();
-          osc.connect(gain);
-          gain.connect(actx.destination);
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(startFreq, actx.currentTime + startTime);
-          osc.frequency.exponentialRampToValueAtTime(endFreq, actx.currentTime + startTime + 0.7);
-          gain.gain.setValueAtTime(vol, actx.currentTime + startTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + startTime + 0.7);
-          osc.start(actx.currentTime + startTime);
-          osc.stop(actx.currentTime + startTime + 0.75);
-        }
-        toot(0, 900, 300, 0.3);
-        toot(0.85, 1100, 400, 0.25);
-        toot(1.7, 850, 250, 0.2);
+          const osc2 = actx.createOscillator();
+          const gain2 = actx.createGain();
+          osc.connect(gain); gain.connect(actx.destination);
+          osc2.connect(gain2); gain2.connect(actx.destination);
+          const t = actx.currentTime + i * 0.12;
+          osc.type = 'sine'; osc2.type = 'sine';
+          osc.frequency.setValueAtTime(freq, t);
+          osc2.frequency.setValueAtTime(freq * 1.002, t);
+          gain.gain.setValueAtTime(0, t);
+          gain.gain.linearRampToValueAtTime(0.15, t + 0.04);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 1.2);
+          gain2.gain.setValueAtTime(0, t);
+          gain2.gain.linearRampToValueAtTime(0.06, t + 0.06);
+          gain2.gain.exponentialRampToValueAtTime(0.001, t + 1.5);
+          osc.start(t); osc.stop(t + 1.6);
+          osc2.start(t); osc2.stop(t + 1.6);
+        });
       } catch(e) {}
     }
-    // Try immediately, fallback on first interaction
-    try { playBlower(); } catch(e) {}
-    document.addEventListener('click', playBlower, { once: true });
-    document.addEventListener('touchstart', playBlower, { once: true });
-    document.addEventListener('scroll', playBlower, { once: true });
+    try { window.playSound(); } catch(e) {}
+    document.addEventListener('click', window.playSound, { once: true });
+    document.addEventListener('touchstart', window.playSound, { once: true });
+    document.addEventListener('scroll', window.playSound, { once: true });
 
-    // ── BANNER ───────────────────────────────────────────────
+    // ── STYLES ───────────────────────────────────────────────
     const style = document.createElement('style');
     style.textContent = `
       @keyframes cmgBannerPop {
-        from { transform: translate(-50%, -50%) scale(0) rotate(-5deg); opacity: 0; }
-        to   { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; }
+        from { transform: translate(-50%,-50%) scale(0) rotate(-5deg); opacity:0; }
+        to   { transform: translate(-50%,-50%) scale(1) rotate(0deg);  opacity:1; }
       }
       @keyframes cmgShine {
         to { background-position: 200% center; }
@@ -1295,6 +1299,7 @@
     `;
     document.head.appendChild(style);
 
+    // ── BANNER ───────────────────────────────────────────────
     const banner = document.createElement('div');
     banner.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:9999;text-align:center;pointer-events:none;animation:cmgBannerPop 0.6s cubic-bezier(0.175,0.885,0.32,1.275) 0.3s forwards;';
     banner.innerHTML = `
@@ -1302,14 +1307,13 @@
         <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(1.2rem,4vw,2.2rem);font-weight:600;letter-spacing:0.15em;background:linear-gradient(90deg,#d4af37,#f5e6a3,#d4af37,#e46d69,#d4af37,#f5e6a3,#d4af37);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:cmgShine 2s linear infinite;margin-bottom:8px;">✨ NEW WEBSITE ✨</div>
         <div style="font-family:'Lato',Arial,sans-serif;font-size:clamp(0.7rem,2vw,1rem);letter-spacing:0.3em;color:rgba(255,255,255,0.7);text-transform:uppercase;">We've had a fresh new look!</div>
         <div style="margin-top:12px;font-size:1.4rem;">🎉 🕯️ 🌿 🎉</div>
+        <button onclick="playSound();this.style.display='none';" style="margin-top:16px;background:linear-gradient(135deg,#d4af37,#f5e6a3,#d4af37);border:none;border-radius:30px;padding:10px 28px;font-family:'Lato',Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;color:#1e1e1e;cursor:pointer;text-transform:uppercase;">🎵 Click to Celebrate!</button>
       </div>`;
     document.body.appendChild(banner);
 
     // ── CONFETTI ─────────────────────────────────────────────
-    const FALL_MS    = 7000;
-    const SETTLE_MS  = 3000;
-    const FADE_MS    = 1500;
-    const TOTAL_MS   = FALL_MS + SETTLE_MS + FADE_MS;
+    const SETTLE_MS = 3000; // time to settle after all pieces land
+    const FADE_MS   = 1500; // fade out duration
 
     const canvas = document.createElement('canvas');
     canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;';
@@ -1324,17 +1328,20 @@
     const pieces  = [];
 
     for (let i = 0; i < 160; i++) {
+      // Stagger start positions so they all arrive at different times
+      // but ALL start above the viewport
       pieces.push({
         x:       Math.random() * canvas.width,
-        y:       -10 - Math.random() * canvas.height * 0.3,
+        y:       -10 - Math.random() * 60, // all start just above top
         size:    7 + Math.random() * 10,
         colour:  colours[Math.floor(Math.random() * colours.length)],
         shape:   shapes[Math.floor(Math.random() * shapes.length)],
-        speed:   2.5 + Math.random() * 3.0,
-        drift:   (Math.random() - 0.5) * 1.0,
+        speed:   3 + Math.random() * 4,    // fast enough to reach bottom
+        drift:   (Math.random() - 0.5) * 1.2,
         rot:     Math.random() * Math.PI * 2,
-        spin:    (Math.random() - 0.5) * 0.07,
+        spin:    (Math.random() - 0.5) * 0.08,
         settled: false,
+        delay:   Math.random() * 1500,     // stagger launch time in ms
       });
     }
 
@@ -1349,51 +1356,70 @@
     }
 
     let start = null;
+    let allSettledAt = null;
+    let fadeStartAt = null;
+
     function animate(ts) {
       if (!start) start = ts;
       const elapsed = ts - start;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Global opacity — only fade in the last FADE_MS
-      const globalAlpha = elapsed > FALL_MS + SETTLE_MS
-        ? Math.max(0, 1 - (elapsed - FALL_MS - SETTLE_MS) / FADE_MS)
-        : 1;
-
+      let allSettled = true;
       pieces.forEach(p => {
-        // Only move during FALL phase
-        if (elapsed < FALL_MS && !p.settled) {
+        // Don't start moving until after delay
+        if (elapsed > p.delay && !p.settled) {
           p.y   += p.speed;
           p.x   += p.drift;
           p.rot += p.spin;
-          if (p.y >= FLOOR) { p.y = FLOOR; p.settled = true; }
+          if (p.y >= FLOOR) {
+            p.y = FLOOR;
+            p.settled = true;
+          } else {
+            allSettled = false;
+          }
+        } else if (!p.settled && elapsed <= p.delay) {
+          allSettled = false;
         }
+      });
 
+      // Once all settled, start settle timer
+      if (allSettled && !allSettledAt) allSettledAt = ts;
+
+      // Start fading after SETTLE_MS
+      if (allSettledAt && ts - allSettledAt > SETTLE_MS && !fadeStartAt) {
+        fadeStartAt = ts;
+        // Fade banner at same time
+        banner.style.transition = 'opacity ' + (FADE_MS/1000) + 's ease';
+        banner.style.opacity = '0';
+      }
+
+      // Calculate alpha
+      let alpha = 1;
+      if (fadeStartAt) {
+        alpha = Math.max(0, 1 - (ts - fadeStartAt) / FADE_MS);
+      }
+
+      pieces.forEach(p => {
+        if (elapsed <= p.delay) return; // not started yet
         ctx.save();
-        ctx.globalAlpha = globalAlpha;
+        ctx.globalAlpha = alpha;
         ctx.fillStyle   = p.colour;
         ctx.translate(p.x, p.y);
         ctx.rotate(p.rot);
-
         if      (p.shape === 'circle') { ctx.beginPath(); ctx.arc(0,0,p.size/2,0,Math.PI*2); ctx.fill(); }
-        else if (p.shape === 'rect')   { ctx.fillRect(-p.size/2, -p.size/4, p.size, p.size/2); }
-        else                           { drawHeart(0, -p.size/2, p.size); }
+        else if (p.shape === 'rect')   { ctx.fillRect(-p.size/2,-p.size/4,p.size,p.size/2); }
+        else                           { drawHeart(0,-p.size/2,p.size); }
         ctx.restore();
       });
 
-      if (elapsed < TOTAL_MS) {
+      if (!fadeStartAt || alpha > 0) {
         requestAnimationFrame(animate);
       } else {
         canvas.remove();
+        banner.remove();
       }
     }
-
-    // Sync banner fade with confetti fade
-    setTimeout(() => {
-      banner.style.transition = 'opacity 1.5s ease';
-      banner.style.opacity = '0';
-      setTimeout(() => banner.remove(), 1500);
-    }, FALL_MS + SETTLE_MS);
 
     requestAnimationFrame(animate);
   })();
