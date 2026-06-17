@@ -220,6 +220,21 @@
     }
     .btn-details:hover { background: var(--rose); color: #fff; }
 
+  
+    /* iOS safe area fix */
+    .site-header {
+      padding-top: env(safe-area-inset-top);
+    }
+    @supports (padding-top: env(safe-area-inset-top)) {
+      .site-header { padding-top: max(0px, env(safe-area-inset-top)); }
+    }
+    /* Mobile nav improvements */
+    @media (max-width: 600px) {
+      .header-top { padding: 8px 16px; }
+      .logo-link img, .header-logo img { width: 80px; height: 80px; }
+      main, .shop-layout, section { padding-top: 8px; }
+    }
+
   </style>
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-Cxk8PXNpeptW3BnTK8Zyt.js"></script>
