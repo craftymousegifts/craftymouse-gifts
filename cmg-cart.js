@@ -27,7 +27,7 @@ function updateCartBadge() {
 }
 
 // ── Add to Cart ───────────────────────────────────────────────────────────────
-function cmgAddToCart(priceId, qty, variant) {
+function cmgAddToCart(priceId, qty, variant, nameOverride, imgOverride) {
   qty = qty || 1;
   variant = variant || '';
   const cart = getCart();
@@ -36,26 +36,20 @@ function cmgAddToCart(priceId, qty, variant) {
   if (existing) {
     existing.qty += qty;
   } else {
-    // Get product name from page
-    let name = priceId;
-    document.querySelectorAll('.product-card').forEach(card => {
-      const btn = card.querySelector('[onclick*="' + priceId + '"]');
-      if (btn) {
-        const h3 = card.querySelector('h3');
-        if (h3) name = h3.textContent.trim();
-      }
-    });
-    const img = (() => {
-      let src = '';
+    let name = nameOverride || '';
+    let img = imgOverride || '';
+    if (!name) {
       document.querySelectorAll('.product-card').forEach(card => {
         const btn = card.querySelector('[onclick*="' + priceId + '"]');
         if (btn) {
+          const h3 = card.querySelector('h3');
+          if (h3) name = h3.textContent.trim();
           const imgEl = card.querySelector('img');
-          if (imgEl) src = imgEl.src;
+          if (imgEl) img = imgEl.src;
         }
       });
-      return src;
-    })();
+    }
+    if (!name) name = priceId;
     cart.push({ key, priceId, name, variant, qty, img });
   }
   saveCart(cart);
