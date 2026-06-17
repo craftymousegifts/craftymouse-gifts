@@ -264,6 +264,13 @@
       flex-shrink: 0;
     }
 
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--mid);
+      margin: 12px 0 24px;
+      line-height: 1.7;
+      max-width: 380px;
+    }
     .hero-badge {
       font-family: var(--serif);
       font-size: 13px;
@@ -681,6 +688,58 @@
       color: var(--mid);
     }
 
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      position: relative;
+      background: linear-gradient(135deg, #e8d5d0 0%, #f3e8e6 40%, #edddd9 70%, #dfc8c2 100%);
+      padding: 36px 0;
+      overflow: hidden;
+    }
+    .trust-bar::before,
+    .trust-bar::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 120px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .trust-bar::before {
+      left: 0;
+      background: linear-gradient(to right, #e2cdc8, transparent);
+    }
+    .trust-bar::after {
+      right: 0;
+      background: linear-gradient(to left, #dfc8c2, transparent);
+    }
+    .trust-bar-inner {
+      max-width: 380px;
+      margin: 0 auto;
+      padding: 0 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: #3a2a28;
+      letter-spacing: 0.01em;
+    }
+    .trust-icon {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .nav-inner { display: none; }
@@ -882,14 +941,8 @@
   <section class="hero">
     <div class="hero-text">
       <h1>Hand-Poured Candles &amp; Wax Melts —<br><em>Made in the Scottish Borders</em></h1>
-      <ul class="hero-bullets">
-        <li>Hand-poured soy/plant-based candles</li>
-        <li>Wax melts &amp; wax melt bouquets</li>
-        <li>Eco-friendly handmade home décor</li>
-        <li>Fast UK Delivery</li>
-      </ul>
-      <p class="hero-badge">⭐⭐⭐⭐⭐ Rated 5 stars by happy customers</p>
-      <a href="/shop" class="btn-primary">Shop Now</a>
+      <p class="hero-sub">Lovingly crafted soy candles, wax melts and Reiki crystal gifts — straight from the Scottish Borders to your door.</p>
+      <a href="/shop.html" class="btn-primary">Shop Now</a>
     </div>
     <div class="hero-image">
       <img src="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21889183/720x1260.jpg"
@@ -897,6 +950,32 @@
            loading="eager">
     </div>
   </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-bar-inner">
+      <div class="trust-item">
+        <span class="trust-icon">⭐</span>
+        <span>5 Star Customer Reviews</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">🚚</span>
+        <span>Fast UK Shipping</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">💬</span>
+        <span>Custom Orders Welcome</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">🌿</span>
+        <span>Eco-Friendly &amp; Handmade</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span>
+        <span>Made in the Scottish Borders</span>
+      </div>
+    </div>
+  </div>
 
   <!-- REVIEWS STRIP -->
   <div class="reviews-strip">
