@@ -1,3 +1,4 @@
+// CMG Product & Package Modal — v5 — 202606171839
 // CMG Product & Package Modal — v3
 // Usage: cmgOpenProductModal(product) | cmgOpenPackageModal(pkg)
 
