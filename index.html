@@ -1306,7 +1306,7 @@
     document.body.appendChild(banner);
 
     // ── CONFETTI ─────────────────────────────────────────────
-    const FALL_MS    = 5000;
+    const FALL_MS    = 7000;
     const SETTLE_MS  = 3000;
     const FADE_MS    = 1500;
     const TOTAL_MS   = FALL_MS + SETTLE_MS + FADE_MS;
@@ -1317,7 +1317,7 @@
     const ctx = canvas.getContext('2d');
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
-    const FLOOR = canvas.height - 8;
+    const FLOOR = canvas.height - 4;
 
     const colours = ['#f3e8e6','#e46d69','#c4524e','#1e1e1e','#d4af37','#f5e6a3','#ffb7c5'];
     const shapes  = ['circle','rect','heart'];
@@ -1326,11 +1326,11 @@
     for (let i = 0; i < 160; i++) {
       pieces.push({
         x:       Math.random() * canvas.width,
-        y:       -20 - Math.random() * canvas.height,
+        y:       -10 - Math.random() * canvas.height * 0.3,
         size:    7 + Math.random() * 10,
         colour:  colours[Math.floor(Math.random() * colours.length)],
         shape:   shapes[Math.floor(Math.random() * shapes.length)],
-        speed:   1.0 + Math.random() * 2.0,
+        speed:   2.5 + Math.random() * 3.0,
         drift:   (Math.random() - 0.5) * 1.0,
         rot:     Math.random() * Math.PI * 2,
         spin:    (Math.random() - 0.5) * 0.07,
