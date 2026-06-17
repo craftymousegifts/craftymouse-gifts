@@ -143,11 +143,20 @@
         // Fallback to Shop Now if no matching card found (e.g. from gift builder)
         const btn = document.createElement('button');
         btn.className = 'pm-btn';
-        btn.textContent = 'Shop Now →';
-        btn.addEventListener('click', function() {
-          overlay.remove();
-          window.location = '/shop.html';
-        });
+        if (product.backFn) {
+          btn.textContent = '← Back to Package';
+          btn.style.background = '#555';
+          btn.addEventListener('click', function() {
+            overlay.remove();
+            product.backFn();
+          });
+        } else {
+          btn.textContent = 'Shop Now →';
+          btn.addEventListener('click', function() {
+            overlay.remove();
+            window.location = '/shop.html';
+          });
+        }
         basketArea.appendChild(btn);
       }
     }
@@ -185,6 +194,7 @@ window.cmgOpenPackageModal = function(pkg) {
       <div class="pm-contents">
         <h4>What's Inside</h4>
         <ul class="pm-contents-list">${items}</ul>
+        <p style="font-size:12px;color:#888;margin-top:10px;font-style:italic;">✨ Presented with love: shredded tissue, luxury gift box and branded ribbon</p>
       </div>`;
   }
 
@@ -216,13 +226,18 @@ window.cmgOpenPackageModal = function(pkg) {
 
   // Add to Basket button
   const basketArea = overlay.querySelector('#cmg-pkg-basket-area');
-  if (basketArea && pkg.addBtn) {
+  if (basketArea) {
     const btn = document.createElement('button');
     btn.className = 'pm-btn';
     btn.textContent = 'Add Gift Package to Basket';
     btn.addEventListener('click', function() {
       overlay.remove();
-      pkg.addBtn.click();
+      if (pkg.priceId && typeof cmgAddToCart === 'function') {
+        // Use price ID directly
+        cmgAddToCart(pkg.priceId);
+      } else if (pkg.addBtn) {
+        pkg.addBtn.click();
+      }
     });
     basketArea.appendChild(btn);
   }
