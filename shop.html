@@ -1519,9 +1519,10 @@ function cmgSwapImage(select) {
     let contentsHtml = '';
     if (pkg.contents && pkg.contents.length) {
       const items = pkg.contents.map(function(name) {
-        const found = window.cmgProductLookup && window.cmgProductLookup.find(function(p) { return p.title.trim() === name.trim(); });
-        const price = found ? ' \u2014 \u00a3' + found.price.toFixed(2) : '';
-        return '<li>' + name + price + '</li>';
+        var found = window.cmgProductLookup && window.cmgProductLookup.find(function(p) { return p.title.trim() === name.trim(); });
+        var price = found ? '\u00a3' + found.price.toFixed(2) : '';
+        var imgHtml = (found && found.image) ? '<img src="' + found.image + '" alt="' + name + '" style="width:56px;height:56px;object-fit:cover;border-radius:6px;flex-shrink:0;" onerror="this.style.display=\'none\'">' : '<div style="width:56px;height:56px;border-radius:6px;background:#f3e8e6;flex-shrink:0;"></div>';
+        return '<li style="display:flex;align-items:center;gap:12px;padding:8px;background:#fdf8f7;border-radius:8px;border-left:3px solid #e46d69;list-style:none;">' + imgHtml + '<div><div style="font-size:.88rem;font-weight:600;color:#1e1e1e;">' + name + '</div>' + (price ? '<div style="font-size:.8rem;color:#888;margin-top:2px;">' + price + '</div>' : '') + '</div></li>';
       }).join('');
       contentsHtml = `
         <div class="pm-contents">
