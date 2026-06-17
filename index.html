@@ -752,6 +752,74 @@
       .trust-item { font-size: 0.9rem; }
     }
 
+
+    /* ── NEWSLETTER ── */
+    .newsletter-section {
+      background: var(--charcoal);
+      padding: 60px 32px;
+      text-align: center;
+    }
+    .newsletter-section h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .newsletter-section h2 em {
+      font-style: italic;
+      color: var(--rose);
+    }
+    .newsletter-section p {
+      color: rgba(255,255,255,0.65);
+      font-size: 14px;
+      margin-bottom: 28px;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .newsletter-form {
+      display: flex;
+      gap: 0;
+      max-width: 440px;
+      margin: 0 auto 12px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .newsletter-form input {
+      flex: 1;
+      padding: 14px 18px;
+      border: none;
+      font-size: 14px;
+      font-family: var(--sans);
+      outline: none;
+      background: #fff;
+      color: var(--charcoal);
+    }
+    .newsletter-form button {
+      padding: 14px 24px;
+      background: var(--rose);
+      color: #fff;
+      border: none;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .newsletter-form button:hover { background: var(--rose-dark); }
+    .newsletter-msg { font-size: 13px; min-height: 20px; }
+    .newsletter-msg.success { color: #7dd3b0; }
+    .newsletter-msg.error { color: #f87171; }
+    .newsletter-note { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 10px; }
+    @media (max-width: 480px) {
+      .newsletter-form { flex-direction: column; }
+      .newsletter-form input, .newsletter-form button { border-radius: 4px; }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .nav-inner { display: none; }
@@ -1168,6 +1236,54 @@
       <a href="/reviews" class="btn-outline">Read All Reviews</a>
     </div>
   </section>
+
+
+  <!-- NEWSLETTER SIGNUP -->
+  <section class="newsletter-section">
+    <h2>Join Our Community & Get <em>10% Off</em></h2>
+    <p>Sign up for handpicked wellness tips, new product launches, seasonal collections and exclusive offers — straight to your inbox.</p>
+    <div class="newsletter-form">
+      <input type="email" id="cmg-email-input" placeholder="Your email address" autocomplete="email">
+      <button onclick="cmgSubscribe()">Subscribe</button>
+    </div>
+    <p class="newsletter-msg" id="cmg-newsletter-msg"></p>
+    <p class="newsletter-note">No spam, ever. Unsubscribe anytime. 🌿</p>
+  </section>
+
+  <script>
+  async function cmgSubscribe() {
+    const email = document.getElementById('cmg-email-input').value.trim();
+    const msg = document.getElementById('cmg-newsletter-msg');
+    if (!email || !email.includes('@')) {
+      msg.textContent = 'Please enter a valid email address.';
+      msg.className = 'newsletter-msg error';
+      return;
+    }
+    msg.textContent = 'Subscribing...';
+    msg.className = 'newsletter-msg';
+    try {
+      const res = await fetch('https://qvkosdqcryrcfbjtaxic.supabase.co/functions/v1/cmg-subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        msg.textContent = '🎉 Welcome! Check your inbox for your 10% discount code.';
+        msg.className = 'newsletter-msg success';
+        document.getElementById('cmg-email-input').value = '';
+      } else {
+        throw new Error('Subscription failed');
+      }
+    } catch(e) {
+      msg.textContent = 'Something went wrong — please try again.';
+      msg.className = 'newsletter-msg error';
+    }
+  }
+  document.getElementById('cmg-email-input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') cmgSubscribe();
+  });
+  </script>
 
   <!-- FOOTER -->
   <footer>
