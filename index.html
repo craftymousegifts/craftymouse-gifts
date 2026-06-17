@@ -219,7 +219,7 @@
       background: var(--blush);
       display: grid;
       grid-template-columns: 1fr 1fr;
-      min-height: 520px;
+      min-height: 420px;
       align-items: center;
     }
 
@@ -269,7 +269,7 @@
       color: var(--mid);
       margin: 12px 0 24px;
       line-height: 1.7;
-      max-width: 380px;
+      max-width: 520px;
     }
     .hero-badge {
       font-family: var(--serif);
@@ -318,14 +318,18 @@
     }
 
     .hero-image {
-      height: 520px;
-      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
     }
 
     .hero-image img {
-      width: 100%;
-      height: 100%;
+      width: 340px;
+      height: 340px;
       object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
     }
 
     /* ── REVIEWS STRIP ── */
@@ -692,7 +696,7 @@
     .trust-bar {
       position: relative;
       background: linear-gradient(135deg, #e8d5d0 0%, #f3e8e6 40%, #edddd9 70%, #dfc8c2 100%);
-      padding: 36px 0;
+      padding: 22px 0;
       overflow: hidden;
     }
     .trust-bar::before,
@@ -700,7 +704,7 @@
       content: '';
       position: absolute;
       top: 0; bottom: 0;
-      width: 120px;
+      width: 80px;
       z-index: 2;
       pointer-events: none;
     }
@@ -713,31 +717,39 @@
       background: linear-gradient(to left, #dfc8c2, transparent);
     }
     .trust-bar-inner {
-      max-width: 380px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 0 60px;
+      padding: 0 40px;
       display: flex;
-      flex-direction: column;
-      gap: 18px;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
     }
     .trust-item {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 8px;
       font-family: var(--serif);
-      font-size: 1.15rem;
+      font-size: 1rem;
       font-weight: 500;
       color: #3a2a28;
       letter-spacing: 0.01em;
+      white-space: nowrap;
     }
     .trust-icon {
-      width: 36px;
-      height: 36px;
+      font-size: 18px;
       flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
+    }
+    @media (max-width: 700px) {
+      .trust-bar-inner {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 14px 20px;
+        padding: 0 20px;
+      }
+      .trust-item { font-size: 0.9rem; }
     }
 
     /* ── RESPONSIVE ── */
@@ -940,8 +952,8 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-text">
-      <h1>Hand-Poured Candles &amp; Wax Melts —<br><em>Made in the Scottish Borders</em></h1>
-      <p class="hero-sub">Lovingly crafted soy candles, wax melts and Reiki crystal gifts — straight from the Scottish Borders to your door.</p>
+      <h1>Hand-Poured Candles, Wax Melts &amp;<br><em>Eco-Friendly Home Décor</em></h1>
+      <p class="hero-sub">Lovingly hand-poured soy candles, fragrant wax melts, Reiki-inspired crystal candles and beautiful eco-friendly home décor — all made with care in the Scottish Borders.</p>
       <a href="/shop.html" class="btn-primary">Shop Now</a>
     </div>
     <div class="hero-image">

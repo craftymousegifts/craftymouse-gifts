@@ -110,6 +110,39 @@
     .payment-icons img { height: 20px; opacity: .6; filter: brightness(10); }
     @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
+  
+    /* ── COOKIE CONSENT ── */
+    #cookie-banner {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #1e1e1e;
+      color: #fff;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      font-family: 'Lato', Arial, sans-serif;
+      font-size: 13px;
+      z-index: 9999;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.2);
+    }
+    #cookie-banner p { margin: 0; line-height: 1.5; max-width: 600px; }
+    #cookie-banner a { color: #e46d69; text-decoration: underline; }
+    .cookie-btn {
+      padding: 9px 22px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .cookie-btn-accept { background: #e46d69; color: #fff; }
+    .cookie-btn-essential { background: transparent; color: #ccc; border: 1px solid #555; }
+    .cookie-btn:hover { opacity: 0.85; }
   </style>
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-Cxk8PXNpeptW3BnTK8Zyt.js"></script>
@@ -271,5 +304,25 @@
       </div>
     </div>
   </footer>
+
+  <!-- COOKIE CONSENT BANNER -->
+  <div id="cookie-banner" style="display:none;">
+    <p>We use essential cookies to keep your basket working. We also use <a href="/cookie-policy.html">Plausible Analytics</a> — privacy-friendly, no personal data collected. <a href="/cookie-policy.html">Cookie Policy</a></p>
+    <button class="cookie-btn cookie-btn-accept" onclick="cmgAcceptCookies()">Accept All</button>
+    <button class="cookie-btn cookie-btn-essential" onclick="cmgAcceptCookies()">Essential Only</button>
+  </div>
+
+  <script>
+    // Cookie consent
+    (function() {
+      if (!localStorage.getItem('cmg_cookie_consent')) {
+        document.getElementById('cookie-banner').style.display = 'flex';
+      }
+    })();
+    function cmgAcceptCookies() {
+      localStorage.setItem('cmg_cookie_consent', 'true');
+      document.getElementById('cookie-banner').style.display = 'none';
+    }
+  </script>
 </body>
 </html>
