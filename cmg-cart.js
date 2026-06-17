@@ -77,15 +77,16 @@ function fmtPrice(pence) {
 }
 
 // ── Add to Cart ──────────────────────────────────────────────────────
-function cmgAddToCart(priceId, qty = 1) {
+function cmgAddToCart(priceId, qty = 1, variant = '') {
   const product = CMG_PRODUCTS.find(p => p.id === priceId);
   if (!product) { console.warn('CMG: product not found', priceId); return; }
 
-  const existing = cart.find(i => i.id === priceId);
+  // If same product with different variant, add as separate item
+  const existing = cart.find(i => i.id === priceId && i.variant === variant);
   if (existing) {
     existing.qty += qty;
   } else {
-    cart.push({ id: priceId, name: product.name, price: product.price, image: product.image, qty });
+    cart.push({ id: priceId, name: product.name, price: product.price, image: product.image, qty, variant });
   }
 
   saveCart();
@@ -95,8 +96,8 @@ function cmgAddToCart(priceId, qty = 1) {
 }
 
 // ── Remove / Update ──────────────────────────────────────────────────
-function cmgRemoveFromCart(priceId) {
-  cart = cart.filter(i => i.id !== priceId);
+function cmgRemoveFromCart(priceId, variant) {
+  cart = cart.filter(i => !(i.id === priceId && i.variant === variant));
   saveCart();
   updateCartBadge();
   renderCartItems();
@@ -162,7 +163,7 @@ function renderCartItems() {
           <button onclick="cmgUpdateQty('${item.id}', ${item.qty - 1})" style="width:28px;height:28px;border-radius:50%;border:1.5px solid #e0d0cf;background:white;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#666;">−</button>
           <span style="font-size:14px;font-weight:600;min-width:20px;text-align:center;">${item.qty}</span>
           <button onclick="cmgUpdateQty('${item.id}', ${item.qty + 1})" style="width:28px;height:28px;border-radius:50%;border:1.5px solid #e0d0cf;background:white;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#666;">+</button>
-          <button onclick="cmgRemoveFromCart('${item.id}')" style="margin-left:auto;font-size:11px;color:#999;background:none;border:none;cursor:pointer;padding:4px;">Remove</button>
+          <button onclick="cmgRemoveFromCart('${item.id}','${item.variant || ''}')" style="margin-left:auto;font-size:11px;color:#999;background:none;border:none;cursor:pointer;padding:4px;">Remove</button>
         </div>
       </div>
     </div>`).join('');
@@ -205,7 +206,7 @@ async function cmgCheckout() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        items: cart.map(i => ({ price_id: i.id, quantity: i.qty })),
+        items: cart.map(i => ({ price_id: i.id, quantity: i.qty, variant: i.variant || '' })),
         subtotal: cartTotal(),
       }),
     });

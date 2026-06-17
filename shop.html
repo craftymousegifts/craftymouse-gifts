@@ -158,14 +158,19 @@
     .payment-icons img { height: 20px; opacity: .6; filter: brightness(10); }
     @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
-  </style>
+  
+@keyframes shake {
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-4px)}
+  75%{transform:translateX(4px)}
+}
+</style>
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-Cxk8PXNpeptW3BnTK8Zyt.js"></script>
 <script>
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
   plausible.init()
 </script>
-<script src="/cmg-cart.js"></script>
 </head>
 <body>
   <script>
@@ -192,7 +197,7 @@
       <div class="header-actions">
         <a href="/reviews.html">Reviews</a>
         <a href="/account.html">Account</a>
-        <button class="cart-btn" id="cmg-cart-btn" onclick="openCart()" aria-label="Open basket"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span id="cmg-cart-badge" style="position:absolute;top:-6px;right:-8px;background:#e46d69;color:white;font-size:10px;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;font-weight:700;"></span></button>
+        <button class="cart-btn snipcart-checkout" aria-label="Open basket"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span class="snipcart-items-count"></span></button>
         <button class="hamburger" onclick="document.getElementById('mob-nav').classList.toggle('open')" aria-label="Menu">
           <span></span><span></span><span></span>
         </button>
@@ -289,7 +294,7 @@
             <p class="desc">Autumn Emporium Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjiQpAVWZATGhr6BBDNsF')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="autumn-emporium" data-item-name="Autumn Emporium" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677047/1369x1825.png" data-item-description="Autumn Emporium Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -300,7 +305,7 @@
             <p class="desc">Snowflake Kisses Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjjQpAVWZATGhh7ePcWgj')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="snowflake-kisses" data-item-name="Snowflake Kisses" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677030/1369x1825.png" data-item-description="Snowflake Kisses Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -311,7 +316,7 @@
             <p class="desc">Cinnamon Bark & White Ginger Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjkQpAVWZATGhuNg9ZC0S')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="cinnamon-bark-white-ginger" data-item-name="Cinnamon Bark & White Ginger" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677026/1369x1825.png" data-item-description="Cinnamon Bark & White Ginger Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -322,7 +327,7 @@
             <p class="desc">Cosmic Plum & Saffron Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjlQpAVWZATGhsQ6b4ljE')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="cosmic-plum-saffron" data-item-name="Cosmic Plum & Saffron" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677017/1825x1369.png" data-item-description="Cosmic Plum & Saffron Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -333,7 +338,7 @@
             <p class="desc">Crimson Berry & Clementine Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjlQpAVWZATGhbxTNpelA')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="crimson-berry-clementine" data-item-name="Crimson Berry & Clementine" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677015/1825x1369.png" data-item-description="Crimson Berry & Clementine Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -344,7 +349,7 @@
             <p class="desc">Meditation Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjmQpAVWZATGhUX38EXSj')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="meditation" data-item-name="Meditation" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676959/1825x1369.png" data-item-description="Meditation Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -355,7 +360,7 @@
             <p class="desc">Me Time Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjnQpAVWZATGhDJRlYLf1')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="me-time" data-item-name="Me Time" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676956/1825x1369.png" data-item-description="Me Time Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -366,7 +371,7 @@
             <p class="desc">Recharge Black Pepper Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjoQpAVWZATGhm7AA2ALS')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="recharge-black-pepper" data-item-name="Recharge Black Pepper" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676941/1825x1369.png" data-item-description="Recharge Black Pepper Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -377,7 +382,7 @@
             <p class="desc">Birthday Cake Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjoQpAVWZATGhPwdKVSCH')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="birthday-cake" data-item-name="Birthday Cake" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676938/1825x1369.png" data-item-description="Birthday Cake Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -388,7 +393,7 @@
             <p class="desc">Pink Rhubarb Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjpQpAVWZATGhvJvVs2t9')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="pink-rhubarb" data-item-name="Pink Rhubarb" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676935/1825x1369.png" data-item-description="Pink Rhubarb Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -399,7 +404,7 @@
             <p class="desc">Shimmering Star Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjqQpAVWZATGhHRTq54Sj')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="shimmering-star" data-item-name="Shimmering Star" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676920/1825x1369.png" data-item-description="Shimmering Star Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -410,7 +415,7 @@
             <p class="desc">Charming Oasis Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjrQpAVWZATGhAlnTIndW')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="charming-oasis" data-item-name="Charming Oasis" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676907/1825x1369.png" data-item-description="Charming Oasis Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -421,7 +426,7 @@
             <p class="desc">Intergalactic Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjsQpAVWZATGhkaq4Mybg')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="intergalactic" data-item-name="Intergalactic" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21676904/1825x1369.png" data-item-description="Intergalactic Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -432,7 +437,7 @@
             <p class="desc">Amethyst Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjsQpAVWZATGhCKC1yWSZ')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="amethyst" data-item-name="Amethyst" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21675978/2000x1500.png" data-item-description="Amethyst Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -448,7 +453,7 @@
             <p class="desc">Eco-Friendly Jesmonite Candle</p>
             <div class="footer">
               <span class="price">£26.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjaQpAVWZATGhHzLuPxhq')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="eco-friendly-jesmonite-candle" data-item-name="Eco-Friendly Jesmonite Candle" data-item-price="26.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820888/1024x1536.png" data-item-description="Eco-Friendly Jesmonite Candle" data-item-custom1-name="Eco-Friendly Jesmonite Candle" data-item-custom1-options="Bergamot & Patchouli|Coconut & Vanilla|Peony & Blush Suede|Rose & Oud|Vanilla & Sandalwood" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -465,7 +470,14 @@
             <p class="desc">Root Chakra Candle</p>
             <div class="footer">
               <span class="price">£24.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjtQpAVWZATGhQoKq1exn')">Add to Basket</button>
+              <div class="variant-select" style="margin-bottom:10px;">
+              <label style="font-size:12px;font-weight:700;color:var(--mid);display:block;margin-bottom:4px;">Choose scent:</label>
+              <select class="scent-select" style="width:100%;padding:8px 10px;border:1.5px solid var(--blush-dark);border-radius:8px;font-size:13px;font-family:inherit;color:var(--charcoal);background:white;cursor:pointer;" onchange="this.style.borderColor=this.value?'#e46d69':'var(--blush-dark)'">
+                <option value="">— Select a scent —</option>
+                <option value="Black Pepper">Black Pepper</option><option value="Sandalwood">Sandalwood</option><option value="Cedarwood">Cedarwood</option><option value="Myrrh">Myrrh</option><option value="Patchouli">Patchouli</option><option value="Ylang Ylang">Ylang Ylang</option>
+              </select>
+            </div>
+              <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjtQpAVWZATGhQoKq1exn', 'Root Chakra Candle')">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -476,7 +488,14 @@
             <p class="desc">Sacral Chakra</p>
             <div class="footer">
               <span class="price">£24.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjOQpAVWZATGhbuWSBndO')">Add to Basket</button>
+              <div class="variant-select" style="margin-bottom:10px;">
+              <label style="font-size:12px;font-weight:700;color:var(--mid);display:block;margin-bottom:4px;">Choose scent:</label>
+              <select class="scent-select" style="width:100%;padding:8px 10px;border:1.5px solid var(--blush-dark);border-radius:8px;font-size:13px;font-family:inherit;color:var(--charcoal);background:white;cursor:pointer;" onchange="this.style.borderColor=this.value?'#e46d69':'var(--blush-dark)'">
+                <option value="">— Select a scent —</option>
+                <option value="Ylang Ylang">Ylang Ylang</option><option value="Sweet Orange">Sweet Orange</option><option value="Patchouli">Patchouli</option><option value="Sandalwood">Sandalwood</option><option value="Jasmine">Jasmine</option><option value="Ginger">Ginger</option>
+              </select>
+            </div>
+              <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjOQpAVWZATGhbuWSBndO', 'Sacral Chakra')">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -487,7 +506,14 @@
             <p class="desc">Solar Plexus Chakra</p>
             <div class="footer">
               <span class="price">£24.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjuQpAVWZATGhMvNzAXne')">Add to Basket</button>
+              <div class="variant-select" style="margin-bottom:10px;">
+              <label style="font-size:12px;font-weight:700;color:var(--mid);display:block;margin-bottom:4px;">Choose scent:</label>
+              <select class="scent-select" style="width:100%;padding:8px 10px;border:1.5px solid var(--blush-dark);border-radius:8px;font-size:13px;font-family:inherit;color:var(--charcoal);background:white;cursor:pointer;" onchange="this.style.borderColor=this.value?'#e46d69':'var(--blush-dark)'">
+                <option value="">— Select a scent —</option>
+                <option value="Black Pepper">Black Pepper</option><option value="Eucalyptus">Eucalyptus</option><option value="Peppermint">Peppermint</option><option value="Ginger">Ginger</option><option value="Juniper Berry">Juniper Berry</option><option value="Lemon">Lemon</option>
+              </select>
+            </div>
+              <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjuQpAVWZATGhMvNzAXne', 'Solar Plexus Chakra')">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -498,7 +524,14 @@
             <p class="desc">Heart Chakra</p>
             <div class="footer">
               <span class="price">£24.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjvQpAVWZATGh1SAiyZaN')">Add to Basket</button>
+              <div class="variant-select" style="margin-bottom:10px;">
+              <label style="font-size:12px;font-weight:700;color:var(--mid);display:block;margin-bottom:4px;">Choose scent:</label>
+              <select class="scent-select" style="width:100%;padding:8px 10px;border:1.5px solid var(--blush-dark);border-radius:8px;font-size:13px;font-family:inherit;color:var(--charcoal);background:white;cursor:pointer;" onchange="this.style.borderColor=this.value?'#e46d69':'var(--blush-dark)'">
+                <option value="">— Select a scent —</option>
+                <option value="Geranium & Willow Moss">Geranium & Willow Moss</option><option value="Jasmine">Jasmine</option><option value="Ylang Ylang">Ylang Ylang</option><option value="Pine">Pine</option><option value="Geranium">Geranium</option>
+              </select>
+            </div>
+              <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjvQpAVWZATGh1SAiyZaN', 'Heart Chakra')">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -509,7 +542,14 @@
             <p class="desc">Throat Chakra</p>
             <div class="footer">
               <span class="price">£24.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjwQpAVWZATGhPYvXgctA')">Add to Basket</button>
+              <div class="variant-select" style="margin-bottom:10px;">
+              <label style="font-size:12px;font-weight:700;color:var(--mid);display:block;margin-bottom:4px;">Choose scent:</label>
+              <select class="scent-select" style="width:100%;padding:8px 10px;border:1.5px solid var(--blush-dark);border-radius:8px;font-size:13px;font-family:inherit;color:var(--charcoal);background:white;cursor:pointer;" onchange="this.style.borderColor=this.value?'#e46d69':'var(--blush-dark)'">
+                <option value="">— Select a scent —</option>
+                <option value="Lemongrass">Lemongrass</option><option value="Peppermint">Peppermint</option><option value="Tea Tree">Tea Tree</option>
+              </select>
+            </div>
+              <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjwQpAVWZATGhPYvXgctA', 'Throat Chakra')">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -520,7 +560,14 @@
             <p class="desc">Third Eye Chakra</p>
             <div class="footer">
               <span class="price">£24.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjwQpAVWZATGhr5D6gcLO')">Add to Basket</button>
+              <div class="variant-select" style="margin-bottom:10px;">
+              <label style="font-size:12px;font-weight:700;color:var(--mid);display:block;margin-bottom:4px;">Choose scent:</label>
+              <select class="scent-select" style="width:100%;padding:8px 10px;border:1.5px solid var(--blush-dark);border-radius:8px;font-size:13px;font-family:inherit;color:var(--charcoal);background:white;cursor:pointer;" onchange="this.style.borderColor=this.value?'#e46d69':'var(--blush-dark)'">
+                <option value="">— Select a scent —</option>
+                <option value="Cedarwood & Vanilla">Cedarwood & Vanilla</option><option value="Clary Sage">Clary Sage</option><option value="Rosemary">Rosemary</option>
+              </select>
+            </div>
+              <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjwQpAVWZATGhr5D6gcLO', 'Third Eye Chakra')">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -531,7 +578,14 @@
             <p class="desc">Crown Chakra</p>
             <div class="footer">
               <span class="price">£24.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjxQpAVWZATGhyi67MCAB')">Add to Basket</button>
+              <div class="variant-select" style="margin-bottom:10px;">
+              <label style="font-size:12px;font-weight:700;color:var(--mid);display:block;margin-bottom:4px;">Choose scent:</label>
+              <select class="scent-select" style="width:100%;padding:8px 10px;border:1.5px solid var(--blush-dark);border-radius:8px;font-size:13px;font-family:inherit;color:var(--charcoal);background:white;cursor:pointer;" onchange="this.style.borderColor=this.value?'#e46d69':'var(--blush-dark)'">
+                <option value="">— Select a scent —</option>
+                <option value="Cedarwood & Vanilla">Cedarwood & Vanilla</option><option value="Lavender">Lavender</option><option value="Sandalwood">Sandalwood</option><option value="Lemon, Neroli, Sandalwood & Myrrh">Lemon, Neroli, Sandalwood & Myrrh</option>
+              </select>
+            </div>
+              <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjxQpAVWZATGhyi67MCAB', 'Crown Chakra')">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -551,7 +605,7 @@
             <p class="desc">Three handcrafted soy candles for every mood — morning, midday, and evening.</p>
             <div class="footer">
               <span class="price">£36.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjTQpAVWZATGh4CmdKhgQ')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="the-candle-lover-s-collection" data-item-name="The Candle Lover's Collection" data-item-price="36.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888811/784x1176.JPG" data-item-description="Three handcrafted soy candles for every mood — morning, midday, and evening.">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -562,7 +616,7 @@
             <p class="desc">A gift he'll actually love — crisp, clean scents and quality craftsmanship.</p>
             <div class="footer">
               <span class="price">£18.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjTQpAVWZATGhWVSs7WsZ')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="the-dad-s-treat-box" data-item-name="The Dad's Treat Box" data-item-price="18.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888812/784x1176.JPG" data-item-description="A gift he'll actually love — crisp, clean scents and quality craftsmanship.">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -573,7 +627,7 @@
             <p class="desc">Beautiful, sustainable, and thoughtfully made in the Scottish Borders.</p>
             <div class="footer">
               <span class="price">£41.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjSQpAVWZATGhWPcBdmMJ')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="the-eco-gifting-set" data-item-name="The Eco Gifting Set" data-item-price="41.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888814/784x1176.JPG" data-item-description="Beautiful, sustainable, and thoughtfully made in the Scottish Borders.">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -584,7 +638,7 @@
             <p class="desc">When only the very best will do — a show-stopping luxury hamper.</p>
             <div class="footer">
               <span class="price">£59.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjRQpAVWZATGhoIRgWEG2')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="the-grand-occasion-gift-box" data-item-name="The Grand Occasion Gift Box" data-item-price="59.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888816/784x1176.JPG" data-item-description="When only the very best will do — a show-stopping luxury hamper.">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -595,7 +649,7 @@
             <p class="desc">Indulgent self-care from the Scottish Borders, straight to their door.</p>
             <div class="footer">
               <span class="price">£59.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjQQpAVWZATGhDMWQs4XY')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="the-luxury-home-spa" data-item-name="The Luxury Home Spa" data-item-price="59.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888818/784x1176.JPG" data-item-description="Indulgent self-care from the Scottish Borders, straight to their door.">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -606,7 +660,7 @@
             <p class="desc">Unwind and relax with calming treats</p>
             <div class="footer">
               <span class="price">£46.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjQQpAVWZATGhwRJQwjWc')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="the-relaxation-box" data-item-name="The Relaxation Box" data-item-price="46.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888819/784x1176.JPG" data-item-description="Unwind and relax with calming treats">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -617,7 +671,7 @@
             <p class="desc">A gorgeous little gift that fills every room with warmth and fragrance.</p>
             <div class="footer">
               <span class="price">£18.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjPQpAVWZATGhhMTCTIQL')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="the-wax-melt-treat" data-item-name="The Wax Melt Treat" data-item-price="18.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/8/21888821/784x1176.JPG" data-item-description="A gorgeous little gift that fills every room with warmth and fragrance.">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -637,7 +691,7 @@
             <p class="desc">A sustainable seaside keepsake, inspired by shells from the Scottish and Northumberland coast—made w</p>
             <div class="footer">
               <span class="price">£4.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjVQpAVWZATGhgykZxsNa')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="seashell-keyring" data-item-name="Seashell Keyring" data-item-price="4.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/5/21859451/1024x1536.png" data-item-description="A sustainable seaside keepsake, inspired by shells from the Scottish and Northumberland coast—made w" data-item-custom1-name="Choose Your Beach" data-item-custom1-options="Bamburgh Beach|Berwick Beach|Coldingham Bay|Eyemouth Beach|Seahouses|St Abbs" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -648,7 +702,7 @@
             <p class="desc">Eco Resin Hamsa Tealight Holder</p>
             <div class="footer">
               <span class="price">£19.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjYQpAVWZATGhlRlqbD4x')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="eco-resin-hamsa-tealight-holder" data-item-name="Eco Resin Hamsa Tealight Holder" data-item-price="19.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820500/1536x1024.png" data-item-description="Eco Resin Hamsa Tealight Holder" data-item-custom1-name="Wax Melt Burner" data-item-custom1-options="Black|Blush Pink Marble|Grey Marble|Terracotta|Terracotta Marble|White" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -659,7 +713,7 @@
             <p class="desc">Celtic & Pagan Symbol Fridge Magnets</p>
             <div class="footer">
               <span class="price">£3.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjaQpAVWZATGhfGSdqY54')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="celtic-pagan-symbol-fridge-magnets" data-item-name="Celtic & Pagan Symbol Fridge Magnets" data-item-price="3.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21811018/1025x1024.png" data-item-description="Celtic & Pagan Symbol Fridge Magnets" data-item-custom1-name="Fridge Magnets" data-item-custom1-options="Pentacle ? symbolising the five elements and protection|Triple Moon ? representing the cycles of the moon and feminine energy|Triquetra (Celtic Trinity Knot) ? symbolising unity and interconnectedness|Triskelion (Triple Spiral) ? representing motion, balance and growth" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -670,7 +724,7 @@
             <p class="desc">Moon Face Fridge Magnets</p>
             <div class="footer">
               <span class="price">£4.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjbQpAVWZATGhDSBnHfYU')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="moon-face-fridge-magnets" data-item-name="Moon Face Fridge Magnets" data-item-price="4.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21811012/1363x1024.png" data-item-description="Moon Face Fridge Magnets" data-item-custom1-name="Moon Face Fridge Magnets" data-item-custom1-options="Dark Blue|Dark Blue with Stars|Dark Grey|Light Brown|Light Grey|Pastel Lemon" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -692,7 +746,7 @@
             <p class="desc">Scented Wax Melt Bouquet Elements</p>
             <div class="footer">
               <span class="price">£29.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjhQpAVWZATGha7x7TT89')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="rose-floral-bouquet" data-item-name="Rose Floral Bouquet" data-item-price="29.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/4/21743326/1500x2000.jpg" data-item-description="Scented Wax Melt Bouquet Elements" data-item-custom1-name="Floral Wax Melts" data-item-custom1-options="No Place Like Home|Cedarwood & Jasmine|Champagne Toast|Peony Blush Suede" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -703,7 +757,7 @@
             <p class="desc">Mother's Day Bouquet</p>
             <div class="footer">
               <span class="price">£29.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjZQpAVWZATGhKaaFwLV9')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="mother-s-day-bouquet" data-item-name="Mother's Day Bouquet" data-item-price="29.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/1/21815487/360x359.jpg" data-item-description="Mother's Day Bouquet">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -719,7 +773,7 @@
             <p class="desc">Cylinder Style Wax Melt Warmer</p>
             <div class="footer">
               <span class="price">£16.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjVQpAVWZATGh9cTfhm5s')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="cylinder-style-wax-melt-warmer" data-item-name="Cylinder Style Wax Melt Warmer" data-item-price="16.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820499/1024x1536.png" data-item-description="Cylinder Style Wax Melt Warmer" data-item-custom1-name="Wax Melt Burner" data-item-custom1-options="Black|Blush Pink Marble|Grey Marble|Terracotta Marble|Terracotta|White" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -730,7 +784,7 @@
             <p class="desc">Nordic Style Wax Melt Warmer</p>
             <div class="footer">
               <span class="price">£16.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjWQpAVWZATGhaLKukUh0')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="nordic-style-wax-melt-warmer" data-item-name="Nordic Style Wax Melt Warmer" data-item-price="16.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820498/1024x1536.png" data-item-description="Nordic Style Wax Melt Warmer" data-item-custom1-name="Wax Melt Burner" data-item-custom1-options="Black|Blush Pink Marble|Grey Marble|Terracotta Marble|Terracotta|White" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -741,7 +795,7 @@
             <p class="desc">Handmade Arch Jesmonite Wax Melt Warmer</p>
             <div class="footer">
               <span class="price">£16.99</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjXQpAVWZATGh6BDvbvav')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="handmade-arch-jesmonite-wax-melt-warmer" data-item-name="Handmade Arch Jesmonite Wax Melt Warmer" data-item-price="16.99" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/8/2/21820491/1024x1024.png" data-item-description="Handmade Arch Jesmonite Wax Melt Warmer" data-item-custom1-name="Wax Melt Burner" data-item-custom1-options="Black|Blush Pink Marble|Grey Marble|Terracotta Marble|Terracotta|White" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -757,7 +811,7 @@
             <p class="desc">Passionfruit Martini & Coconut</p>
             <div class="footer">
               <span class="price">£3.50</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjdQpAVWZATGhRqPPieqi')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="passionfruit-martini-coconut" data-item-name="Passionfruit Martini & Coconut" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761144/1024x1280.PNG" data-item-description="Passionfruit Martini & Coconut" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -768,7 +822,7 @@
             <p class="desc">Passionfruit Martini</p>
             <div class="footer">
               <span class="price">£3.50</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjeQpAVWZATGhKKnnvDmv')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="passionfruit-martini" data-item-name="Passionfruit Martini" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761138/1024x1280.PNG" data-item-description="Passionfruit Martini" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -779,7 +833,7 @@
             <p class="desc">Cosmic Plum & Saffron Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjlQpAVWZATGhsQ6b4ljE')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="cosmic-plum-saffron" data-item-name="Cosmic Plum & Saffron" data-item-price="16.00" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/6/7/21677017/1825x1369.png" data-item-description="Cosmic Plum & Saffron Soy Wax Candle">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -790,7 +844,7 @@
             <p class="desc">Champagne Toast</p>
             <div class="footer">
               <span class="price">£3.50</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjcQpAVWZATGhm9xuDp25')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="champagne-toast" data-item-name="Champagne Toast" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761129/1600x2000.PNG" data-item-description="Champagne Toast" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -801,7 +855,7 @@
             <p class="desc">Champagne Grapes & Roses</p>
             <div class="footer">
               <span class="price">£3.50</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjdQpAVWZATGhXMxWy5ls')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="champagne-grapes-roses" data-item-name="Champagne Grapes & Roses" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761128/1024x1280.PNG" data-item-description="Champagne Grapes & Roses" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -817,7 +871,7 @@
             <p class="desc">Champagne Toast</p>
             <div class="footer">
               <span class="price">£3.50</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjcQpAVWZATGhm9xuDp25')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="champagne-toast" data-item-name="Champagne Toast" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761129/1600x2000.PNG" data-item-description="Champagne Toast" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -828,7 +882,7 @@
             <p class="desc">Champagne Grapes & Roses</p>
             <div class="footer">
               <span class="price">£3.50</span>
-              <button class="btn-cart" onclick="cmgAddToCart('price_1TizjdQpAVWZATGhXMxWy5ls')">Add to Basket</button>
+              <button class="btn-cart snipcart-add-item" data-item-id="champagne-grapes-roses" data-item-name="Champagne Grapes & Roses" data-item-price="3.50" data-item-url="/shop.html" data-item-image="https://sites.create-cdn.net/siteimages/74/7/9/747971/21/7/6/21761128/1024x1280.PNG" data-item-description="Champagne Grapes & Roses" data-item-custom1-name="Wax Melt Offer" data-item-custom1-options="Single Wax Melt|3 for 10 bundle" data-item-custom1-required="true">Add to Basket</button>
             </div>
           </div>
         </div>
@@ -903,7 +957,11 @@
 
     // Ensure cart opens on button click
     document.addEventListener('click', function(e) {
-      
+      const btn = e.target.closest('.btn-cart');
+      if (btn && window.Snipcart) {
+        window.Snipcart.api.cart.open();
+      }
+    });
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
         const t = document.querySelector(a.getAttribute('href'));
