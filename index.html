@@ -1250,8 +1250,11 @@
     if (sessionStorage.getItem('cmg_confetti_shown')) return;
     sessionStorage.setItem('cmg_confetti_shown', '1');
 
-    // Party blower sound — triggered immediately on load
+    // ── SOUND ────────────────────────────────────────────────
+    let soundPlayed = false;
     function playBlower() {
+      if (soundPlayed) return;
+      soundPlayed = true;
       try {
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         const actx = new AudioCtx();
@@ -1273,162 +1276,13 @@
         toot(1.7, 850, 250, 0.2);
       } catch(e) {}
     }
+    // Try immediately, fallback on first interaction
+    try { playBlower(); } catch(e) {}
+    document.addEventListener('click', playBlower, { once: true });
+    document.addEventListener('touchstart', playBlower, { once: true });
+    document.addEventListener('scroll', playBlower, { once: true });
 
-    // Play on first user interaction if autoplay blocked
-    let soundPlayed = false;
-    function trySound() {
-      if (!soundPlayed) { soundPlayed = true; playBlower(); }
-    }
-    // Try immediately
-    trySound();
-    // Fallback: play on first click/touch if browser blocked autoplay
-    document.addEventListener('click', trySound, { once: true });
-    document.addEventListener('touchstart', trySound, { once: true });
-
-    const canvas = document.createElement('canvas');
-    canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;';
-    document.body.appendChild(canvas);
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const colours = ['#f3e8e6','#e46d69','#c4524e','#1e1e1e','#d4af37','#f5e6a3','#ffb7c5','#fff0f0','#gold'];
-    const shapes = ['circle','rect','heart'];
-    const pieces = [];
-    const FALL_DURATION = 6000;   // 6s to fall
-    const SETTLE_DURATION = 3000; // 3s settled at bottom
-    const FADE_DURATION = 2000;   // 2s to fade out
-    const TOTAL = FALL_DURATION + SETTLE_DURATION + FADE_DURATION;
-
-    for (let i = 0; i < 160; i++) {
-      pieces.push({
-        x: Math.random() * canvas.width,
-        y: -30 - Math.random() * canvas.height * 0.8,
-        size: 7 + Math.random() * 10,
-        colour: colours[Math.floor(Math.random() * colours.length)],
-        shape: shapes[Math.floor(Math.random() * shapes.length)],
-        speed: 1.2 + Math.random() * 2,
-        drift: (Math.random() - 0.5) * 1.2,
-        rotation: Math.random() * Math.PI * 2,
-        spin: (Math.random() - 0.5) * 0.08,
-        opacity: 1,
-        settled: false,
-        settleY: canvas.height - 5 - Math.random() * 20
-      });
-    }
-
-    let start = null;
-
-    function drawHeart(ctx, x, y, size) {
-      ctx.beginPath();
-      ctx.moveTo(x, y + size / 4);
-      ctx.bezierCurveTo(x, y, x - size/2, y, x - size/2, y + size/4);
-      ctx.bezierCurveTo(x - size/2, y + size/2, x, y + size*0.75, x, y + size);
-      ctx.bezierCurveTo(x, y + size*0.75, x + size/2, y + size/2, x + size/2, y + size/4);
-      ctx.bezierCurveTo(x + size/2, y, x, y, x, y + size/4);
-      ctx.closePath();
-      ctx.fill();
-    }
-
-    function animate(ts) {
-      if (!start) start = ts;
-      const elapsed = ts - start;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Calculate opacity for fade phase
-      let globalOpacity = 1;
-      if (elapsed > FALL_DURATION + SETTLE_DURATION) {
-        globalOpacity = Math.max(0, 1 - (elapsed - FALL_DURATION - SETTLE_DURATION) / FADE_DURATION);
-      }
-
-      pieces.forEach(p => {
-        if (elapsed < FALL_DURATION) {
-          // Falling phase
-          if (!p.settled) {
-            p.y += p.speed;
-            p.x += p.drift;
-            p.rotation += p.spin;
-            if (p.y >= p.settleY) {
-              p.y = p.settleY;
-              p.settled = true;
-            }
-          }
-        }
-        // In settle phase — stay put
-        // In fade phase — stay put but fade
-
-        ctx.save();
-        ctx.globalAlpha = globalOpacity;
-        ctx.fillStyle = p.colour === '#gold' ? '#d4af37' : p.colour;
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rotation);
-
-        if (p.shape === 'circle') {
-          ctx.beginPath();
-          ctx.arc(0, 0, p.size/2, 0, Math.PI*2);
-          ctx.fill();
-        } else if (p.shape === 'rect') {
-          ctx.fillRect(-p.size/2, -p.size/4, p.size, p.size/2);
-        } else {
-          drawHeart(ctx, -p.size/2, -p.size/2, p.size);
-        }
-        ctx.restore();
-      });
-
-      if (elapsed < TOTAL) {
-        requestAnimationFrame(animate);
-      } else {
-        canvas.remove();
-      }
-    }
-
-
-    // Celebration text banner
-    const banner = document.createElement('div');
-    banner.style.cssText = `
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      z-index: 9999;
-      text-align: center;
-      pointer-events: none;
-      animation: cmgBannerPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s forwards;
-    `;
-    banner.innerHTML = `
-      <div style="
-        background: linear-gradient(135deg, #1e1e1e 0%, #3a2a28 50%, #1e1e1e 100%);
-        border: 2px solid #d4af37;
-        border-radius: 12px;
-        padding: 24px 40px;
-        box-shadow: 0 0 40px rgba(212,175,55,0.4), 0 20px 60px rgba(0,0,0,0.5);
-      ">
-        <div style="
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: clamp(1.2rem, 4vw, 2.2rem);
-          font-weight: 600;
-          letter-spacing: 0.15em;
-          background: linear-gradient(90deg, #d4af37, #f5e6a3, #d4af37, #e46d69, #d4af37, #f5e6a3, #d4af37);
-          background-size: 200% auto;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          animation: cmgShine 2s linear infinite;
-          margin-bottom: 8px;
-        ">✨ NEW WEBSITE ✨</div>
-        <div style="
-          font-family: 'Lato', Arial, sans-serif;
-          font-size: clamp(0.7rem, 2vw, 1rem);
-          letter-spacing: 0.3em;
-          color: rgba(255,255,255,0.7);
-          text-transform: uppercase;
-        ">We've had a fresh new look!</div>
-        <div style="margin-top:12px;font-size:1.4rem;">🎉 🕯️ 🌿 🎉</div>
-      </div>
-    `;
-
-    // Add keyframes
+    // ── BANNER ───────────────────────────────────────────────
     const style = document.createElement('style');
     style.textContent = `
       @keyframes cmgBannerPop {
@@ -1440,14 +1294,106 @@
       }
     `;
     document.head.appendChild(style);
+
+    const banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:9999;text-align:center;pointer-events:none;animation:cmgBannerPop 0.6s cubic-bezier(0.175,0.885,0.32,1.275) 0.3s forwards;';
+    banner.innerHTML = `
+      <div style="background:linear-gradient(135deg,#1e1e1e 0%,#3a2a28 50%,#1e1e1e 100%);border:2px solid #d4af37;border-radius:12px;padding:24px 40px;box-shadow:0 0 40px rgba(212,175,55,0.4),0 20px 60px rgba(0,0,0,0.5);">
+        <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(1.2rem,4vw,2.2rem);font-weight:600;letter-spacing:0.15em;background:linear-gradient(90deg,#d4af37,#f5e6a3,#d4af37,#e46d69,#d4af37,#f5e6a3,#d4af37);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:cmgShine 2s linear infinite;margin-bottom:8px;">✨ NEW WEBSITE ✨</div>
+        <div style="font-family:'Lato',Arial,sans-serif;font-size:clamp(0.7rem,2vw,1rem);letter-spacing:0.3em;color:rgba(255,255,255,0.7);text-transform:uppercase;">We've had a fresh new look!</div>
+        <div style="margin-top:12px;font-size:1.4rem;">🎉 🕯️ 🌿 🎉</div>
+      </div>`;
     document.body.appendChild(banner);
 
-    // Remove banner after 4 seconds with fade
+    // ── CONFETTI ─────────────────────────────────────────────
+    const FALL_MS    = 5000;
+    const SETTLE_MS  = 3000;
+    const FADE_MS    = 1500;
+    const TOTAL_MS   = FALL_MS + SETTLE_MS + FADE_MS;
+
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;';
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const FLOOR = canvas.height - 8;
+
+    const colours = ['#f3e8e6','#e46d69','#c4524e','#1e1e1e','#d4af37','#f5e6a3','#ffb7c5'];
+    const shapes  = ['circle','rect','heart'];
+    const pieces  = [];
+
+    for (let i = 0; i < 160; i++) {
+      pieces.push({
+        x:       Math.random() * canvas.width,
+        y:       -20 - Math.random() * canvas.height,
+        size:    7 + Math.random() * 10,
+        colour:  colours[Math.floor(Math.random() * colours.length)],
+        shape:   shapes[Math.floor(Math.random() * shapes.length)],
+        speed:   1.0 + Math.random() * 2.0,
+        drift:   (Math.random() - 0.5) * 1.0,
+        rot:     Math.random() * Math.PI * 2,
+        spin:    (Math.random() - 0.5) * 0.07,
+        settled: false,
+      });
+    }
+
+    function drawHeart(x, y, s) {
+      ctx.beginPath();
+      ctx.moveTo(x, y+s/4);
+      ctx.bezierCurveTo(x, y, x-s/2, y, x-s/2, y+s/4);
+      ctx.bezierCurveTo(x-s/2, y+s/2, x, y+s*.75, x, y+s);
+      ctx.bezierCurveTo(x, y+s*.75, x+s/2, y+s/2, x+s/2, y+s/4);
+      ctx.bezierCurveTo(x+s/2, y, x, y, x, y+s/4);
+      ctx.closePath(); ctx.fill();
+    }
+
+    let start = null;
+    function animate(ts) {
+      if (!start) start = ts;
+      const elapsed = ts - start;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Global opacity — only fade in the last FADE_MS
+      const globalAlpha = elapsed > FALL_MS + SETTLE_MS
+        ? Math.max(0, 1 - (elapsed - FALL_MS - SETTLE_MS) / FADE_MS)
+        : 1;
+
+      pieces.forEach(p => {
+        // Only move during FALL phase
+        if (elapsed < FALL_MS && !p.settled) {
+          p.y   += p.speed;
+          p.x   += p.drift;
+          p.rot += p.spin;
+          if (p.y >= FLOOR) { p.y = FLOOR; p.settled = true; }
+        }
+
+        ctx.save();
+        ctx.globalAlpha = globalAlpha;
+        ctx.fillStyle   = p.colour;
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+
+        if      (p.shape === 'circle') { ctx.beginPath(); ctx.arc(0,0,p.size/2,0,Math.PI*2); ctx.fill(); }
+        else if (p.shape === 'rect')   { ctx.fillRect(-p.size/2, -p.size/4, p.size, p.size/2); }
+        else                           { drawHeart(0, -p.size/2, p.size); }
+        ctx.restore();
+      });
+
+      if (elapsed < TOTAL_MS) {
+        requestAnimationFrame(animate);
+      } else {
+        canvas.remove();
+      }
+    }
+
+    // Sync banner fade with confetti fade
     setTimeout(() => {
-      banner.style.transition = 'opacity 1s ease';
+      banner.style.transition = 'opacity 1.5s ease';
       banner.style.opacity = '0';
-      setTimeout(() => banner.remove(), 1000);
-    }, 4000);
+      setTimeout(() => banner.remove(), 1500);
+    }, FALL_MS + SETTLE_MS);
 
     requestAnimationFrame(animate);
   })();
