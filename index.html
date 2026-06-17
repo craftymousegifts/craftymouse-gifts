@@ -173,6 +173,9 @@
     }
 
     .nav-item:hover .dropdown { display: block; }
+    /* Bridge gap between nav item and dropdown so mouse can travel to it */
+    .nav-item { padding-bottom: 6px; margin-bottom: -6px; }
+    .dropdown { margin-top: 0; }
 
     .dropdown a {
       display: block;
