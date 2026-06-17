@@ -97,3 +97,53 @@
   from = "/shop/wax-melts/hearts"
   to = "/shop.html#wax-melt-hearts"
   status = 301
+
+[[redirects]]
+  from = "/account"
+  to = "/shop.html"
+  status = 301
+
+[[redirects]]
+  from = "/shop/candles"
+  to = "/shop.html#candles"
+  status = 301
+
+[[redirects]]
+  from = "/shop/individual-gifts/fridge-magnets"
+  to = "/shop.html#individual-gifts"
+  status = 301
+
+[[redirects]]
+  from = "/shop/individual-gifts/hamsa"
+  to = "/shop.html#individual-gifts"
+  status = 301
+
+[[redirects]]
+  from = "/shop/individual-gifts/keyring"
+  to = "/shop.html#individual-gifts"
+  status = 301
+
+[[redirects]]
+  from = "/shop/individual-gifts"
+  to = "/shop.html#individual-gifts"
+  status = 301
+
+[[redirects]]
+  from = "/shop/wax-melts"
+  to = "/shop.html#wax-melts"
+  status = 301
+
+[[redirects]]
+  from = "/shop/candles/*"
+  to = "/shop.html#candles"
+  status = 301
+
+[[redirects]]
+  from = "/shop/*"
+  to = "/shop.html"
+  status = 301
+
+[[redirects]]
+  from = "/wellness/*"
+  to = "/wellness.html"
+  status = 301
