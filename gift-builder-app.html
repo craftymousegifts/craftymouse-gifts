@@ -362,7 +362,29 @@ function openModal(idx,triggerBtn){
   var pl=document.createElement('p');pl.style.cssText='font-size:.82rem;color:var(--mid);margin:12px 0 16px;font-style:italic;';pl.textContent='\Presented with love: shredded tissue, luxury gift box and branded ribbon.';modal.appendChild(pl);
   if(pkg.url){
     var sb=document.createElement('a');sb.href=pkg.url;sb.target='_blank';
-    sb.className='modal-shop-btn';sb.textContent='Shop This Package';modal.appendChild(sb);
+    sb.className='modal-shop-btn';sb.textContent='Add to Basket';
+  sb.addEventListener('click', function() {
+    // Find matching add to basket button in parent window shop page
+    try {
+      if (window.parent && window.parent.document) {
+        var cards = window.parent.document.querySelectorAll('.product-card');
+        var pkgTitle = pkg.title;
+        cards.forEach(function(card) {
+          var h3 = card.querySelector('h3');
+          if (h3 && h3.textContent.trim() === pkgTitle) {
+            var addBtn = card.querySelector('.btn-cart');
+            if (addBtn) { addBtn.click(); }
+          }
+        });
+      }
+    } catch(e) {
+      // Cross-origin fallback — just go to shop
+      window.parent.location = '/shop.html';
+    }
+    var m = document.getElementById('inline-modal');
+    if (m) m.parentNode.removeChild(m);
+  });
+  modal.appendChild(sb);
   }
   var targetCard=triggerBtn?triggerBtn.closest('.pkg-card'):null;
   var wrap=triggerBtn?triggerBtn.closest('.pkg-wrap'):null;

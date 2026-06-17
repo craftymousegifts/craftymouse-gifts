@@ -101,9 +101,7 @@
           <h2 class="pm-title">${product.title}</h2>
           <p class="pm-price">${price}</p>
           <p class="pm-desc">${desc}</p>
-          <button class="pm-btn" onclick="document.getElementById('cmg-product-modal-overlay').remove(); window.location='/shop.html';">
-            Shop Now →
-          </button>
+          <div id="cmg-modal-basket-area"></div>
         </div>
       </div>`;
 
@@ -118,5 +116,114 @@
     });
 
     document.body.appendChild(overlay);
+
+    // Try to find matching Add to Basket button on the page
+    const basketArea = overlay.querySelector('#cmg-modal-basket-area');
+    if (basketArea) {
+      // Find the product card on the page by title match
+      let addBtn = null;
+      document.querySelectorAll('.product-card').forEach(function(card) {
+        const h3 = card.querySelector('h3');
+        if (h3 && h3.textContent.trim().toLowerCase() === product.title.trim().toLowerCase()) {
+          const orig = card.querySelector('.btn-cart');
+          if (orig) addBtn = orig;
+        }
+      });
+      if (addBtn) {
+        // Clone the original add to basket button behaviour
+        const btn = document.createElement('button');
+        btn.className = 'pm-btn';
+        btn.textContent = 'Add to Basket';
+        btn.addEventListener('click', function() {
+          overlay.remove();
+          addBtn.click();
+        });
+        basketArea.appendChild(btn);
+      } else {
+        // Fallback to Shop Now if no matching card found (e.g. from gift builder)
+        const btn = document.createElement('button');
+        btn.className = 'pm-btn';
+        btn.textContent = 'Shop Now →';
+        btn.addEventListener('click', function() {
+          overlay.remove();
+          window.location = '/shop.html';
+        });
+        basketArea.appendChild(btn);
+      }
+    }
   };
 })();
+
+// ── PACKAGE MODAL ─────────────────────────────────────────────────────────────
+window.cmgOpenPackageModal = function(pkg) {
+  const existing = document.getElementById('cmg-product-modal-overlay');
+  if (existing) existing.remove();
+
+  const style = document.createElement('style');
+  if (!document.getElementById('cmg-modal-style')) {
+    style.id = 'cmg-modal-style';
+    style.textContent = `
+      .pm-contents { margin: 16px 0 20px; }
+      .pm-contents h4 { font-family:'Cormorant Garamond',Georgia,serif; font-size:1.1rem; font-weight:400; margin-bottom:12px; color:#1e1e1e; }
+      .pm-contents-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+      .pm-contents-list li { display:flex; align-items:center; gap:10px; font-size:.9rem; color:#555; padding:8px 12px; background:#fdf8f7; border-radius:8px; border-left:3px solid #e46d69; }
+      .pm-contents-list li::before { content:'🕯️'; font-size:1rem; }
+      .pm-save { background:#f3e8e6; border-radius:8px; padding:10px 14px; font-size:.85rem; color:#e46d69; font-weight:700; margin-bottom:16px; text-align:center; }
+    `;
+    document.head.appendChild(style);
+  }
+
+  // Build contents list with product lookup
+  let contentsHtml = '';
+  if (pkg.contents && pkg.contents.length) {
+    const items = pkg.contents.map(name => {
+      const found = window.cmgProductLookup && window.cmgProductLookup.find(p => p.title.trim() === name.trim());
+      const price = found ? ` — £${found.price.toFixed(2)}` : '';
+      return `<li>${name}${price}</li>`;
+    }).join('');
+    contentsHtml = `
+      <div class="pm-contents">
+        <h4>What's Inside</h4>
+        <ul class="pm-contents-list">${items}</ul>
+      </div>`;
+  }
+
+  const desc = (pkg.description || '').replace(/\n/g, '<br>');
+
+  const overlay = document.createElement('div');
+  overlay.id = 'cmg-product-modal-overlay';
+  overlay.innerHTML = `
+    <div id="cmg-product-modal">
+      <div class="pm-header">
+        ${pkg.image ? `<img class="pm-img" src="${pkg.image}" alt="${pkg.title}">` : ''}
+        <button class="pm-close" onclick="document.getElementById('cmg-product-modal-overlay').remove()">✕</button>
+      </div>
+      <div class="pm-body">
+        <p class="pm-cat">Gift Package</p>
+        <h2 class="pm-title">${pkg.title}</h2>
+        <p class="pm-price">${pkg.price}</p>
+        <p class="pm-desc">${desc}</p>
+        ${contentsHtml}
+        <div id="cmg-pkg-basket-area"></div>
+      </div>
+    </div>`;
+
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  document.addEventListener('keydown', function esc(e) {
+    if (e.key === 'Escape') { overlay.remove(); document.removeEventListener('keydown', esc); }
+  });
+  document.body.appendChild(overlay);
+
+  // Add to Basket button
+  const basketArea = overlay.querySelector('#cmg-pkg-basket-area');
+  if (basketArea && pkg.addBtn) {
+    const btn = document.createElement('button');
+    btn.className = 'pm-btn';
+    btn.textContent = 'Add Gift Package to Basket';
+    btn.addEventListener('click', function() {
+      overlay.remove();
+      pkg.addBtn.click();
+    });
+    basketArea.appendChild(btn);
+  }
+};
