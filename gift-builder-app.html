@@ -100,6 +100,7 @@ header{background:#fff;border-bottom:1px solid var(--border);padding:14px 24px;d
 .empty-state{text-align:center;padding:50px 20px;color:var(--mid);font-size:.88rem;}
 @media(max-width:600px){.hero h2{font-size:2rem;}.main-tab{padding:13px 14px;font-size:.72rem;}.pkg-grid{grid-template-columns:1fr;}}
 </style>
+  <script src="/cmg-product-modal.js"></script>
 </head>
 <body>
 
@@ -353,7 +354,7 @@ function openModal(idx,triggerBtn){
       var ib=document.createElement('div');ib.className='modal-item-body';
       var nm=document.createElement('div');nm.className='modal-item-name';nm.textContent=p.title;ib.appendChild(nm);
       var ipr=document.createElement('div');ipr.className='modal-item-price';ipr.textContent=fmt(p.price);ib.appendChild(ipr);
-      if(p.url){var a=document.createElement('a');a.href=p.url;a.target='_blank';a.className='modal-item-link';a.textContent='View Product';ib.appendChild(a);}
+      var vb2=document.createElement('button');vb2.className='modal-item-link';vb2.textContent='View Product';vb2.style.cursor='pointer';vb2.addEventListener('click',(function(prod){return function(){if(window.parent&&window.parent.cmgOpenProductModal){window.parent.cmgOpenProductModal(prod);}else if(window.cmgOpenProductModal){window.cmgOpenProductModal(prod);}}})(p));ib.appendChild(vb2);
       item.appendChild(ib);itemGrid.appendChild(item);
     });
     modal.appendChild(itemGrid);
@@ -368,7 +369,7 @@ function openModal(idx,triggerBtn){
   if(wrap){wrap.appendChild(modal);}else{document.getElementById('panels').appendChild(modal);}
   setTimeout(function(){
     var absTop=0;var node=modal;
-    while(node){absTop+=node.offsetTop;nfode=node.offsetParent;}
+    while(node){absTop+=node.offsetTop;node=node.offsetParent;}
     window.scrollTo({top:Math.max(0,absTop-100),behavior:'smooth'});
     try{window.parent.postMessage({type:'cmg-scroll',offset:absTop},'*');}catch(e){}
   },100);

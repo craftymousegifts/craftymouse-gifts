@@ -209,6 +209,17 @@
     .scent-required-msg { color: #e46d69; font-size: 12px; margin-top: 4px; display: none; }
     .scent-required-msg.show { display: block; }
 
+  
+    .btn-details {
+      display: block; width: 100%; background: transparent;
+      border: 1.5px solid var(--rose); color: var(--rose);
+      padding: 8px; border-radius: 8px; font-family: var(--sans);
+      font-size: 12px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; cursor: pointer; margin-bottom: 8px;
+      transition: all .2s;
+    }
+    .btn-details:hover { background: var(--rose); color: #fff; }
+
   </style>
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-Cxk8PXNpeptW3BnTK8Zyt.js"></script>
@@ -217,6 +228,7 @@
   plausible.init()
 </script>
   <script src="/cmg-cart.js"></script>
+  <script src="/cmg-product-modal.js"></script>
 </head>
 <body>
 
@@ -333,6 +345,7 @@
             <p class="desc">Autumn Emporium Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjiQpAVWZATGhr6BBDNsF')">Add to Basket</button>
             </div>
           </div>
@@ -344,6 +357,7 @@
             <p class="desc">Snowflake Kisses Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjjQpAVWZATGhh7ePcWgj')">Add to Basket</button>
             </div>
           </div>
@@ -355,6 +369,7 @@
             <p class="desc">Cinnamon Bark & White Ginger Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjkQpAVWZATGhuNg9ZC0S')">Add to Basket</button>
             </div>
           </div>
@@ -366,6 +381,7 @@
             <p class="desc">Cosmic Plum & Saffron Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjlQpAVWZATGhsQ6b4ljE')">Add to Basket</button>
             </div>
           </div>
@@ -377,6 +393,7 @@
             <p class="desc">Crimson Berry & Clementine Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjlQpAVWZATGhbxTNpelA')">Add to Basket</button>
             </div>
           </div>
@@ -388,6 +405,7 @@
             <p class="desc">Meditation Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjmQpAVWZATGhUX38EXSj')">Add to Basket</button>
             </div>
           </div>
@@ -399,6 +417,7 @@
             <p class="desc">Me Time Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjnQpAVWZATGhDJRlYLf1')">Add to Basket</button>
             </div>
           </div>
@@ -410,6 +429,7 @@
             <p class="desc">Recharge Black Pepper Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjoQpAVWZATGhm7AA2ALS')">Add to Basket</button>
             </div>
           </div>
@@ -421,6 +441,7 @@
             <p class="desc">Birthday Cake Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjoQpAVWZATGhPwdKVSCH')">Add to Basket</button>
             </div>
           </div>
@@ -432,6 +453,7 @@
             <p class="desc">Pink Rhubarb Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjpQpAVWZATGhvJvVs2t9')">Add to Basket</button>
             </div>
           </div>
@@ -443,6 +465,7 @@
             <p class="desc">Shimmering Star Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjqQpAVWZATGhHRTq54Sj')">Add to Basket</button>
             </div>
           </div>
@@ -454,6 +477,7 @@
             <p class="desc">Charming Oasis Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjrQpAVWZATGhAlnTIndW')">Add to Basket</button>
             </div>
           </div>
@@ -465,6 +489,7 @@
             <p class="desc">Intergalactic Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjsQpAVWZATGhkaq4Mybg')">Add to Basket</button>
             </div>
           </div>
@@ -476,6 +501,7 @@
             <p class="desc">Amethyst Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjsQpAVWZATGhCKC1yWSZ')">Add to Basket</button>
             </div>
           </div>
@@ -505,6 +531,7 @@
             </div>
             <div class="footer">
               <span class="price">£26.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjaQpAVWZATGhHzLuPxhq', 'Eco-Friendly Jesmonite Candle')">Add to Basket</button>
             </div>
             </div>
@@ -533,6 +560,7 @@
             </div>
             <div class="footer">
               <span class="price">£24.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjtQpAVWZATGhQoKq1exn', 'Root Chakra Candle')">Add to Basket</button>
             </div>
           </div>
@@ -555,6 +583,7 @@
             </div>
             <div class="footer">
               <span class="price">£24.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjOQpAVWZATGhbuWSBndO', 'Sacral Chakra')">Add to Basket</button>
             </div>
           </div>
@@ -577,6 +606,7 @@
             </div>
             <div class="footer">
               <span class="price">£24.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjuQpAVWZATGhMvNzAXne', 'Solar Plexus Chakra')">Add to Basket</button>
             </div>
           </div>
@@ -599,6 +629,7 @@
             </div>
             <div class="footer">
               <span class="price">£24.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjvQpAVWZATGh1SAiyZaN', 'Heart Chakra')">Add to Basket</button>
             </div>
           </div>
@@ -621,6 +652,7 @@
             </div>
             <div class="footer">
               <span class="price">£24.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjwQpAVWZATGhPYvXgctA', 'Throat Chakra')">Add to Basket</button>
             </div>
           </div>
@@ -643,6 +675,7 @@
             </div>
             <div class="footer">
               <span class="price">£24.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjwQpAVWZATGhr5D6gcLO', 'Third Eye Chakra')">Add to Basket</button>
             </div>
           </div>
@@ -665,6 +698,7 @@
             </div>
             <div class="footer">
               <span class="price">£24.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjxQpAVWZATGhyi67MCAB', 'Crown Chakra')">Add to Basket</button>
             </div>
           </div>
@@ -685,6 +719,7 @@
             <p class="desc">Three handcrafted soy candles for every mood — morning, midday, and evening.</p>
             <div class="footer">
               <span class="price">£36.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjTQpAVWZATGh4CmdKhgQ')">Add to Basket</button>
             </div>
           </div>
@@ -696,6 +731,7 @@
             <p class="desc">A gift he'll actually love — crisp, clean scents and quality craftsmanship.</p>
             <div class="footer">
               <span class="price">£18.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjTQpAVWZATGhWVSs7WsZ')">Add to Basket</button>
             </div>
           </div>
@@ -707,6 +743,7 @@
             <p class="desc">Beautiful, sustainable, and thoughtfully made in the Scottish Borders.</p>
             <div class="footer">
               <span class="price">£41.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjSQpAVWZATGhWPcBdmMJ')">Add to Basket</button>
             </div>
           </div>
@@ -718,6 +755,7 @@
             <p class="desc">When only the very best will do — a show-stopping luxury hamper.</p>
             <div class="footer">
               <span class="price">£59.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjRQpAVWZATGhoIRgWEG2')">Add to Basket</button>
             </div>
           </div>
@@ -729,6 +767,7 @@
             <p class="desc">Indulgent self-care from the Scottish Borders, straight to their door.</p>
             <div class="footer">
               <span class="price">£59.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjQQpAVWZATGhDMWQs4XY')">Add to Basket</button>
             </div>
           </div>
@@ -740,6 +779,7 @@
             <p class="desc">Unwind and relax with calming treats</p>
             <div class="footer">
               <span class="price">£46.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjQQpAVWZATGhwRJQwjWc')">Add to Basket</button>
             </div>
           </div>
@@ -751,6 +791,7 @@
             <p class="desc">A gorgeous little gift that fills every room with warmth and fragrance.</p>
             <div class="footer">
               <span class="price">£18.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjPQpAVWZATGhhMTCTIQL')">Add to Basket</button>
             </div>
           </div>
@@ -785,6 +826,7 @@
             </div>
             <div class="footer">
               <span class="price">£4.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjVQpAVWZATGhgykZxsNa', 'Seashell Keyring')">Add to Basket</button>
             </div>
             </div>
@@ -811,6 +853,7 @@
             </div>
             <div class="footer">
               <span class="price">£19.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjYQpAVWZATGhlRlqbD4x', 'Eco Resin Hamsa Tealight Holder')">Add to Basket</button>
             </div>
             </div>
@@ -835,6 +878,7 @@
             </div>
             <div class="footer">
               <span class="price">£3.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjaQpAVWZATGhfGSdqY54', 'Celtic & Pagan Symbol Fridge Magnets')">Add to Basket</button>
             </div>
             </div>
@@ -861,6 +905,7 @@
             </div>
             <div class="footer">
               <span class="price">£4.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjbQpAVWZATGhDSBnHfYU', 'Moon Face Fridge Magnets')">Add to Basket</button>
             </div>
             </div>
@@ -896,6 +941,7 @@
             </div>
             <div class="footer">
               <span class="price">£29.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjhQpAVWZATGha7x7TT89', 'Rose Floral Bouquet')">Add to Basket</button>
             </div>
             </div>
@@ -908,6 +954,7 @@
             <p class="desc">Mother's Day Bouquet</p>
             <div class="footer">
               <span class="price">£29.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjZQpAVWZATGhKaaFwLV9')">Add to Basket</button>
             </div>
           </div>
@@ -938,6 +985,7 @@
             </div>
             <div class="footer">
               <span class="price">£16.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjVQpAVWZATGh9cTfhm5s', 'Cylinder Style Wax Melt Warmer')">Add to Basket</button>
             </div>
             </div>
@@ -964,6 +1012,7 @@
             </div>
             <div class="footer">
               <span class="price">£16.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjWQpAVWZATGhaLKukUh0', 'Nordic Style Wax Melt Warmer')">Add to Basket</button>
             </div>
             </div>
@@ -990,6 +1039,7 @@
             </div>
             <div class="footer">
               <span class="price">£16.99</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjXQpAVWZATGh6BDvbvav', 'Handmade Arch Jesmonite Wax Melt Warmer')">Add to Basket</button>
             </div>
             </div>
@@ -1017,6 +1067,7 @@
             </div>
             <div class="footer">
               <span class="price">£3.50</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjdQpAVWZATGhRqPPieqi', 'Passionfruit Martini & Coconut')">Add to Basket</button>
             </div>
             </div>
@@ -1039,6 +1090,7 @@
             </div>
             <div class="footer">
               <span class="price">£3.50</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjeQpAVWZATGhKKnnvDmv', 'Passionfruit Martini')">Add to Basket</button>
             </div>
             </div>
@@ -1051,6 +1103,7 @@
             <p class="desc">Cosmic Plum & Saffron Soy Wax Candle</p>
             <div class="footer">
               <span class="price">£16.00</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCart('price_1TizjlQpAVWZATGhsQ6b4ljE')">Add to Basket</button>
             </div>
           </div>
@@ -1072,6 +1125,7 @@
             </div>
             <div class="footer">
               <span class="price">£3.50</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjcQpAVWZATGhm9xuDp25', 'Champagne Toast')">Add to Basket</button>
             </div>
             </div>
@@ -1094,6 +1148,7 @@
             </div>
             <div class="footer">
               <span class="price">£3.50</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjdQpAVWZATGhXMxWy5ls', 'Champagne Grapes & Roses')">Add to Basket</button>
             </div>
             </div>
@@ -1121,6 +1176,7 @@
             </div>
             <div class="footer">
               <span class="price">£3.50</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjcQpAVWZATGhm9xuDp25', 'Champagne Toast')">Add to Basket</button>
             </div>
             </div>
@@ -1143,6 +1199,7 @@
             </div>
             <div class="footer">
               <span class="price">£3.50</span>
+              <button class="btn-details" onclick="(function(btn){var card=btn.closest('.product-card');var title=card.querySelector('h3')?card.querySelector('h3').textContent:'';var desc=card.querySelector('.desc')?card.querySelector('.desc').textContent:'';var price=card.querySelector('.price')?card.querySelector('.price').textContent:'';var img=card.querySelector('img')?card.querySelector('img').src:'';window.cmgOpenProductModal({title:title,description:desc,price:price,image:img,category:''});})(this)">View Details</button>
               <button class="btn-cart" onclick="cmgAddToCartWithScent(this, 'price_1TizjdQpAVWZATGhXMxWy5ls', 'Champagne Grapes & Roses')">Add to Basket</button>
             </div>
             </div>
