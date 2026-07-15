@@ -64,7 +64,7 @@
 
     /* MOBILE NAV */
     .mobile-nav { display: none; background: #fff; border-top: 1px solid var(--blush); }
-    .mobile-nav.open { display: block; }
+    @media (max-width: 900px) { .mobile-nav.open { display: block; } }
     .mobile-nav a { display: block; padding: 11px 28px; font-size: 14px; color: var(--charcoal); border-bottom: 1px solid var(--blush); }
     .mobile-nav a.sub { padding-left: 44px; font-size: 13px; color: var(--mid); }
     .mobile-nav a:hover { color: var(--rose); }
@@ -1266,6 +1266,7 @@
         <a href="/returns.html">Returns &amp; Refunds</a>
         <a href="/privacy.html">Privacy Policy</a>
         <a href="/terms.html">Terms &amp; Conditions</a>
+        <a href="/cookie-policy.html">Cookie Policy</a>
       </div>
     </div>
     <div class="footer-bottom">

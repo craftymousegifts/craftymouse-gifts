@@ -49,7 +49,7 @@
     .sub-drop li a{display:block;padding:10px 18px;font-size:13px;color:var(--mid);border-bottom:1px solid var(--blush);}
     .sub-drop li a:hover{background:var(--light);color:var(--rose);}
     .mobile-nav{display:none;background:#fff;border-top:1px solid var(--blush);}
-    .mobile-nav.open{display:block;}
+    @media(max-width:900px){.mobile-nav.open{display:block;}}
     .mobile-nav a{display:block;padding:11px 28px;font-size:14px;color:var(--charcoal);border-bottom:1px solid var(--blush);}
     .mobile-nav a.sub{padding-left:44px;font-size:13px;color:var(--mid);}
     .mobile-nav a:hover{color:var(--rose);}
@@ -72,7 +72,7 @@
     .payment-icons img{height:20px;opacity:.6;filter:brightness(10);}
     @media(max-width:900px){.nav-list{display:none;}.hamburger{display:flex;}.header-top { display: flex; align-items: center; justify-content: space-between; padding: 12px 32px; }.footer-grid{grid-template-columns:1fr 1fr;}.page-content{padding:24px 20px;}}
     @media(max-width:480px){.footer-grid{grid-template-columns:1fr;}}
-  
+
     footer { background: var(--charcoal); color: rgba(255,255,255,.8); padding: 48px 32px 24px; margin-top: 64px; }
     .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
     .footer-brand img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 16px; background: #f3e8e6; padding: 3px; }
@@ -89,7 +89,7 @@
     .payment-icons img { height: 20px; opacity: .6; filter: brightness(10); }
     @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
-  
+
     /* ── COOKIE CONSENT ── */
     #cookie-banner {
       position: fixed;
@@ -122,7 +122,7 @@
     .cookie-btn-accept { background: #e46d69; color: #fff; }
     .cookie-btn-essential { background: transparent; color: #ccc; border: 1px solid #555; }
     .cookie-btn:hover { opacity: 0.85; }
-  
+
     /* iOS safe area fix */
     .site-header {
       padding-top: env(safe-area-inset-top);
@@ -153,7 +153,7 @@
     <div class="header-top">
       <div class="social-links">
         <a href="https://www.facebook.com/share/1C1mTyJjAo/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
-        <a href="mailto:craftymousegifts@gmail.com" aria-label="Email"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></a>
+        <a href="mailto:contact@craftymousegifts.com" aria-label="Email"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></a>
         <a href="https://www.instagram.com/crafty_mouse_gifts" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg></a>
         <a href="https://www.youtube.com/@CraftyMouseGifts1" target="_blank" rel="noopener" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon fill="#fff" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
         <a href="https://www.tiktok.com/@crafty.mouse" target="_blank" rel="noopener" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.37 6.37 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.53V6.75a4.85 4.85 0 01-1.03-.06z"/></svg></a>
@@ -242,6 +242,7 @@ window.addEventListener('message', function(e) {
         <a href="/returns.html">Returns &amp; Refunds</a>
         <a href="/privacy.html">Privacy Policy</a>
         <a href="/terms.html">Terms &amp; Conditions</a>
+        <a href="/cookie-policy.html">Cookie Policy</a>
       </div>
     </div>
     <div class="footer-bottom">

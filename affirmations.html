@@ -49,7 +49,7 @@
     .sub-drop li a{display:block;padding:10px 18px;font-size:13px;color:var(--mid);border-bottom:1px solid var(--blush);}
     .sub-drop li a:hover{background:var(--light);color:var(--rose);}
     .mobile-nav{display:none;background:#fff;border-top:1px solid var(--blush);}
-    .mobile-nav.open{display:block;}
+    @media(max-width:900px){.mobile-nav.open{display:block;}}
     .mobile-nav a{display:block;padding:11px 28px;font-size:14px;color:var(--charcoal);border-bottom:1px solid var(--blush);}
     .mobile-nav a.sub{padding-left:44px;font-size:13px;color:var(--mid);}
     .mobile-nav a:hover{color:var(--rose);}
@@ -72,24 +72,7 @@
     .payment-icons img{height:20px;opacity:.6;filter:brightness(10);}
     @media(max-width:900px){.nav-list{display:none;}.hamburger{display:flex;}.header-top { display: flex; align-items: center; justify-content: space-between; padding: 12px 32px; }.footer-grid{grid-template-columns:1fr 1fr;}.page-content{padding:24px 20px;}}
     @media(max-width:480px){.footer-grid{grid-template-columns:1fr;}}
-  
-    footer { background: var(--charcoal); color: rgba(255,255,255,.8); padding: 48px 32px 24px; margin-top: 64px; }
-    .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-    .footer-brand img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 16px; background: #f3e8e6; padding: 3px; }
-    .footer-brand p { font-size: 13px; line-height: 1.7; opacity: .7; margin-bottom: 16px; }
-    .footer-social { display: flex; gap: 12px; }
-    .footer-social a { color: rgba(255,255,255,.6); transition: color .2s; }
-    .footer-social a:hover { color: #fff; }
-    .footer-col h5 { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #fff; margin-bottom: 16px; }
-    .footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,.65); margin-bottom: 8px; transition: color .2s; }
-    .footer-col a:hover { color: #fff; }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,.1); padding-top: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; max-width: 1100px; margin: 0 auto; }
-    .footer-bottom p { font-size: 12px; opacity: .5; }
-    .payment-icons { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    .payment-icons img { height: 20px; opacity: .6; filter: brightness(10); }
-    @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
-  
+
     /* ── COOKIE CONSENT ── */
     #cookie-banner {
       position: fixed;
@@ -122,7 +105,7 @@
     .cookie-btn-accept { background: #e46d69; color: #fff; }
     .cookie-btn-essential { background: transparent; color: #ccc; border: 1px solid #555; }
     .cookie-btn:hover { opacity: 0.85; }
-  
+
     /* iOS safe area fix */
     .site-header {
       padding-top: env(safe-area-inset-top);
@@ -138,8 +121,9 @@
     }
 
   </style>
-<!-- Privacy-friendly analytics by Plausible -->
-<script async src="https://plausible.io/js/pa-Cxk8PXNpeptW3BnTK8Zyt.js"></script>
+<!-- Privacy-friendly analytics by Plausible — script itself is only
+     loaded after the visitor accepts cookies (see cookie consent
+     script near the end of <body>). This stub just queues events. -->
 <script>
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
   plausible.init()
@@ -149,12 +133,43 @@
 <!-- revert-20260617193702 -->
 </head>
 <body>
+  <script>
+    // Shared storage helper: falls back to an in-memory object if
+    // localStorage throws (private browsing, strict cookie blocking,
+    // etc.) so the page still works — it just won't remember
+    // choices between visits in that case.
+    window.cmgSafeStorage = (function(){
+      var memory = {};
+      var available = true;
+      try {
+        var testKey = "__cmg_test__";
+        localStorage.setItem(testKey, "1");
+        localStorage.removeItem(testKey);
+      } catch(e){
+        available = false;
+      }
+      return {
+        getItem: function(key){
+          if(available){
+            try { return localStorage.getItem(key); } catch(e){}
+          }
+          return Object.prototype.hasOwnProperty.call(memory, key) ? memory[key] : null;
+        },
+        setItem: function(key, value){
+          if(available){
+            try { localStorage.setItem(key, value); return; } catch(e){}
+          }
+          memory[key] = value;
+        }
+      };
+    })();
+  </script>
   <div class="promo">10% off your first order – use code <strong>WELCOME10</strong> &nbsp;•&nbsp; Free UK Delivery on orders over £30</div>
   <header class="site-header">
     <div class="header-top">
       <div class="social-links">
         <a href="https://www.facebook.com/share/1C1mTyJjAo/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
-        <a href="mailto:craftymousegifts@gmail.com" aria-label="Email"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></a>
+        <a href="mailto:contact@craftymousegifts.com" aria-label="Email"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></a>
         <a href="https://www.instagram.com/crafty_mouse_gifts" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg></a>
         <a href="https://www.youtube.com/@CraftyMouseGifts1" target="_blank" rel="noopener" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon fill="#fff" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
         <a href="https://www.tiktok.com/@crafty.mouse" target="_blank" rel="noopener" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.37 6.37 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.53V6.75a4.85 4.85 0 01-1.03-.06z"/></svg></a>
@@ -204,7 +219,7 @@
         <div class="cmg-card-face cmg-card-front">
           <div class="cmg-front-inner">
             <div class="cmg-front-title">Today’s Message</div>
-            <div class="cmg-message"></div>
+            <div class="cmg-message"><span class="cmg-message-text"></span></div>
             <div class="cmg-front-stars">✦ ✧ ✦</div>
           </div>
         </div>
@@ -217,7 +232,7 @@
         <div class="cmg-card-face cmg-card-front">
           <div class="cmg-front-inner">
             <div class="cmg-front-title">Today’s Message</div>
-            <div class="cmg-message"></div>
+            <div class="cmg-message"><span class="cmg-message-text"></span></div>
             <div class="cmg-front-stars">✦ ✧ ✦</div>
           </div>
         </div>
@@ -230,7 +245,7 @@
         <div class="cmg-card-face cmg-card-front">
           <div class="cmg-front-inner">
             <div class="cmg-front-title">Today’s Message</div>
-            <div class="cmg-message"></div>
+            <div class="cmg-message"><span class="cmg-message-text"></span></div>
             <div class="cmg-front-stars">✦ ✧ ✦</div>
           </div>
         </div>
@@ -259,7 +274,6 @@
     color:#b89453;
     margin-bottom:12px;
     line-height:1.4;
-    white-space:nowrap;
   }
 
   .cmg-sub{
@@ -339,15 +353,17 @@
     inset:14px;
     border:1px solid rgba(212,177,109,.35);
     border-radius:14px;
-    padding:18px 14px;
+    padding:14px 10px;
     display:flex;
     flex-direction:column;
-    justify-content:space-between;
+    align-items:stretch;
     background:linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,.08));
+    overflow:hidden;
   }
 
   .cmg-front-title,
   .cmg-front-stars{
+    flex:0 0 auto;
     font-size:12px;
     letter-spacing:2px;
     text-transform:uppercase;
@@ -355,10 +371,25 @@
   }
 
   .cmg-message{
+    flex:1 1 auto;
+    min-height:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    padding:4px 2px;
+  }
+
+  .cmg-message-text{
+    display:block;
+    width:100%;
     font-size:24px;
-    line-height:1.45;
+    line-height:1.32;
     color:#6b585d;
-    padding:10px 4px;
+    word-break:normal;
+    overflow-wrap:normal;
+    hyphens:none;
+    -webkit-hyphens:none;
   }
 
   .cmg-card.chosen{
@@ -403,16 +434,32 @@
 
   @media (max-width:760px){
     .cmg-card{width:160px;}
-    .cmg-message{font-size:18px;}
+    .cmg-message-text{font-size:18px;}
     .cmg-top{font-size:24px;}
   }
 
   @media (max-width:560px){
+    .cmg-top{font-size:19px; line-height:1.5;}
     .cmg-cards{gap:12px; min-height:290px;}
-    .cmg-card{width:102px;}
-    .cmg-message{font-size:14px; line-height:1.35;}
-    .cmg-front-title,.cmg-front-stars{font-size:9px; letter-spacing:1px;}
-    .cmg-sub{font-size:16px;}
+    .cmg-card{width:118px;}
+    .cmg-message-text{font-size:14px; line-height:1.3;}
+    .cmg-front-title,.cmg-front-stars{font-size:8px; letter-spacing:.5px;}
+    .cmg-sub{font-size:15px;}
+    .cmg-front-inner{padding:10px 7px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .cmg-card,
+    .cmg-card-inner,
+    .cmg-card-face{
+      transition:none !important;
+    }
+    .cmg-card:hover{
+      transform:none;
+    }
+    .cmg-card-back:after{
+      animation:none;
+    }
   }
 </style>
 
@@ -442,7 +489,7 @@
   var note = document.getElementById("cmgNote");
 
   function getDailyIndex(){
-    var saved = localStorage.getItem(dailyKey);
+    var saved = cmgSafeStorage.getItem(dailyKey);
 
     if(saved){
       try{
@@ -461,12 +508,12 @@
     }
 
     var index = Math.abs(hash) % affirmations.length;
-    localStorage.setItem(dailyKey, JSON.stringify({date: today, index: index}));
+    cmgSafeStorage.setItem(dailyKey, JSON.stringify({date: today, index: index}));
     return index;
   }
 
   function getPickedCard(){
-    var saved = localStorage.getItem(pickedKey);
+    var saved = cmgSafeStorage.getItem(pickedKey);
     if(!saved) return null;
 
     try{
@@ -478,22 +525,57 @@
   }
 
   function savePickedCard(index){
-    localStorage.setItem(pickedKey, JSON.stringify({date: today, card: index}));
+    cmgSafeStorage.setItem(pickedKey, JSON.stringify({date: today, card: index}));
+  }
+
+  var MIN_FONT_PX = 9;
+
+  function fitMessageText(card){
+    var box = card.querySelector(".cmg-message");
+    var textEl = card.querySelector(".cmg-message-text");
+    if(!box || !textEl || !textEl.textContent) return;
+
+    textEl.style.fontSize = "";
+    var size = parseFloat(getComputedStyle(textEl).fontSize);
+
+    var guard = 0;
+    while(
+      (textEl.scrollHeight > box.clientHeight || textEl.scrollWidth > box.clientWidth) &&
+      size > MIN_FONT_PX && guard < 60
+    ){
+      size -= 0.5;
+      textEl.style.fontSize = size + "px";
+      guard++;
+    }
+  }
+
+  function fitAllVisible(){
+    cards.forEach(function(card){
+      if(!card.classList.contains("hidden")){
+        fitMessageText(card);
+      }
+    });
   }
 
   function revealCard(chosenIndex, restored){
     var text = affirmations[getDailyIndex()];
 
     for(var i=0; i<cards.length; i++){
-      var msg = cards[i].querySelector(".cmg-message");
-      msg.textContent = text;
+      var textEl = cards[i].querySelector(".cmg-message-text");
+      textEl.textContent = text;
 
       if(i === chosenIndex){
         cards[i].classList.add("flipped");
         cards[i].classList.add("chosen");
         cards[i].classList.remove("hidden");
+        cards[i].removeAttribute("aria-hidden");
+        cards[i].removeAttribute("tabindex");
+        cards[i].disabled = false;
       } else {
         cards[i].classList.add("hidden");
+        cards[i].setAttribute("aria-hidden", "true");
+        cards[i].tabIndex = -1;
+        cards[i].disabled = true;
       }
     }
 
@@ -501,6 +583,10 @@
     note.textContent = restored
       ? "Your card for today has already been drawn."
       : "This is your affirmation for today. It will change tomorrow.";
+
+    setTimeout(function(){
+      fitMessageText(cards[chosenIndex]);
+    }, 60);
   }
 
   for(let i=0; i<cards.length; i++){
@@ -535,6 +621,12 @@
   if(picked !== null){
     revealCard(picked, true);
   }
+
+  var resizeTimer;
+  window.addEventListener("resize", function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(fitAllVisible, 120);
+  });
 })();
 </script>
   </div>
@@ -570,6 +662,7 @@
         <a href="/returns.html">Returns &amp; Refunds</a>
         <a href="/privacy.html">Privacy Policy</a>
         <a href="/terms.html">Terms &amp; Conditions</a>
+        <a href="/cookie-policy.html">Cookie Policy</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -577,9 +670,9 @@
       <div class="payment-icons">
         <img src="https://assetsbeta.create-cdn.net/_assets/livesites/component/card-logos/mastercard.svg" alt="Mastercard">
         <img src="https://assetsbeta.create-cdn.net/_assets/livesites/component/card-logos/visa.svg" alt="Visa">
-        <img src="https://assetsbeta.create-cdn.net/_assets/livesites/component/card-logos/paypal.svg" alt="PayPal">
+        <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/paypal/default.svg" alt="PayPal">
         <img src="https://assetsbeta.create-cdn.net/_assets/livesites/component/card-logos/applepay.svg" alt="Apple Pay">
-        <img src="https://assetsbeta.create-cdn.net/_assets/livesites/component/card-logos/googlepay.svg" alt="Google Pay">
+        <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/google-pay/default.svg" alt="Google Pay">
         <img src="https://assetsbeta.create-cdn.net/_assets/livesites/component/card-logos/clearpay.svg" alt="Clearpay">
       </div>
     </div>
@@ -589,18 +682,40 @@
   <div id="cookie-banner" style="display:none;">
     <p>We use essential cookies to keep your basket working. We also use <a href="/cookie-policy.html">Plausible Analytics</a> — privacy-friendly, no personal data collected. <a href="/cookie-policy.html">Cookie Policy</a></p>
     <button class="cookie-btn cookie-btn-accept" onclick="cmgAcceptCookies()">Accept All</button>
-    <button class="cookie-btn cookie-btn-essential" onclick="cmgAcceptCookies()">Essential Only</button>
+    <button class="cookie-btn cookie-btn-essential" onclick="cmgEssentialOnlyCookies()">Essential Only</button>
   </div>
 
   <script>
-    // Cookie consent
+    // Cookie consent: "Accept All" loads the Plausible analytics
+    // script; "Essential Only" stores the choice but never loads it.
+    // Both use the shared safe storage wrapper defined at the top
+    // of <body>, so this still works if localStorage is blocked.
+    function cmgLoadAnalytics() {
+      if (document.getElementById('cmg-plausible-script')) return;
+      var s = document.createElement('script');
+      s.id = 'cmg-plausible-script';
+      s.async = true;
+      s.src = 'https://plausible.io/js/pa-Cxk8PXNpeptW3BnTK8Zyt.js';
+      document.head.appendChild(s);
+    }
+
     (function() {
-      if (!localStorage.getItem('cmg_cookie_consent')) {
+      var consent = cmgSafeStorage.getItem('cmg_cookie_consent');
+      if (!consent) {
         document.getElementById('cookie-banner').style.display = 'flex';
+      } else if (consent === 'accepted') {
+        cmgLoadAnalytics();
       }
     })();
+
     function cmgAcceptCookies() {
-      localStorage.setItem('cmg_cookie_consent', 'true');
+      cmgSafeStorage.setItem('cmg_cookie_consent', 'accepted');
+      cmgLoadAnalytics();
+      document.getElementById('cookie-banner').style.display = 'none';
+    }
+
+    function cmgEssentialOnlyCookies() {
+      cmgSafeStorage.setItem('cmg_cookie_consent', 'essential');
       document.getElementById('cookie-banner').style.display = 'none';
     }
   </script>
