@@ -145,7 +145,35 @@ function cmgAddToCart(priceId, qty, variant, nameOverride, imgOverride, pricePen
   }
   saveCart(cart);
   renderCart();
-  openCart();
+  // Don't auto-open the drawer here: it renders a full-viewport overlay
+  // (#cmg-cart-overlay, z-index 9000) that intercepts the very next click.
+  // That's fine for a single add, but it breaks the "add 3 different wax
+  // melts in a row" bundle flow — the drawer pops open after item 1, and
+  // the click meant for item 2's Add to Basket button lands on the overlay
+  // instead and just closes the drawer again. A quick non-blocking toast
+  // confirms the add without stealing focus from the page.
+  cmgShowAddedToast();
+}
+
+function cmgShowAddedToast() {
+  let toast = document.getElementById('cmg-added-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'cmg-added-toast';
+    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1e1e1e;color:#fff;padding:12px 22px;border-radius:30px;font-size:14px;font-weight:600;z-index:9500;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 6px 20px rgba(0,0,0,.2);';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = '✓ Added to basket';
+  clearTimeout(toast._hideTimer);
+  clearTimeout(toast._removeTimer);
+  // Force reflow so re-triggering the transition works even if a toast is already visible
+  void toast.offsetWidth;
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  toast._hideTimer = setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(20px)';
+  }, 1400);
 }
 
 // Fallback lookup: scan the whole document (not just visible cards) for any
