@@ -39,7 +39,7 @@ function cmgParsePriceToPence(text) {
 }
 
 // ── Add to Cart ───────────────────────────────────────────────────────────────
-function cmgAddToCart(priceId, qty, variant, nameOverride, imgOverride, pricePenceOverride) {
+function cmgAddToCart(priceId, qty, variant, nameOverride, imgOverride, pricePenceOverride, isBundle) {
   qty = qty || 1;
   variant = variant || '';
   const cart = getCart();
@@ -57,7 +57,11 @@ function cmgAddToCart(priceId, qty, variant, nameOverride, imgOverride, pricePen
     let img = imgOverride || '';
     let pricePence = (typeof pricePenceOverride === 'number') ? pricePenceOverride : null;
 
-    if (!name || pricePence === null) {
+    // Only fall back to scanning the page when something is still missing —
+    // but always try to fill in the image, even if name/price were already
+    // supplied by the caller (e.g. cmgAddToCartWithScent), since a missing
+    // image was previously silently skipped whenever name+price were known.
+    if (!name || pricePence === null || !img) {
       document.querySelectorAll('.product-card').forEach(card => {
         const btn = card.querySelector('[onclick*="' + priceId + '"]');
         if (btn) {
@@ -77,7 +81,7 @@ function cmgAddToCart(priceId, qty, variant, nameOverride, imgOverride, pricePen
     if (!name) name = priceId;
     if (pricePence === null) pricePence = cmgFindPriceForId(priceId);
 
-    cart.push({ key, priceId, name, variant, qty, img, pricePence });
+    cart.push({ key, priceId, name, variant, qty, img, pricePence, isBundle: !!isBundle });
   }
   saveCart(cart);
   renderCart();
@@ -95,6 +99,19 @@ function cmgFindPriceForId(priceId) {
   const priceEl = card.querySelector('.price');
   if (!priceEl) return null;
   return cmgParsePriceToPence(priceEl.textContent);
+}
+
+// Detects "N for £X" style bundle-deal variant text (e.g. "3 for £10 bundle")
+// and returns the flat bundle price in pence, or null if the variant text
+// isn't a bundle deal. Generalised so any future "X for £Y" option anywhere
+// on the site is handled automatically, not just this one product.
+function cmgParseBundlePence(variantText) {
+  if (!variantText) return null;
+  const match = String(variantText).match(/(\d+)\s*for\s*£\s*([\d,]+(?:\.\d{2})?)/i);
+  if (!match) return null;
+  const pounds = parseFloat(match[2].replace(/,/g, ''));
+  if (isNaN(pounds)) return null;
+  return Math.round(pounds * 100);
 }
 
 // ── Scent/Variant wrapper ─────────────────────────────────────────────────────
@@ -125,13 +142,21 @@ function cmgAddToCartWithScent(btn, priceId, productName) {
   const msg = card ? card.querySelector('.scent-required-msg') : null;
   if (msg) msg.style.display = 'none';
 
-  let pricePence = null;
+  const bundlePence = cmgParseBundlePence(variant);
+  const isBundle = bundlePence !== null;
+
+  let pricePence = bundlePence;
+  let img = '';
   if (card) {
-    const priceEl = card.querySelector('.price');
-    if (priceEl) pricePence = cmgParsePriceToPence(priceEl.textContent);
+    const imgEl = card.querySelector('img');
+    if (imgEl) img = imgEl.src;
+    if (pricePence === null) {
+      const priceEl = card.querySelector('.price');
+      if (priceEl) pricePence = cmgParsePriceToPence(priceEl.textContent);
+    }
   }
 
-  cmgAddToCart(priceId, 1, variant, productName || '', '', pricePence);
+  cmgAddToCart(priceId, 1, variant, productName || '', img, pricePence, isBundle);
 }
 
 // ── Cart Drawer ───────────────────────────────────────────────────────────────
@@ -256,11 +281,22 @@ async function cmgCheckout() {
   if (btn) { btn.textContent = 'Preparing checkout…'; btn.disabled = true; }
 
   try {
-    const items = cart.map(item => ({
-      price_id: item.priceId,
-      quantity: item.qty,
-      variant: item.variant || ''
-    }));
+    const items = cart.map(item => {
+      const base = {
+        price_id: item.priceId,
+        quantity: item.qty,
+        variant: item.variant || ''
+      };
+      // Bundle deals (e.g. "3 for £10") aren't a real Stripe Price — the
+      // catalogue price ID is still the single-item price. Send the flat
+      // bundle amount + a name so the edge function can build an inline
+      // Stripe price instead of charging quantity × single-item price.
+      if (item.isBundle && typeof item.pricePence === 'number') {
+        base.unit_amount = item.pricePence;
+        base.name = item.name + (item.variant ? ' — ' + item.variant : '');
+      }
+      return base;
+    });
 
     // Real subtotal in pence, computed from the prices we tracked when items
     // were added. Falls back to 0 only if every item is missing a price
