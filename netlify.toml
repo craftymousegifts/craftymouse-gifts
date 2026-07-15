@@ -47,16 +47,25 @@
   from = "/returns"
   to = "/returns.html"
   status = 301
+  force = true
 
 [[redirects]]
   from = "/privacy"
   to = "/privacy.html"
   status = 301
+  force = true
 
 [[redirects]]
   from = "/terms"
   to = "/terms.html"
   status = 301
+  force = true
+
+[[redirects]]
+  from = "/cookie-policy"
+  to = "/cookie-policy.html"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/success"

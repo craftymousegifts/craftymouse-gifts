@@ -26,8 +26,20 @@ function updateCartBadge() {
   }
 }
 
+// ── Price parsing helper ─────────────────────────────────────────────────────
+// Reads a price string like "£16.00" or "£3.50" and returns pence (1600, 350).
+// Returns null if it can't confidently parse a price.
+function cmgParsePriceToPence(text) {
+  if (!text) return null;
+  const match = String(text).match(/[\d,]+\.\d{2}|\d+/);
+  if (!match) return null;
+  const num = parseFloat(match[0].replace(/,/g, ''));
+  if (isNaN(num)) return null;
+  return Math.round(num * 100);
+}
+
 // ── Add to Cart ───────────────────────────────────────────────────────────────
-function cmgAddToCart(priceId, qty, variant, nameOverride, imgOverride) {
+function cmgAddToCart(priceId, qty, variant, nameOverride, imgOverride, pricePenceOverride) {
   qty = qty || 1;
   variant = variant || '';
   const cart = getCart();
@@ -35,26 +47,54 @@ function cmgAddToCart(priceId, qty, variant, nameOverride, imgOverride) {
   const existing = cart.find(i => i.key === key);
   if (existing) {
     existing.qty += qty;
+    // Backfill price on existing items if we're able to and it's missing
+    if ((existing.pricePence === undefined || existing.pricePence === null)) {
+      const found = cmgFindPriceForId(priceId);
+      if (found !== null) existing.pricePence = found;
+    }
   } else {
     let name = nameOverride || '';
     let img = imgOverride || '';
-    if (!name) {
+    let pricePence = (typeof pricePenceOverride === 'number') ? pricePenceOverride : null;
+
+    if (!name || pricePence === null) {
       document.querySelectorAll('.product-card').forEach(card => {
         const btn = card.querySelector('[onclick*="' + priceId + '"]');
         if (btn) {
-          const h3 = card.querySelector('h3');
-          if (h3) name = h3.textContent.trim();
+          if (!name) {
+            const h3 = card.querySelector('h3');
+            if (h3) name = h3.textContent.trim();
+          }
           const imgEl = card.querySelector('img');
-          if (imgEl) img = imgEl.src;
+          if (!img && imgEl) img = imgEl.src;
+          if (pricePence === null) {
+            const priceEl = card.querySelector('.price');
+            if (priceEl) pricePence = cmgParsePriceToPence(priceEl.textContent);
+          }
         }
       });
     }
     if (!name) name = priceId;
-    cart.push({ key, priceId, name, variant, qty, img });
+    if (pricePence === null) pricePence = cmgFindPriceForId(priceId);
+
+    cart.push({ key, priceId, name, variant, qty, img, pricePence });
   }
   saveCart(cart);
   renderCart();
   openCart();
+}
+
+// Fallback lookup: scan the whole document (not just visible cards) for any
+// element referencing this priceId, in case the product-card structure
+// differs on a given page (e.g. gift bundles, product detail modals).
+function cmgFindPriceForId(priceId) {
+  const btn = document.querySelector('[onclick*="' + priceId + '"]');
+  if (!btn) return null;
+  const card = btn.closest('.product-card') || btn.parentElement;
+  if (!card) return null;
+  const priceEl = card.querySelector('.price');
+  if (!priceEl) return null;
+  return cmgParsePriceToPence(priceEl.textContent);
 }
 
 // ── Scent/Variant wrapper ─────────────────────────────────────────────────────
@@ -84,7 +124,14 @@ function cmgAddToCartWithScent(btn, priceId, productName) {
   const variant = select ? select.value : '';
   const msg = card ? card.querySelector('.scent-required-msg') : null;
   if (msg) msg.style.display = 'none';
-  cmgAddToCart(priceId, 1, variant);
+
+  let pricePence = null;
+  if (card) {
+    const priceEl = card.querySelector('.price');
+    if (priceEl) pricePence = cmgParsePriceToPence(priceEl.textContent);
+  }
+
+  cmgAddToCart(priceId, 1, variant, productName || '', '', pricePence);
 }
 
 // ── Cart Drawer ───────────────────────────────────────────────────────────────
@@ -103,6 +150,10 @@ function closeCart() {
   if (overlay) overlay.classList.remove('open');
 }
 
+function cmgFormatPence(pence) {
+  return '£' + (pence / 100).toFixed(2);
+}
+
 function renderCart() {
   const container = document.getElementById('cmg-cart-items');
   const footer = document.getElementById('cmg-cart-footer');
@@ -118,10 +169,19 @@ function renderCart() {
 
   if (footer) footer.style.display = 'block';
 
-  const subtotalPence = cart.reduce((sum, item) => {
-    // We don't store prices client-side — subtotal is estimated from qty
-    return sum + item.qty;
-  }, 0);
+  // Real subtotal — sum of stored per-item prices. If an item is missing a
+  // price (e.g. an older cart saved before this fix, or a product whose
+  // price couldn't be found on the page), we flag it rather than silently
+  // undercounting.
+  let subtotalPence = 0;
+  let hasUnknownPrice = false;
+  cart.forEach(item => {
+    if (typeof item.pricePence === 'number' && !isNaN(item.pricePence)) {
+      subtotalPence += item.pricePence * item.qty;
+    } else {
+      hasUnknownPrice = true;
+    }
+  });
 
   container.innerHTML = cart.map((item, idx) => `
     <div style="display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #f0e8e6;align-items:flex-start;">
@@ -129,22 +189,45 @@ function renderCart() {
       <div style="flex:1;min-width:0;">
         <p style="font-size:13px;font-weight:700;color:#1e1e1e;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.name}</p>
         ${item.variant ? `<p style="font-size:11px;color:#888;margin-bottom:4px;">Scent: ${item.variant}</p>` : ''}
-        <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
-          <button onclick="cmgUpdateQty(${idx},-1)" style="width:24px;height:24px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">−</button>
-          <span style="font-size:13px;min-width:20px;text-align:center;">${item.qty}</span>
-          <button onclick="cmgUpdateQty(${idx},1)" style="width:24px;height:24px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">+</button>
-          <button onclick="cmgRemoveItem(${idx})" style="margin-left:auto;background:none;border:none;color:#aaa;cursor:pointer;font-size:18px;line-height:1;padding:0;">×</button>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:4px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button onclick="cmgUpdateQty(${idx},-1)" style="width:24px;height:24px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">−</button>
+            <span style="font-size:13px;min-width:20px;text-align:center;">${item.qty}</span>
+            <button onclick="cmgUpdateQty(${idx},1)" style="width:24px;height:24px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">+</button>
+            <button onclick="cmgRemoveItem(${idx})" style="background:none;border:none;color:#aaa;cursor:pointer;font-size:18px;line-height:1;padding:0;">×</button>
+          </div>
+          <span style="font-size:13px;font-weight:700;color:#1e1e1e;white-space:nowrap;">${typeof item.pricePence === 'number' ? cmgFormatPence(item.pricePence * item.qty) : '—'}</span>
         </div>
       </div>
     </div>
   `).join('');
 
-  // Delivery nudge
-  const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+  // Subtotal line
+  let subtotalEl = document.getElementById('cmg-cart-subtotal');
+  if (!subtotalEl && footer) {
+    subtotalEl = document.createElement('div');
+    subtotalEl.id = 'cmg-cart-subtotal';
+    subtotalEl.style.cssText = 'display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;color:#1e1e1e;margin-bottom:10px;';
+    footer.insertBefore(subtotalEl, footer.firstChild);
+  }
+  if (subtotalEl) {
+    subtotalEl.innerHTML = hasUnknownPrice
+      ? `<span>Subtotal</span><span>${cmgFormatPence(subtotalPence)}+</span>`
+      : `<span>Subtotal</span><span>${cmgFormatPence(subtotalPence)}</span>`;
+  }
+
+  // Delivery nudge — based on the real subtotal, not just "cart has items"
   const deliveryMsg = document.getElementById('cmg-delivery-msg');
   if (deliveryMsg) {
-    // We can't know exact subtotal without prices, so show generic free delivery message
-    deliveryMsg.textContent = totalQty > 0 ? 'Free UK delivery on orders over £30 🎁' : '';
+    if (hasUnknownPrice) {
+      // We couldn't price every item confidently — don't claim a threshold we can't verify
+      deliveryMsg.textContent = 'Free UK delivery on orders over £30 🎁';
+    } else if (subtotalPence >= CMG_FREE_DELIVERY) {
+      deliveryMsg.textContent = "🎉 You've unlocked free UK delivery!";
+    } else {
+      const remaining = CMG_FREE_DELIVERY - subtotalPence;
+      deliveryMsg.textContent = `Add ${cmgFormatPence(remaining)} more for free UK delivery 🎁`;
+    }
   }
 }
 
@@ -173,19 +256,24 @@ async function cmgCheckout() {
   if (btn) { btn.textContent = 'Preparing checkout…'; btn.disabled = true; }
 
   try {
-    // Calculate subtotal in pence — we need prices
-    // Pass items to edge function; it handles shipping
     const items = cart.map(item => ({
       price_id: item.priceId,
       quantity: item.qty,
       variant: item.variant || ''
     }));
 
-    // Estimate subtotal — we don't store prices so pass 0 and let Stripe decide shipping
+    // Real subtotal in pence, computed from the prices we tracked when items
+    // were added. Falls back to 0 only if every item is missing a price
+    // (e.g. a very old cart from before this fix) — the edge function/Stripe
+    // remains the source of truth for the actual charge either way.
+    const subtotal = cart.reduce((sum, item) => {
+      return sum + (typeof item.pricePence === 'number' ? item.pricePence * item.qty : 0);
+    }, 0);
+
     const res = await fetch(CMG_CHECKOUT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items, subtotal: 0 })
+      body: JSON.stringify({ items, subtotal })
     });
 
     const data = await res.json();
