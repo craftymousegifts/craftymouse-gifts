@@ -1341,15 +1341,25 @@
         const bannerText = bannerH2 ? bannerH2.textContent : '';
 
         section.querySelectorAll('.product-grid').forEach(grid => {
-          const label = grid.previousElementSibling && grid.previousElementSibling.classList.contains('section-label')
-            ? grid.previousElementSibling : null;
-          const labelText = label ? label.textContent : '';
+          // Walk back from the grid to find its section-label — some groups
+          // (e.g. Reiki Crystal Candles) have a descriptive blurb <p> sitting
+          // between the label and the grid, so the label usually isn't the
+          // *immediate* previous sibling. Collect any blurb text along the
+          // way too, so it's searchable as well.
+          let label = null;
+          let contextText = '';
+          let sib = grid.previousElementSibling;
+          while (sib && !sib.classList.contains('product-grid') && !sib.classList.contains('cat-banner') && !sib.classList.contains('section-gap')) {
+            contextText += ' ' + sib.textContent;
+            if (sib.classList.contains('section-label')) { label = sib; break; }
+            sib = sib.previousElementSibling;
+          }
           let groupVisible = 0;
 
           grid.querySelectorAll('.product-card').forEach(card => {
             const h3 = card.querySelector('h3');
             const desc = card.querySelector('.desc');
-            const text = ((h3 ? h3.textContent : '') + ' ' + (desc ? desc.textContent : '') + ' ' + labelText + ' ' + bannerText).toLowerCase();
+            const text = ((h3 ? h3.textContent : '') + ' ' + (desc ? desc.textContent : '') + ' ' + contextText + ' ' + bannerText).toLowerCase();
             const match = !q || text.includes(q);
             card.style.display = match ? '' : 'none';
             if (match) groupVisible++;
