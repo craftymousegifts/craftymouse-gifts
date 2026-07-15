@@ -39,7 +39,7 @@ function cmgParsePriceToPence(text) {
 }
 
 // ── Add to Cart ───────────────────────────────────────────────────────────────
-function cmgAddToCart(priceId, qty, variant, nameOverride, imgOverride, pricePenceOverride, isBundle) {
+function cmgAddToCart(priceId, qty, variant, nameOverride, imgOverride, pricePenceOverride, isBundle, bundleUnits) {
   qty = qty || 1;
   variant = variant || '';
   const cart = getCart();
@@ -81,7 +81,7 @@ function cmgAddToCart(priceId, qty, variant, nameOverride, imgOverride, pricePen
     if (!name) name = priceId;
     if (pricePence === null) pricePence = cmgFindPriceForId(priceId);
 
-    cart.push({ key, priceId, name, variant, qty, img, pricePence, isBundle: !!isBundle });
+    cart.push({ key, priceId, name, variant, qty, img, pricePence, isBundle: !!isBundle, bundleUnits: bundleUnits || 1 });
   }
   saveCart(cart);
   renderCart();
@@ -102,16 +102,18 @@ function cmgFindPriceForId(priceId) {
 }
 
 // Detects "N for £X" style bundle-deal variant text (e.g. "3 for £10 bundle")
-// and returns the flat bundle price in pence, or null if the variant text
-// isn't a bundle deal. Generalised so any future "X for £Y" option anywhere
-// on the site is handled automatically, not just this one product.
-function cmgParseBundlePence(variantText) {
+// and returns { units, totalPence } — the number of physical items included
+// and the flat total price in pence — or null if the variant text isn't a
+// bundle deal. Generalised so any future "X for £Y" option anywhere on the
+// site is handled automatically, not just this one product.
+function cmgParseBundleDeal(variantText) {
   if (!variantText) return null;
   const match = String(variantText).match(/(\d+)\s*for\s*£\s*([\d,]+(?:\.\d{2})?)/i);
   if (!match) return null;
+  const units = parseInt(match[1], 10);
   const pounds = parseFloat(match[2].replace(/,/g, ''));
-  if (isNaN(pounds)) return null;
-  return Math.round(pounds * 100);
+  if (!units || isNaN(pounds)) return null;
+  return { units: units, totalPence: Math.round(pounds * 100) };
 }
 
 // ── Scent/Variant wrapper ─────────────────────────────────────────────────────
@@ -142,10 +144,10 @@ function cmgAddToCartWithScent(btn, priceId, productName) {
   const msg = card ? card.querySelector('.scent-required-msg') : null;
   if (msg) msg.style.display = 'none';
 
-  const bundlePence = cmgParseBundlePence(variant);
-  const isBundle = bundlePence !== null;
+  const bundle = cmgParseBundleDeal(variant);
+  const isBundle = !!bundle;
 
-  let pricePence = bundlePence;
+  let pricePence = bundle ? bundle.totalPence : null;
   let img = '';
   if (card) {
     const imgEl = card.querySelector('img');
@@ -156,7 +158,7 @@ function cmgAddToCartWithScent(btn, priceId, productName) {
     }
   }
 
-  cmgAddToCart(priceId, 1, variant, productName || '', img, pricePence, isBundle);
+  cmgAddToCart(priceId, 1, variant, productName || '', img, pricePence, isBundle, bundle ? bundle.units : 1);
 }
 
 // ── Cart Drawer ───────────────────────────────────────────────────────────────
@@ -216,9 +218,9 @@ function renderCart() {
         ${item.variant ? `<p style="font-size:11px;color:#888;margin-bottom:4px;">Scent: ${item.variant}</p>` : ''}
         <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:4px;">
           <div style="display:flex;align-items:center;gap:8px;">
-            <button onclick="cmgUpdateQty(${idx},-1)" style="width:24px;height:24px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">−</button>
-            <span style="font-size:13px;min-width:20px;text-align:center;">${item.qty}</span>
-            <button onclick="cmgUpdateQty(${idx},1)" style="width:24px;height:24px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">+</button>
+            <button onclick="cmgUpdateQty(${idx},-1)" style="width:24px;height:24px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;" title="${item.bundleUnits > 1 ? 'Remove 1 bundle (' + item.bundleUnits + ' items)' : ''}">−</button>
+            <span style="font-size:13px;min-width:20px;text-align:center;">${item.qty * (item.bundleUnits || 1)}</span>
+            <button onclick="cmgUpdateQty(${idx},1)" style="width:24px;height:24px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;" title="${item.bundleUnits > 1 ? 'Add 1 more bundle (' + item.bundleUnits + ' items)' : ''}">+</button>
             <button onclick="cmgRemoveItem(${idx})" style="background:none;border:none;color:#aaa;cursor:pointer;font-size:18px;line-height:1;padding:0;">×</button>
           </div>
           <span style="font-size:13px;font-weight:700;color:#1e1e1e;white-space:nowrap;">${typeof item.pricePence === 'number' ? cmgFormatPence(item.pricePence * item.qty) : '—'}</span>
