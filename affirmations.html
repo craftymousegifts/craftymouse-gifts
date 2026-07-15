@@ -204,7 +204,7 @@
         <div class="cmg-card-face cmg-card-front">
           <div class="cmg-front-inner">
             <div class="cmg-front-title">Today’s Message</div>
-            <div class="cmg-message"></div>
+            <div class="cmg-message"><span class="cmg-message-text"></span></div>
             <div class="cmg-front-stars">✦ ✧ ✦</div>
           </div>
         </div>
@@ -217,7 +217,7 @@
         <div class="cmg-card-face cmg-card-front">
           <div class="cmg-front-inner">
             <div class="cmg-front-title">Today’s Message</div>
-            <div class="cmg-message"></div>
+            <div class="cmg-message"><span class="cmg-message-text"></span></div>
             <div class="cmg-front-stars">✦ ✧ ✦</div>
           </div>
         </div>
@@ -230,7 +230,7 @@
         <div class="cmg-card-face cmg-card-front">
           <div class="cmg-front-inner">
             <div class="cmg-front-title">Today’s Message</div>
-            <div class="cmg-message"></div>
+            <div class="cmg-message"><span class="cmg-message-text"></span></div>
             <div class="cmg-front-stars">✦ ✧ ✦</div>
           </div>
         </div>
@@ -259,7 +259,6 @@
     color:#b89453;
     margin-bottom:12px;
     line-height:1.4;
-    white-space:nowrap;
   }
 
   .cmg-sub{
@@ -334,31 +333,54 @@
     border:2px solid rgba(212,177,109,.45);
   }
 
+  /* ── Front inner: fixed-height flex column so the message area is
+     always a known, bounded box. Title and stars keep their natural
+     size; the message fills whatever space is left and never
+     overflows the card. ── */
   .cmg-front-inner{
     position:absolute;
     inset:14px;
     border:1px solid rgba(212,177,109,.35);
     border-radius:14px;
-    padding:18px 14px;
+    padding:14px 10px;
     display:flex;
     flex-direction:column;
-    justify-content:space-between;
+    align-items:stretch;
     background:linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,.08));
+    overflow:hidden;
   }
 
   .cmg-front-title,
   .cmg-front-stars{
+    flex:0 0 auto;
     font-size:12px;
     letter-spacing:2px;
     text-transform:uppercase;
     color:#b08d4c;
   }
 
+  /* The message box now takes all remaining vertical space between
+     the title and the stars, and centers its text inside that box.
+     JS measures this box and shrinks the text to fit it exactly. */
   .cmg-message{
+    flex:1 1 auto;
+    min-height:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    padding:4px 2px;
+  }
+
+  .cmg-message-text{
+    display:block;
+    width:100%;
     font-size:24px;
-    line-height:1.45;
+    line-height:1.32;
     color:#6b585d;
-    padding:10px 4px;
+    word-break:break-word;
+    overflow-wrap:break-word;
+    hyphens:auto;
   }
 
   .cmg-card.chosen{
@@ -403,16 +425,18 @@
 
   @media (max-width:760px){
     .cmg-card{width:160px;}
-    .cmg-message{font-size:18px;}
+    .cmg-message-text{font-size:18px;}
     .cmg-top{font-size:24px;}
   }
 
   @media (max-width:560px){
+    .cmg-top{font-size:19px; line-height:1.5;}
     .cmg-cards{gap:12px; min-height:290px;}
-    .cmg-card{width:102px;}
-    .cmg-message{font-size:14px; line-height:1.35;}
-    .cmg-front-title,.cmg-front-stars{font-size:9px; letter-spacing:1px;}
-    .cmg-sub{font-size:16px;}
+    .cmg-card{width:118px;}
+    .cmg-message-text{font-size:14px; line-height:1.3;}
+    .cmg-front-title,.cmg-front-stars{font-size:8px; letter-spacing:.5px;}
+    .cmg-sub{font-size:15px;}
+    .cmg-front-inner{padding:10px 7px;}
   }
 </style>
 
@@ -481,12 +505,42 @@
     localStorage.setItem(pickedKey, JSON.stringify({date: today, card: index}));
   }
 
+  // ── Auto-fit: shrinks a card's message text until it fits inside
+  // its allotted box, so any affirmation length works on any card
+  // size (desktop and mobile). Re-runs on resize/orientation change.
+  var MIN_FONT_PX = 9;
+
+  function fitMessageText(card){
+    var box = card.querySelector(".cmg-message");
+    var textEl = card.querySelector(".cmg-message-text");
+    if(!box || !textEl || !textEl.textContent) return;
+
+    // Reset to the CSS-defined starting size for this breakpoint.
+    textEl.style.fontSize = "";
+    var size = parseFloat(getComputedStyle(textEl).fontSize);
+
+    var guard = 0;
+    while(textEl.scrollHeight > box.clientHeight && size > MIN_FONT_PX && guard < 60){
+      size -= 0.5;
+      textEl.style.fontSize = size + "px";
+      guard++;
+    }
+  }
+
+  function fitAllVisible(){
+    cards.forEach(function(card){
+      if(!card.classList.contains("hidden")){
+        fitMessageText(card);
+      }
+    });
+  }
+
   function revealCard(chosenIndex, restored){
     var text = affirmations[getDailyIndex()];
 
     for(var i=0; i<cards.length; i++){
-      var msg = cards[i].querySelector(".cmg-message");
-      msg.textContent = text;
+      var textEl = cards[i].querySelector(".cmg-message-text");
+      textEl.textContent = text;
 
       if(i === chosenIndex){
         cards[i].classList.add("flipped");
@@ -501,6 +555,11 @@
     note.textContent = restored
       ? "Your card for today has already been drawn."
       : "This is your affirmation for today. It will change tomorrow.";
+
+    // Wait for the flip transition / layout to settle before measuring.
+    setTimeout(function(){
+      fitMessageText(cards[chosenIndex]);
+    }, 60);
   }
 
   for(let i=0; i<cards.length; i++){
@@ -535,6 +594,12 @@
   if(picked !== null){
     revealCard(picked, true);
   }
+
+  var resizeTimer;
+  window.addEventListener("resize", function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(fitAllVisible, 120);
+  });
 })();
 </script>
   </div>
