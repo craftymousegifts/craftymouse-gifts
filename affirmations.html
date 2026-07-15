@@ -73,23 +73,6 @@
     @media(max-width:900px){.nav-list{display:none;}.hamburger{display:flex;}.header-top { display: flex; align-items: center; justify-content: space-between; padding: 12px 32px; }.footer-grid{grid-template-columns:1fr 1fr;}.page-content{padding:24px 20px;}}
     @media(max-width:480px){.footer-grid{grid-template-columns:1fr;}}
   
-    footer { background: var(--charcoal); color: rgba(255,255,255,.8); padding: 48px 32px 24px; margin-top: 64px; }
-    .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-    .footer-brand img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 16px; background: #f3e8e6; padding: 3px; }
-    .footer-brand p { font-size: 13px; line-height: 1.7; opacity: .7; margin-bottom: 16px; }
-    .footer-social { display: flex; gap: 12px; }
-    .footer-social a { color: rgba(255,255,255,.6); transition: color .2s; }
-    .footer-social a:hover { color: #fff; }
-    .footer-col h5 { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #fff; margin-bottom: 16px; }
-    .footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,.65); margin-bottom: 8px; transition: color .2s; }
-    .footer-col a:hover { color: #fff; }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,.1); padding-top: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; max-width: 1100px; margin: 0 auto; }
-    .footer-bottom p { font-size: 12px; opacity: .5; }
-    .payment-icons { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    .payment-icons img { height: 20px; opacity: .6; filter: brightness(10); }
-    @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
-  
     /* ── COOKIE CONSENT ── */
     #cookie-banner {
       position: fixed;
@@ -138,8 +121,9 @@
     }
 
   </style>
-<!-- Privacy-friendly analytics by Plausible -->
-<script async src="https://plausible.io/js/pa-Cxk8PXNpeptW3BnTK8Zyt.js"></script>
+<!-- Privacy-friendly analytics by Plausible — script itself is only
+     loaded after the visitor accepts cookies (see cookie consent
+     script near the end of <body>). This stub just queues events. -->
 <script>
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
   plausible.init()
@@ -149,6 +133,37 @@
 <!-- revert-20260617193702 -->
 </head>
 <body>
+  <script>
+    // Shared storage helper: falls back to an in-memory object if
+    // localStorage throws (private browsing, strict cookie blocking,
+    // etc.) so the page still works — it just won't remember
+    // choices between visits in that case.
+    window.cmgSafeStorage = (function(){
+      var memory = {};
+      var available = true;
+      try {
+        var testKey = "__cmg_test__";
+        localStorage.setItem(testKey, "1");
+        localStorage.removeItem(testKey);
+      } catch(e){
+        available = false;
+      }
+      return {
+        getItem: function(key){
+          if(available){
+            try { return localStorage.getItem(key); } catch(e){}
+          }
+          return Object.prototype.hasOwnProperty.call(memory, key) ? memory[key] : null;
+        },
+        setItem: function(key, value){
+          if(available){
+            try { localStorage.setItem(key, value); return; } catch(e){}
+          }
+          memory[key] = value;
+        }
+      };
+    })();
+  </script>
   <div class="promo">10% off your first order – use code <strong>WELCOME10</strong> &nbsp;•&nbsp; Free UK Delivery on orders over £30</div>
   <header class="site-header">
     <div class="header-top">
@@ -378,9 +393,10 @@
     font-size:24px;
     line-height:1.32;
     color:#6b585d;
-    word-break:break-word;
-    overflow-wrap:break-word;
-    hyphens:auto;
+    word-break:normal;
+    overflow-wrap:normal;
+    hyphens:none;
+    -webkit-hyphens:none;
   }
 
   .cmg-card.chosen{
@@ -438,6 +454,22 @@
     .cmg-sub{font-size:15px;}
     .cmg-front-inner{padding:10px 7px;}
   }
+
+  /* Respect visitors who've asked for reduced motion: no flip
+     animation, no hover lift, no pulsing glow on the card back. */
+  @media (prefers-reduced-motion: reduce){
+    .cmg-card,
+    .cmg-card-inner,
+    .cmg-card-face{
+      transition:none !important;
+    }
+    .cmg-card:hover{
+      transform:none;
+    }
+    .cmg-card-back:after{
+      animation:none;
+    }
+  }
 </style>
 
 <script>
@@ -466,7 +498,7 @@
   var note = document.getElementById("cmgNote");
 
   function getDailyIndex(){
-    var saved = localStorage.getItem(dailyKey);
+    var saved = cmgSafeStorage.getItem(dailyKey);
 
     if(saved){
       try{
@@ -485,12 +517,12 @@
     }
 
     var index = Math.abs(hash) % affirmations.length;
-    localStorage.setItem(dailyKey, JSON.stringify({date: today, index: index}));
+    cmgSafeStorage.setItem(dailyKey, JSON.stringify({date: today, index: index}));
     return index;
   }
 
   function getPickedCard(){
-    var saved = localStorage.getItem(pickedKey);
+    var saved = cmgSafeStorage.getItem(pickedKey);
     if(!saved) return null;
 
     try{
@@ -502,7 +534,7 @@
   }
 
   function savePickedCard(index){
-    localStorage.setItem(pickedKey, JSON.stringify({date: today, card: index}));
+    cmgSafeStorage.setItem(pickedKey, JSON.stringify({date: today, card: index}));
   }
 
   // ── Auto-fit: shrinks a card's message text until it fits inside
@@ -520,7 +552,10 @@
     var size = parseFloat(getComputedStyle(textEl).fontSize);
 
     var guard = 0;
-    while(textEl.scrollHeight > box.clientHeight && size > MIN_FONT_PX && guard < 60){
+    while(
+      (textEl.scrollHeight > box.clientHeight || textEl.scrollWidth > box.clientWidth) &&
+      size > MIN_FONT_PX && guard < 60
+    ){
       size -= 0.5;
       textEl.style.fontSize = size + "px";
       guard++;
@@ -546,8 +581,14 @@
         cards[i].classList.add("flipped");
         cards[i].classList.add("chosen");
         cards[i].classList.remove("hidden");
+        cards[i].removeAttribute("aria-hidden");
+        cards[i].removeAttribute("tabindex");
+        cards[i].disabled = false;
       } else {
         cards[i].classList.add("hidden");
+        cards[i].setAttribute("aria-hidden", "true");
+        cards[i].tabIndex = -1;
+        cards[i].disabled = true;
       }
     }
 
@@ -654,18 +695,40 @@
   <div id="cookie-banner" style="display:none;">
     <p>We use essential cookies to keep your basket working. We also use <a href="/cookie-policy.html">Plausible Analytics</a> — privacy-friendly, no personal data collected. <a href="/cookie-policy.html">Cookie Policy</a></p>
     <button class="cookie-btn cookie-btn-accept" onclick="cmgAcceptCookies()">Accept All</button>
-    <button class="cookie-btn cookie-btn-essential" onclick="cmgAcceptCookies()">Essential Only</button>
+    <button class="cookie-btn cookie-btn-essential" onclick="cmgEssentialOnlyCookies()">Essential Only</button>
   </div>
 
   <script>
-    // Cookie consent
+    // Cookie consent: "Accept All" loads the Plausible analytics
+    // script; "Essential Only" stores the choice but never loads it.
+    // Both use the shared safe storage wrapper defined at the top
+    // of <body>, so this still works if localStorage is blocked.
+    function cmgLoadAnalytics() {
+      if (document.getElementById('cmg-plausible-script')) return;
+      var s = document.createElement('script');
+      s.id = 'cmg-plausible-script';
+      s.async = true;
+      s.src = 'https://plausible.io/js/pa-Cxk8PXNpeptW3BnTK8Zyt.js';
+      document.head.appendChild(s);
+    }
+
     (function() {
-      if (!localStorage.getItem('cmg_cookie_consent')) {
+      var consent = cmgSafeStorage.getItem('cmg_cookie_consent');
+      if (!consent) {
         document.getElementById('cookie-banner').style.display = 'flex';
+      } else if (consent === 'accepted') {
+        cmgLoadAnalytics();
       }
     })();
+
     function cmgAcceptCookies() {
-      localStorage.setItem('cmg_cookie_consent', 'true');
+      cmgSafeStorage.setItem('cmg_cookie_consent', 'accepted');
+      cmgLoadAnalytics();
+      document.getElementById('cookie-banner').style.display = 'none';
+    }
+
+    function cmgEssentialOnlyCookies() {
+      cmgSafeStorage.setItem('cmg_cookie_consent', 'essential');
       document.getElementById('cookie-banner').style.display = 'none';
     }
   </script>
