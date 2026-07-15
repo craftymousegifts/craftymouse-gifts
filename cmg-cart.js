@@ -5,6 +5,33 @@ const CMG_CHECKOUT_URL = 'https://qvkosdqcryrcfbjtaxic.supabase.co/functions/v1/
 const CMG_FREE_DELIVERY = 3000; // £30 in pence
 const CMG_DELIVERY_COST = 395;  // £3.95 in pence
 
+// ── Mix-and-match bundle groups ──────────────────────────────────────────────
+// Any 3 items whose price_id is in a group below get discounted to that
+// group's flat set price automatically once 3+ are in the basket — no matter
+// which scents, and no matter how they were added (single or "3 for £X").
+// The edge function recomputes this independently at checkout, so it can't
+// be tampered with client-side.
+const CMG_BUNDLE_GROUPS = {
+  'wax-melt-selections': {
+    setSize: 3,
+    setPricePence: 1000, // £10 for any 3
+    priceIds: new Set([
+      'price_1TizjdQpAVWZATGhRqPPieqi', // Passionfruit Martini & Coconut
+      'price_1TizjeQpAVWZATGhKKnnvDmv', // Passionfruit Martini
+      'price_1TizjfQpAVWZATGhGxX6aIxQ', // Cosmic Plum & Saffron
+      'price_1TizjcQpAVWZATGhm9xuDp25', // Champagne Toast
+      'price_1TizjdQpAVWZATGhXMxWy5ls', // Champagne Grapes & Roses
+    ])
+  }
+};
+
+function cmgGetBundleGroup(priceId) {
+  for (const group in CMG_BUNDLE_GROUPS) {
+    if (CMG_BUNDLE_GROUPS[group].priceIds.has(priceId)) return group;
+  }
+  return null;
+}
+
 // ── Cart State ────────────────────────────────────────────────────────────────
 function getCart() {
   try { return JSON.parse(localStorage.getItem('cmg_cart') || '[]'); }
@@ -38,8 +65,41 @@ function cmgParsePriceToPence(text) {
   return Math.round(num * 100);
 }
 
+// Computes the mix-and-match bundle discount across the whole cart. Returns
+// { discountPence, adjustedSubtotalPence } given a raw (pre-discount)
+// subtotal. This mirrors the authoritative server-side calculation in the
+// cmg-checkout edge function, so the drawer shows the real price the
+// customer will actually pay.
+function cmgComputeBundleDiscount(cart, rawSubtotalPence) {
+  let totalDiscountPence = 0;
+
+  Object.keys(CMG_BUNDLE_GROUPS).forEach(group => {
+    const cfg = CMG_BUNDLE_GROUPS[group];
+    let groupQty = 0;
+    let groupNormalPence = 0;
+    cart.forEach(item => {
+      if (item.bundleGroup === group) {
+        groupQty += item.qty;
+        if (typeof item.pricePence === 'number') groupNormalPence += item.pricePence * item.qty;
+      }
+    });
+    if (groupQty < cfg.setSize) return;
+    const completeSets = Math.floor(groupQty / cfg.setSize);
+    if (completeSets <= 0) return;
+    const avgUnitPence = groupNormalPence / groupQty;
+    const setNormalPence = avgUnitPence * cfg.setSize;
+    const discountPerSet = Math.max(0, Math.round(setNormalPence - cfg.setPricePence));
+    totalDiscountPence += discountPerSet * completeSets;
+  });
+
+  return {
+    discountPence: totalDiscountPence,
+    adjustedSubtotalPence: Math.max(0, rawSubtotalPence - totalDiscountPence)
+  };
+}
+
 // ── Add to Cart ───────────────────────────────────────────────────────────────
-function cmgAddToCart(priceId, qty, variant, nameOverride, imgOverride, pricePenceOverride, isBundle, bundleUnits) {
+function cmgAddToCart(priceId, qty, variant, nameOverride, imgOverride, pricePenceOverride) {
   qty = qty || 1;
   variant = variant || '';
   const cart = getCart();
@@ -81,7 +141,7 @@ function cmgAddToCart(priceId, qty, variant, nameOverride, imgOverride, pricePen
     if (!name) name = priceId;
     if (pricePence === null) pricePence = cmgFindPriceForId(priceId);
 
-    cart.push({ key, priceId, name, variant, qty, img, pricePence, isBundle: !!isBundle, bundleUnits: bundleUnits || 1 });
+    cart.push({ key, priceId, name, variant, qty, img, pricePence, bundleGroup: cmgGetBundleGroup(priceId) });
   }
   saveCart(cart);
   renderCart();
@@ -99,21 +159,6 @@ function cmgFindPriceForId(priceId) {
   const priceEl = card.querySelector('.price');
   if (!priceEl) return null;
   return cmgParsePriceToPence(priceEl.textContent);
-}
-
-// Detects "N for £X" style bundle-deal variant text (e.g. "3 for £10 bundle")
-// and returns { units, totalPence } — the number of physical items included
-// and the flat total price in pence — or null if the variant text isn't a
-// bundle deal. Generalised so any future "X for £Y" option anywhere on the
-// site is handled automatically, not just this one product.
-function cmgParseBundleDeal(variantText) {
-  if (!variantText) return null;
-  const match = String(variantText).match(/(\d+)\s*for\s*£\s*([\d,]+(?:\.\d{2})?)/i);
-  if (!match) return null;
-  const units = parseInt(match[1], 10);
-  const pounds = parseFloat(match[2].replace(/,/g, ''));
-  if (!units || isNaN(pounds)) return null;
-  return { units: units, totalPence: Math.round(pounds * 100) };
 }
 
 // ── Scent/Variant wrapper ─────────────────────────────────────────────────────
@@ -144,75 +189,23 @@ function cmgAddToCartWithScent(btn, priceId, productName) {
   const msg = card ? card.querySelector('.scent-required-msg') : null;
   if (msg) msg.style.display = 'none';
 
-  const bundle = cmgParseBundleDeal(variant);
-  const isBundle = !!bundle;
+  // "3 for £X bundle" style options add 3 units of this one scent in a single
+  // click; the actual £10 pricing is applied automatically at cart level
+  // (and re-verified server-side) once 3+ eligible items are in the basket —
+  // whether that's 3 of this scent or a mix of different ones.
+  const bundleMatch = variant.match(/^(\d+)\s*for/i);
+  const qty = bundleMatch ? parseInt(bundleMatch[1], 10) || 1 : 1;
 
-  let pricePence = bundle ? bundle.totalPence : null;
+  let pricePence = null;
   let img = '';
   if (card) {
     const imgEl = card.querySelector('img');
     if (imgEl) img = imgEl.src;
-    if (pricePence === null) {
-      const priceEl = card.querySelector('.price');
-      if (priceEl) pricePence = cmgParsePriceToPence(priceEl.textContent);
-    }
+    const priceEl = card.querySelector('.price');
+    if (priceEl) pricePence = cmgParsePriceToPence(priceEl.textContent);
   }
 
-  cmgAddToCart(priceId, 1, variant, productName || '', img, pricePence, isBundle, bundle ? bundle.units : 1);
-}
-
-// ── Mix-and-match bundle wrapper ─────────────────────────────────────────────
-// Used by "Build Your Bundle" cards where the customer picks 3 DIFFERENT
-// products for one flat price, rather than 3 of the same item (that's
-// cmgAddToCartWithScent's job). Adds a single cart line representing all 3
-// chosen items together.
-function cmgAddBundleToCart(btn) {
-  const card = btn.closest('.product-card');
-  if (!card) return;
-  const selects = Array.from(card.querySelectorAll('.bundle-scent-select'));
-
-  let allChosen = true;
-  selects.forEach(sel => {
-    if (!sel.value) {
-      allChosen = false;
-      sel.classList.remove('cmg-shake');
-      void sel.offsetWidth;
-      sel.classList.add('cmg-shake');
-      sel.style.borderColor = '#e46d69';
-      setTimeout(() => sel.classList.remove('cmg-shake'), 500);
-    }
-  });
-
-  let msg = card.querySelector('.scent-required-msg');
-  if (!allChosen) {
-    if (!msg) {
-      msg = document.createElement('p');
-      msg.className = 'scent-required-msg';
-      msg.style.cssText = 'color:#e46d69;font-size:12px;margin-top:4px;';
-      const lastSelect = selects[selects.length - 1];
-      if (lastSelect) lastSelect.parentNode.insertBefore(msg, lastSelect.nextSibling);
-    }
-    msg.textContent = 'Please choose all 3 scents';
-    msg.style.display = 'block';
-    return;
-  }
-  if (msg) msg.style.display = 'none';
-
-  const chosen = selects.map(sel => sel.value);
-  const priceEl = card.querySelector('.price');
-  const pricePence = priceEl ? cmgParsePriceToPence(priceEl.textContent) : 1000;
-  const imgEl = card.querySelector('img');
-  const img = imgEl ? imgEl.src : '';
-
-  const name = 'Wax Melt Bundle (3 for £10)';
-  const variant = chosen.join(', ');
-  // Stable synthetic price ID per distinct scent combo, so the same combo
-  // stacks as one cart line while a different combo becomes a new line —
-  // this isn't a real Stripe Price; the checkout builds an inline price for
-  // bundle items instead (see cmgCheckout below).
-  const priceId = 'cmg-bundle-' + chosen.slice().sort().join('|').toLowerCase().replace(/[^a-z0-9|]+/g, '');
-
-  cmgAddToCart(priceId, 1, variant, name, img, pricePence, true, 3);
+  cmgAddToCart(priceId, qty, variant, productName || '', img, pricePence);
 }
 
 // ── Cart Drawer ───────────────────────────────────────────────────────────────
@@ -264,6 +257,8 @@ function renderCart() {
     }
   });
 
+  const bundle = cmgComputeBundleDiscount(cart, subtotalPence);
+
   container.innerHTML = cart.map((item, idx) => `
     <div style="display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #f0e8e6;align-items:flex-start;">
       ${item.img ? `<img src="${item.img}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;flex-shrink:0;" onerror="this.style.display='none'">` : ''}
@@ -272,9 +267,9 @@ function renderCart() {
         ${item.variant ? `<p style="font-size:11px;color:#888;margin-bottom:4px;">Scent: ${item.variant}</p>` : ''}
         <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:4px;">
           <div style="display:flex;align-items:center;gap:8px;">
-            <button onclick="cmgUpdateQty(${idx},-1)" style="width:24px;height:24px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;" title="${item.bundleUnits > 1 ? 'Remove 1 bundle (' + item.bundleUnits + ' items)' : ''}">−</button>
-            <span style="font-size:13px;min-width:20px;text-align:center;">${item.qty * (item.bundleUnits || 1)}</span>
-            <button onclick="cmgUpdateQty(${idx},1)" style="width:24px;height:24px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;" title="${item.bundleUnits > 1 ? 'Add 1 more bundle (' + item.bundleUnits + ' items)' : ''}">+</button>
+            <button onclick="cmgUpdateQty(${idx},-1)" style="width:24px;height:24px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">−</button>
+            <span style="font-size:13px;min-width:20px;text-align:center;">${item.qty}</span>
+            <button onclick="cmgUpdateQty(${idx},1)" style="width:24px;height:24px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">+</button>
             <button onclick="cmgRemoveItem(${idx})" style="background:none;border:none;color:#aaa;cursor:pointer;font-size:18px;line-height:1;padding:0;">×</button>
           </div>
           <span style="font-size:13px;font-weight:700;color:#1e1e1e;white-space:nowrap;">${typeof item.pricePence === 'number' ? cmgFormatPence(item.pricePence * item.qty) : '—'}</span>
@@ -283,30 +278,35 @@ function renderCart() {
     </div>
   `).join('');
 
-  // Subtotal line
+  // Subtotal + bundle discount line
   let subtotalEl = document.getElementById('cmg-cart-subtotal');
   if (!subtotalEl && footer) {
     subtotalEl = document.createElement('div');
     subtotalEl.id = 'cmg-cart-subtotal';
-    subtotalEl.style.cssText = 'display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;color:#1e1e1e;margin-bottom:10px;';
+    subtotalEl.style.cssText = 'margin-bottom:10px;';
     footer.insertBefore(subtotalEl, footer.firstChild);
   }
   if (subtotalEl) {
-    subtotalEl.innerHTML = hasUnknownPrice
-      ? `<span>Subtotal</span><span>${cmgFormatPence(subtotalPence)}+</span>`
-      : `<span>Subtotal</span><span>${cmgFormatPence(subtotalPence)}</span>`;
+    const subtotalRow = hasUnknownPrice
+      ? `<div style="display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;color:#1e1e1e;"><span>Subtotal</span><span>${cmgFormatPence(subtotalPence)}+</span></div>`
+      : `<div style="display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;color:#1e1e1e;"><span>Subtotal</span><span>${cmgFormatPence(subtotalPence)}</span></div>`;
+    const discountRow = bundle.discountPence > 0
+      ? `<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;color:#e46d69;margin-top:4px;"><span>🎁 Mix &amp; Match Discount</span><span>−${cmgFormatPence(bundle.discountPence)}</span></div>`
+      : '';
+    subtotalEl.innerHTML = subtotalRow + discountRow;
   }
 
-  // Delivery nudge — based on the real subtotal, not just "cart has items"
+  // Delivery nudge — based on the real, discounted subtotal
   const deliveryMsg = document.getElementById('cmg-delivery-msg');
+  const effectiveSubtotal = bundle.adjustedSubtotalPence;
   if (deliveryMsg) {
     if (hasUnknownPrice) {
       // We couldn't price every item confidently — don't claim a threshold we can't verify
       deliveryMsg.textContent = 'Free UK delivery on orders over £30 🎁';
-    } else if (subtotalPence >= CMG_FREE_DELIVERY) {
+    } else if (effectiveSubtotal >= CMG_FREE_DELIVERY) {
       deliveryMsg.textContent = "🎉 You've unlocked free UK delivery!";
     } else {
-      const remaining = CMG_FREE_DELIVERY - subtotalPence;
+      const remaining = CMG_FREE_DELIVERY - effectiveSubtotal;
       deliveryMsg.textContent = `Add ${cmgFormatPence(remaining)} more for free UK delivery 🎁`;
     }
   }
@@ -337,30 +337,21 @@ async function cmgCheckout() {
   if (btn) { btn.textContent = 'Preparing checkout…'; btn.disabled = true; }
 
   try {
-    const items = cart.map(item => {
-      const base = {
-        price_id: item.priceId,
-        quantity: item.qty,
-        variant: item.variant || ''
-      };
-      // Bundle deals (e.g. "3 for £10") aren't a real Stripe Price — the
-      // catalogue price ID is still the single-item price. Send the flat
-      // bundle amount + a name so the edge function can build an inline
-      // Stripe price instead of charging quantity × single-item price.
-      if (item.isBundle && typeof item.pricePence === 'number') {
-        base.unit_amount = item.pricePence;
-        base.name = item.name + (item.variant ? ' — ' + item.variant : '');
-      }
-      return base;
-    });
+    const items = cart.map(item => ({
+      price_id: item.priceId,
+      quantity: item.qty,
+      variant: item.variant || ''
+    }));
 
     // Real subtotal in pence, computed from the prices we tracked when items
-    // were added. Falls back to 0 only if every item is missing a price
-    // (e.g. a very old cart from before this fix) — the edge function/Stripe
-    // remains the source of truth for the actual charge either way.
-    const subtotal = cart.reduce((sum, item) => {
+    // were added, minus the mix-and-match bundle discount — the edge
+    // function recomputes the discount itself from price_id + quantity for
+    // the actual charge, this is only used for the free-delivery threshold.
+    const rawSubtotal = cart.reduce((sum, item) => {
       return sum + (typeof item.pricePence === 'number' ? item.pricePence * item.qty : 0);
     }, 0);
+    const bundle = cmgComputeBundleDiscount(cart, rawSubtotal);
+    const subtotal = bundle.adjustedSubtotalPence;
 
     const res = await fetch(CMG_CHECKOUT_URL, {
       method: 'POST',
