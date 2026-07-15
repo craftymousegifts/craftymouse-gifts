@@ -161,6 +161,60 @@ function cmgAddToCartWithScent(btn, priceId, productName) {
   cmgAddToCart(priceId, 1, variant, productName || '', img, pricePence, isBundle, bundle ? bundle.units : 1);
 }
 
+// ── Mix-and-match bundle wrapper ─────────────────────────────────────────────
+// Used by "Build Your Bundle" cards where the customer picks 3 DIFFERENT
+// products for one flat price, rather than 3 of the same item (that's
+// cmgAddToCartWithScent's job). Adds a single cart line representing all 3
+// chosen items together.
+function cmgAddBundleToCart(btn) {
+  const card = btn.closest('.product-card');
+  if (!card) return;
+  const selects = Array.from(card.querySelectorAll('.bundle-scent-select'));
+
+  let allChosen = true;
+  selects.forEach(sel => {
+    if (!sel.value) {
+      allChosen = false;
+      sel.classList.remove('cmg-shake');
+      void sel.offsetWidth;
+      sel.classList.add('cmg-shake');
+      sel.style.borderColor = '#e46d69';
+      setTimeout(() => sel.classList.remove('cmg-shake'), 500);
+    }
+  });
+
+  let msg = card.querySelector('.scent-required-msg');
+  if (!allChosen) {
+    if (!msg) {
+      msg = document.createElement('p');
+      msg.className = 'scent-required-msg';
+      msg.style.cssText = 'color:#e46d69;font-size:12px;margin-top:4px;';
+      const lastSelect = selects[selects.length - 1];
+      if (lastSelect) lastSelect.parentNode.insertBefore(msg, lastSelect.nextSibling);
+    }
+    msg.textContent = 'Please choose all 3 scents';
+    msg.style.display = 'block';
+    return;
+  }
+  if (msg) msg.style.display = 'none';
+
+  const chosen = selects.map(sel => sel.value);
+  const priceEl = card.querySelector('.price');
+  const pricePence = priceEl ? cmgParsePriceToPence(priceEl.textContent) : 1000;
+  const imgEl = card.querySelector('img');
+  const img = imgEl ? imgEl.src : '';
+
+  const name = 'Wax Melt Bundle (3 for £10)';
+  const variant = chosen.join(', ');
+  // Stable synthetic price ID per distinct scent combo, so the same combo
+  // stacks as one cart line while a different combo becomes a new line —
+  // this isn't a real Stripe Price; the checkout builds an inline price for
+  // bundle items instead (see cmgCheckout below).
+  const priceId = 'cmg-bundle-' + chosen.slice().sort().join('|').toLowerCase().replace(/[^a-z0-9|]+/g, '');
+
+  cmgAddToCart(priceId, 1, variant, name, img, pricePence, true, 3);
+}
+
 // ── Cart Drawer ───────────────────────────────────────────────────────────────
 function openCart() {
   const drawer = document.getElementById('cmg-cart-drawer');
