@@ -1334,48 +1334,16 @@
   </script>
 
 <script>
-const cmgImageMap = {
-  "Moon Face Fridge Magnets": {
-    "Dark Blue": "/images/products/moon-face-dark-blue.jpeg",
-    "Dark Blue with Stars": "/images/products/moon-face-dark-blue-stars.jpeg",
-    "Dark Grey": "/images/products/moon-face-dark-grey.jpeg",
-    "Light Brown": "/images/products/moon-face-light-brown.jpeg",
-    "Light Grey": "/images/products/moon-face-white.jpeg",
-    "Pastel Lemon": "/images/products/moon-face-pastel-lemon.jpeg"
-  },
-  "Eco Resin Hamsa Tealight Holder": {
-    "Black": "/images/products/hamsa-black.jpeg",
-    "White": "/images/products/hamsa-white.jpeg",
-    "Grey Marble": "/images/products/hamsa-grey-marble.jpeg",
-    "Terracotta": "/images/products/hamsa-terracotta.jpeg",
-    "Terracotta Marble": "/images/products/hamsa-terracotta-marble.jpeg",
-    "Blush Pink Marble": "/images/products/hamsa-blush-pink-marble.jpeg"
-  },
-  "Cylinder Style Wax Melt Warmer": {
-    "Black": "/images/products/cylinder-black.jpeg",
-    "White": "/images/products/cylinder-white.jpeg",
-    "Grey Marble": "/images/products/cylinder-grey-marble.jpeg",
-    "Terracotta": "/images/products/cylinder-terracotta.jpeg",
-    "Terracotta Marble": "/images/products/cylinder-terracotta-marble.jpeg",
-    "Blush Pink Marble": "/images/products/cylinder-blush-pink-marble.jpeg"
-  },
-  "Nordic Style Wax Melt Warmer": {
-    "Black": "/images/products/nordic-black.jpeg",
-    "White": "/images/products/nordic-white.jpeg",
-    "Grey Marble": "/images/products/nordic-grey-marble.jpeg",
-    "Terracotta": "/images/products/nordic-terracotta.jpeg",
-    "Terracotta Marble": "/images/products/nordic-terracotta-marble.jpeg",
-    "Blush Pink Marble": "/images/products/nordic-blush-pink-marble.jpeg"
-  },
-  "Handmade Arch Jesmonite Wax Melt Warmer": {
-    "Black": "/images/products/arch-black.jpeg",
-    "White": "/images/products/arch-white.jpeg",
-    "Grey Marble": "/images/products/arch-grey-marble.jpeg",
-    "Terracotta": "/images/products/arch-terracotta.jpeg",
-    "Terracotta Marble": "/images/products/arch-terracotta-marble.jpeg",
-    "Blush Pink Marble": "/images/products/arch-blush-pink-marble.jpeg"
-  }
-};
+// NOTE: this map used to list a distinct photo per colour for 5 products
+// (Moon Face Fridge Magnets, Eco Resin Hamsa Tealight Holder, and the 3 wax
+// melt warmers) — but none of those 30 image files ever actually existed in
+// /images/products/, so every colour selection was swapping to a broken
+// image. The CMS source for each of these products only has a single photo,
+// so there's nothing real to swap to. Left empty until real per-colour
+// product photography exists — cmgSwapImage()'s lookup below safely no-ops
+// when a product/colour isn't in this map, so the single real photo stays
+// visible no matter what colour is picked.
+const cmgImageMap = {};
 
 function cmgSwapImage(select) {
   const card = select.closest('.product-card');
