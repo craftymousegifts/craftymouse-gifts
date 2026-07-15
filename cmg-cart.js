@@ -189,12 +189,12 @@ function cmgAddToCartWithScent(btn, priceId, productName) {
   const msg = card ? card.querySelector('.scent-required-msg') : null;
   if (msg) msg.style.display = 'none';
 
-  // "3 for £X bundle" style options add 3 units of this one scent in a single
-  // click; the actual £10 pricing is applied automatically at cart level
-  // (and re-verified server-side) once 3+ eligible items are in the basket —
-  // whether that's 3 of this scent or a mix of different ones.
-  const bundleMatch = variant.match(/^(\d+)\s*for/i);
-  const qty = bundleMatch ? parseInt(bundleMatch[1], 10) || 1 : 1;
+  // Every click adds exactly 1 item, regardless of which offer is selected —
+  // the "3 for £X bundle" option is just labelling the deal, not a shortcut
+  // for adding 3 at once. The £10 pricing is applied automatically at cart
+  // level (and re-verified server-side) once 3+ eligible items are in the
+  // basket, however many separate clicks it took to get there.
+  const qty = 1;
 
   let pricePence = null;
   let img = '';
