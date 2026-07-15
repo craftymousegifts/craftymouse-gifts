@@ -19,6 +19,9 @@
     .btn:hover{background:#c4524e;}
     .btn-outline{display:inline-block;background:transparent;color:#1e1e1e;border:2px solid #1e1e1e;padding:11px 28px;border-radius:8px;font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;margin-top:8px;margin-left:12px;transition:all .2s;}
     .btn-outline:hover{background:#1e1e1e;color:#fff;}
+    .account-nudge{border:1px dashed #d9c9c5;border-radius:10px;padding:18px 20px;margin:24px 0;text-align:left;display:none;}
+    .account-nudge p{margin-bottom:10px;}
+    .account-nudge a.btn{margin-top:0;padding:10px 22px;font-size:12px;}
     @media(max-width:480px){.card{padding:32px 24px;}.btn-outline{margin-left:0;margin-top:12px;}}
   </style>
 </head>
@@ -32,6 +35,10 @@
       We aim to dispatch within <strong>3–5 working days</strong>.
     </div>
     <p>A confirmation email is on its way to you. If you have any questions, contact us at <a href="mailto:contact@craftymousegifts.com" style="color:#e46d69;">contact@craftymousegifts.com</a></p>
+    <div class="account-nudge" id="account-nudge">
+      <p>🐭 <strong>Want to track this order?</strong> Create a free account with the same email you just checked out with and it'll appear in your order history automatically.</p>
+      <a href="/account.html" class="btn">Create Account</a>
+    </div>
     <div style="margin-top:28px;">
       <a href="/shop.html" class="btn">Continue Shopping</a>
       <a href="/" class="btn-outline">Home</a>
@@ -40,5 +47,20 @@
   <!-- Privacy-friendly analytics by Plausible -->
   <script async src="https://plausible.io/js/pa-Cxk8PXNpeptW3BnTK8Zyt.js"></script>
   <script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script>
+    (async function() {
+      if (!window.supabase) return;
+      var db = window.supabase.createClient(
+        'https://adxmrliwacsqzvtftdpq.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkeG1ybGl3YWNzcXp2dGZ0ZHBxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxMzQ3MDcsImV4cCI6MjA5OTcxMDcwN30.K5zTa4RYsdkbIqh0mSOoGJWQspnVCEcsjxDT_LPnyaU'
+      );
+      var res = await db.auth.getSession();
+      // Only show the nudge to guests — logged-in customers already got auto-linked.
+      if (!res.data.session) {
+        document.getElementById('account-nudge').style.display = 'block';
+      }
+    })();
+  </script>
 </body>
 </html>

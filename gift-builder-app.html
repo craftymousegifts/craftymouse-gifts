@@ -388,7 +388,7 @@ function openModal(idx,triggerBtn){
   }
   var targetCard=triggerBtn?triggerBtn.closest('.pkg-card'):null;
   var wrap=triggerBtn?triggerBtn.closest('.pkg-wrap'):null;
-  if(wrap){wrap.appendChild(modal);}else{document.getElementById('panels').appendChild(modal);}
+  if(wrap){wrap.appendChild(modal);}else{document.body.appendChild(modal);}
   setTimeout(function(){
     var absTop=0;var node=modal;
     while(node){absTop+=node.offsetTop;node=node.offsetParent;}
