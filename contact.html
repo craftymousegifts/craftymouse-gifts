@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
-    
+
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{--blush:#f3e8e6;--blush-mid:#edddd9;--blush-dark:#d9c9c5;--rose:#e46d69;--rose-dark:#c4524e;--charcoal:#1e1e1e;--mid:#555;--light:#faf5f3;--white:#fff;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Lato',Arial,sans-serif;}
     html{scroll-behavior:smooth;}
@@ -72,7 +72,6 @@
     .payment-icons img{height:20px;opacity:.6;filter:brightness(10);}
     @media(max-width:900px){.nav-list{display:none;}.hamburger{display:flex;}.header-top { display: flex; align-items: center; justify-content: space-between; padding: 12px 32px; }.footer-grid{grid-template-columns:1fr 1fr;}}
     @media(max-width:480px){.footer-grid{grid-template-columns:1fr;}}
-
     .contact-hero { background: var(--blush); padding: 64px 32px; text-align: center; }
     .contact-hero h1 { font-family: var(--serif); font-size: clamp(2rem,4vw,3rem); font-weight: 400; margin-bottom: 12px; }
     .contact-hero p { color: var(--mid); font-size: 15px; max-width: 500px; margin: 0 auto; }
@@ -100,7 +99,7 @@
     .form-note { font-size: 12px; color: var(--mid); margin-top: 10px; text-align: center; }
     .success-msg { display: none; background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 14px; border-radius: 2px; margin-top: 16px; text-align: center; font-size: 14px; }
     @media(max-width:768px) { .contact-body { grid-template-columns:1fr; padding:40px 20px; } }
-  
+
     footer { background: var(--charcoal); color: rgba(255,255,255,.8); padding: 48px 32px 24px; margin-top: 64px; }
     .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
     .footer-brand img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 16px; background: #f3e8e6; padding: 3px; }
@@ -117,7 +116,7 @@
     .payment-icons img { height: 20px; opacity: .6; filter: brightness(10); }
     @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
-  
+
     /* ── COOKIE CONSENT ── */
     #cookie-banner {
       position: fixed;
@@ -150,7 +149,7 @@
     .cookie-btn-accept { background: #e46d69; color: #fff; }
     .cookie-btn-essential { background: transparent; color: #ccc; border: 1px solid #555; }
     .cookie-btn:hover { opacity: 0.85; }
-  
+
     /* iOS safe area fix */
     .site-header {
       padding-top: env(safe-area-inset-top);
@@ -164,7 +163,6 @@
       .logo-link img, .header-logo img { width: 80px; height: 80px; }
       main, .shop-layout, section { padding-top: 8px; }
     }
-
   </style>
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-Cxk8PXNpeptW3BnTK8Zyt.js"></script>
@@ -220,12 +218,10 @@
     </div>
   </header>
   <div class="breadcrumb"><a href="/">Home</a> &rsaquo; Contact Us</div>
-
   <div class="contact-hero">
     <h1>Get in Touch</h1>
     <p>We'd love to hear from you — whether it's a question about an order, a custom request or just to say hello!</p>
   </div>
-
   <div class="contact-body">
     <div class="contact-info">
       <h2>How to Reach Us</h2>
@@ -234,13 +230,6 @@
         <div class="contact-detail-text">
           <h4>Email</h4>
           <p><a href="mailto:contact@craftymousegifts.com">contact@craftymousegifts.com</a></p>
-        </div>
-      </div>
-      <div class="contact-detail">
-        <div class="contact-detail-icon">📍</div>
-        <div class="contact-detail-text">
-          <h4>Location</h4>
-          <p>Scottish Borders, Scotland, UK</p>
         </div>
       </div>
       <div class="contact-detail">
@@ -267,10 +256,13 @@
         </div>
       </div>
     </div>
-
     <div class="contact-form">
       <h2>Send a Message</h2>
       <form id="contact-form" action="https://qvkosdqcryrcfbjtaxic.supabase.co/functions/v1/cmg-contact" method="POST">
+        <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+          <label for="website">Website</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
         <div class="form-group">
           <label for="name">Your Name</label>
           <input type="text" id="name" name="name" placeholder="Michaela Feeley" required>
@@ -299,7 +291,6 @@
       </form>
     </div>
   </div>
-
   <footer>
     <div class="footer-grid">
       <div class="footer-brand">
@@ -356,7 +347,8 @@
         email: fd.get('email'),
         subject: fd.get('subject'),
         message: fd.get('message'),
-        orderNumber: fd.get('order-number') || ''
+        orderNumber: fd.get('order-number') || '',
+        website: fd.get('website') || ''
       };
       fetch(form.action, {
         method: 'POST',
@@ -377,14 +369,12 @@
         });
     });
   </script>
-
   <!-- COOKIE CONSENT BANNER -->
   <div id="cookie-banner" style="display:none;">
     <p>We use essential cookies to keep your basket working. We also use <a href="/cookie-policy.html">Plausible Analytics</a> — privacy-friendly, no personal data collected. <a href="/cookie-policy.html">Cookie Policy</a></p>
     <button class="cookie-btn cookie-btn-accept" onclick="cmgAcceptCookies()">Accept All</button>
     <button class="cookie-btn cookie-btn-essential" onclick="cmgAcceptCookies()">Essential Only</button>
   </div>
-
   <script>
     // Cookie consent
     (function() {
