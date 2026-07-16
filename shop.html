@@ -1610,7 +1610,7 @@ function cmgSwapImage(select) {
     var sessionRes = await cmgWishDb.auth.getSession();
     var session = sessionRes.data.session;
     if (!session) {
-      window.location.href = '/account.html';
+      window.location.href = '/account.html?from=wishlist';
       return;
     }
 
@@ -1671,4 +1671,4 @@ function cmgSwapImage(select) {
 })();
 </script>
 </body>
-</html> 
+</html>
