@@ -1579,7 +1579,7 @@ function cmgSwapImage(select) {
 <!-- ── WISHLIST (heart button on every product card) ────────────────────────── -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
-  .btn-wishlist { background:none; border:1px solid var(--blush-dark,#d9c9c5); color:#c4524e; padding:8px 10px; font-size:14px; cursor:pointer; border-radius:2px; line-height:1; transition:all .2s; }
+  .btn-wishlist { background:none; border:1px solid var(--blush-dark,#d9c9c5); color:#c4524e; padding:8px 12px; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-family:var(--sans); cursor:pointer; border-radius:2px; line-height:1.2; transition:all .2s; width:100%; }
   .btn-wishlist:hover { background:#fbe4e2; }
   .btn-wishlist.active { background:#e46d69; color:#fff; border-color:#e46d69; }
 </style>
@@ -1610,7 +1610,7 @@ function cmgSwapImage(select) {
     var sessionRes = await cmgWishDb.auth.getSession();
     var session = sessionRes.data.session;
     if (!session) {
-      window.location.href = '/account.html';
+      window.location.href = '/account.html?from=wishlist';
       return;
     }
 
@@ -1619,6 +1619,7 @@ function cmgSwapImage(select) {
       await cmgWishDb.from('wishlist_items').delete().eq('user_id', session.user.id).eq('product_slug', slug);
       cmgWishSet.delete(slug);
       btn.classList.remove('active');
+      btn.innerHTML = '♥ Add to Wishlist';
     } else {
       await cmgWishDb.from('wishlist_items').insert({
         user_id: session.user.id,
@@ -1629,6 +1630,7 @@ function cmgSwapImage(select) {
       });
       cmgWishSet.add(slug);
       btn.classList.add('active');
+      btn.innerHTML = '♥ In Wishlist';
     }
   }
   window.cmgToggleWishlist = cmgToggleWishlist;
@@ -1655,9 +1657,10 @@ function cmgSwapImage(select) {
       var card = cartBtn.closest('.product-card');
       var product = findProductForCard(card);
       var heartBtn = document.createElement('button');
-      heartBtn.className = 'btn-wishlist' + (product && cmgWishSet.has(product._slug) ? ' active' : '');
+      var inList = product && cmgWishSet.has(product._slug);
+      heartBtn.className = 'btn-wishlist' + (inList ? ' active' : '');
       heartBtn.setAttribute('aria-label', 'Add to wishlist');
-      heartBtn.textContent = '♥';
+      heartBtn.innerHTML = inList ? '♥ In Wishlist' : '♥ Add to Wishlist';
       heartBtn.onclick = function() { cmgToggleWishlist(heartBtn); };
       parent.insertBefore(heartBtn, cartBtn);
     });
@@ -1671,4 +1674,4 @@ function cmgSwapImage(select) {
 })();
 </script>
 </body>
-</html> 
+</html>
