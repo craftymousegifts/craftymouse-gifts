@@ -57,6 +57,8 @@
     .policy-body a{color:var(--rose);}
     .policy-body a:hover{text-decoration:underline;}
     .policy-body table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;}
+    .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0;}
+    .table-scroll table{margin:0;min-width:420px;}
     .policy-body th{background:var(--blush);padding:10px 14px;text-align:left;font-weight:700;border:1px solid var(--blush-dark);}
     .policy-body td{padding:10px 14px;border:1px solid var(--blush-dark);vertical-align:top;color:var(--mid);line-height:1.6;}
     .highlight-box{background:var(--blush);border-left:3px solid var(--rose);padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0;font-size:14px;color:var(--mid);}
@@ -81,6 +83,11 @@
     .cookie-btn-decline{background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.3);padding:9px 16px;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit;}
     @media(max-width:900px){.nav-list{display:none;}.hamburger{display:flex;}.footer-grid{grid-template-columns:1fr 1fr;}.policy-body{padding:40px 20px;}}
     @media(max-width:480px){.footer-grid{grid-template-columns:1fr;}#cmg-cookie-banner{flex-direction:column;}}
+    @media(max-width:600px){
+      .header-top{padding:8px 16px;}
+      .header-top .social-links{display:none;}
+      .header-actions{gap:12px;}
+    }
   </style>
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-Cxk8PXNpeptW3BnTK8Zyt.js"></script>
@@ -139,12 +146,14 @@
     <p>Cookies are small text files stored on your device when you visit a website. They help websites remember your preferences and understand how you use them.</p>
 
     <h2>Cookies We Use</h2>
+    <div class="table-scroll">
     <table>
       <tr><th>Cookie / Storage</th><th>Purpose</th><th>Type</th><th>Duration</th></tr>
       <tr><td>cmg_cart</td><td>Stores your shopping basket so items are remembered as you browse</td><td>Essential</td><td>Until cleared</td></tr>
       <tr><td>cmg_cookie_consent</td><td>Remembers your cookie consent choice</td><td>Essential</td><td>1 year</td></tr>
       <tr><td>Plausible Analytics</td><td>Privacy-friendly website analytics — counts page visits and traffic sources. No personal data is collected and no cookies are set by Plausible.</td><td>Analytics (cookie-free)</td><td>N/A</td></tr>
     </table>
+    </div>
 
     <h2>What We Don't Use</h2>
     <ul>
