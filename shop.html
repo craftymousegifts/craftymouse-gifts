@@ -121,7 +121,7 @@
     .btn-cart { background: var(--charcoal); color: #fff; border: none; padding: 8px 12px; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; font-family: var(--sans); transition: background .2s; white-space: nowrap; border-radius: 2px; width: 100%; }
     .btn-cart:hover { background: var(--rose); }
 
-    /* SNIPCART */
+
 
     /* RESPONSIVE */
     @media (max-width: 960px) {
@@ -228,6 +228,7 @@
     /* Mobile nav improvements */
     @media (max-width: 600px) {
       .header-top { padding: 8px 16px; }
+      .header-top .social-links { display: none; }
       .logo-link img, .header-logo img { width: 80px; height: 80px; }
       main, .shop-layout, section { padding-top: 8px; }
     }
@@ -1306,22 +1307,6 @@
       }
     }
 
-    // Force Snipcart to load on page load
-    document.addEventListener('DOMContentLoaded', function() {
-      setTimeout(function() {
-        if (window.LoadSnipcart) {
-          window.LoadSnipcart();
-        }
-      }, 500);
-    });
-
-    // Ensure cart opens on button click
-    document.addEventListener('click', function(e) {
-      const btn = e.target.closest('.btn-cart');
-      if (btn && window.Snipcart) {
-        window.Snipcart.api.cart.open();
-      }
-    });
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
         const t = document.querySelector(a.getAttribute('href'));
