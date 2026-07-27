@@ -680,7 +680,14 @@
       padding: 16px 0;
     }
 
-    @media(max-width:900px){.mobile-menu.open{display:block;}}
+    @media(max-width:900px){
+      .mobile-menu.open{
+        display:block;
+        max-height: calc(100vh - 110px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
 
     .mobile-menu a {
       display: block;
