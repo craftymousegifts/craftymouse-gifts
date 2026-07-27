@@ -79,6 +79,12 @@
     }
     .mobile-nav a { display: block; padding: 11px 28px; font-size: 14px; color: var(--charcoal); border-bottom: 1px solid var(--blush); }
     .mobile-nav a.sub { padding-left: 44px; font-size: 13px; color: var(--mid); }
+    .mob-sub-group{display:none;}
+    .mob-sub-group.open{display:block;}
+    .mob-nav-row{display:flex;align-items:stretch;}
+    .mob-nav-row a{flex:1;}
+    .mob-sub-toggle{background:none;border:none;padding:0 24px;font-size:12px;color:var(--charcoal);cursor:pointer;transition:transform .2s;}
+    .mob-sub-toggle.open{transform:rotate(180deg);}
     .mobile-nav a:hover { color: var(--rose); }
 
     /* BREADCRUMB */
@@ -249,6 +255,13 @@
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-Cxk8PXNpeptW3BnTK8Zyt.js"></script>
 <script>
+
+    function toggleMobSub(btn) {
+      btn.classList.toggle('open');
+      const row = btn.closest('.mob-nav-row');
+      const group = row.nextElementSibling;
+      if (group && group.classList.contains('mob-sub-group')) group.classList.toggle('open');
+    }
     function toggleMobNav() {
       const menu = document.getElementById('mob-nav');
       const header = document.querySelector('header');
@@ -334,11 +347,16 @@
     </nav>
     <div class="mobile-nav" id="mob-nav">
       <a href="/">Home</a>
-      <a href="/shop.html">Shop</a>
-      <a href="#candles" class="sub">— Candles</a>
-      <a href="#gift-packages" class="sub">— Gift Packages</a>
-      <a href="#individual-gifts" class="sub">— Individual Gifts</a>
-      <a href="#wax-melts" class="sub">— Wax Melt Home Living</a>
+      <div class="mob-nav-row">
+        <a href="/shop.html">Shop</a>
+        <button type="button" class="mob-sub-toggle" onclick="toggleMobSub(this)" aria-label="Toggle Shop categories">▾</button>
+      </div>
+      <div class="mob-sub-group">
+        <a href="#candles" class="sub">— Candles</a>
+        <a href="#gift-packages" class="sub">— Gift Packages</a>
+        <a href="#individual-gifts" class="sub">— Individual Gifts</a>
+        <a href="#wax-melts" class="sub">— Wax Melt Home Living</a>
+      </div>
       <a href="/gift-builder.html">Gift Builder</a>
       <a href="/wellness.html">Wellness</a>
       <a href="/scent-finder.html">Scent Finder</a>
