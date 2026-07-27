@@ -175,8 +175,10 @@
         const headerBottom = header.getBoundingClientRect().bottom;
         menu.style.top = headerBottom + 'px';
         menu.style.setProperty('--mn-top', headerBottom + 'px');
+        document.body.style.overflow = 'hidden';
       } else {
         menu.style.top = '';
+        document.body.style.overflow = '';
       }
     }
 
