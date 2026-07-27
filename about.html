@@ -216,7 +216,7 @@
     }
 
     document.addEventListener('click', function(e) {
-      if (e.target.closest('#mob-nav a')) closeMobNav();
+      if (e.target.closest('#mob-nav a')) setTimeout(closeMobNav, 150);
     });
 
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
@@ -398,6 +398,34 @@
       localStorage.setItem('cmg_cookie_consent', 'true');
       document.getElementById('cookie-banner').style.display = 'none';
     }
+  </script>
+  <button type="button" class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">&#8593;</button>
+  <style>
+    .back-to-top{position:fixed;bottom:20px;right:20px;width:48px;height:48px;border-radius:50%;background:var(--rose);color:#fff;border:none;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .25s,visibility .25s,transform .25s;z-index:90;display:flex;align-items:center;justify-content:center;}
+    .back-to-top.visible{opacity:1;visibility:visible;transform:translateY(0);}
+    @media(max-width:600px){.back-to-top{bottom:16px;right:16px;width:44px;height:44px;font-size:18px;}}
+  </style>
+  <script>
+    (function(){
+      var btn = document.getElementById('back-to-top');
+      if(!btn) return;
+      var banner = document.getElementById('cookie-banner');
+      function reposition(){
+        if(banner && getComputedStyle(banner).display !== 'none'){
+          btn.style.bottom = (banner.getBoundingClientRect().height + 20) + 'px';
+        } else {
+          btn.style.bottom = '';
+        }
+      }
+      window.addEventListener('scroll', function(){
+        if(window.scrollY > 400){ btn.classList.add('visible'); } else { btn.classList.remove('visible'); }
+      }, {passive:true});
+      reposition();
+      window.addEventListener('resize', reposition, {passive:true});
+      if(banner){
+        new MutationObserver(reposition).observe(banner, {attributes:true, attributeFilter:['style']});
+      }
+    })();
   </script>
 </body>
 </html>
