@@ -61,9 +61,14 @@
     @media (max-width: 900px) {
       .mobile-nav.open {
         display: block;
-        max-height: calc(100vh - 110px);
+        position: fixed;
+        left: 0;
+        right: 0;
+        max-height: calc(100vh - var(--mn-top, 96px));
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        z-index: 99;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
       }
     }
     .mobile-nav a { display: block; padding: 11px 28px; font-size: 14px; color: var(--charcoal); border-bottom: 1px solid var(--blush); }
@@ -152,6 +157,19 @@
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-Cxk8PXNpeptW3BnTK8Zyt.js"></script>
 <script>
+    function toggleMobNav() {
+      const menu = document.getElementById('mob-nav');
+      const header = document.querySelector('header');
+      menu.classList.toggle('open');
+      if (menu.classList.contains('open')) {
+        const headerBottom = header.getBoundingClientRect().bottom;
+        menu.style.top = headerBottom + 'px';
+        menu.style.setProperty('--mn-top', headerBottom + 'px');
+      } else {
+        menu.style.top = '';
+      }
+    }
+
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
   plausible.init()
 </script>
@@ -177,7 +195,7 @@
         <a href="/reviews.html">Reviews</a>
         <a href="/account.html">Account</a>
         <button class="cart-btn" onclick="openCart()" aria-label="Open basket"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span id="cmg-cart-badge" style="position:absolute;top:-6px;right:-6px;background:#e46d69;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;"></span></button>
-        <button class="hamburger" onclick="document.getElementById('mob-nav').classList.toggle('open')" aria-label="Menu">
+        <button class="hamburger" onclick="toggleMobNav()" aria-label="Menu">
           <span></span><span></span><span></span>
         </button>
       </div>

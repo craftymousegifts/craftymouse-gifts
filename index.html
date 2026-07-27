@@ -683,9 +683,14 @@
     @media(max-width:900px){
       .mobile-menu.open{
         display:block;
-        max-height: calc(100vh - 110px);
+        position: fixed;
+        left: 0;
+        right: 0;
+        max-height: calc(100vh - var(--mm-top, 96px));
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        z-index: 99;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
       }
     }
 
@@ -1242,7 +1247,16 @@
 
   <script>
     function toggleMenu() {
-      document.getElementById('mobile-menu').classList.toggle('open');
+      const menu = document.getElementById('mobile-menu');
+      const header = document.querySelector('header');
+      menu.classList.toggle('open');
+      if (menu.classList.contains('open')) {
+        const headerBottom = header.getBoundingClientRect().bottom;
+        menu.style.top = headerBottom + 'px';
+        menu.style.setProperty('--mm-top', headerBottom + 'px');
+      } else {
+        menu.style.top = '';
+      }
     }
 
 
