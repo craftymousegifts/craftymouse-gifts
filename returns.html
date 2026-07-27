@@ -93,10 +93,26 @@
     .cookie-btn-decline{background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.3);padding:9px 16px;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit;}
     @media(max-width:900px){.nav-list{display:none;}.hamburger{display:flex;}.footer-grid{grid-template-columns:1fr 1fr;}.policy-body{padding:40px 20px;}}
     @media(max-width:480px){.footer-grid{grid-template-columns:1fr;}#cmg-cookie-banner{flex-direction:column;}}
+    @media(max-width:600px){
+      .header-top{padding:8px 16px;}
+      .header-top .social-links{display:none;}
+      .header-actions{gap:12px;}
+    }
   </style>
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-Cxk8PXNpeptW3BnTK8Zyt.js"></script>
 <script>
+    function closeMobNav() {
+      const menu = document.getElementById('mob-nav');
+      menu.classList.remove('open');
+      menu.style.top = '';
+      const scrollY = parseInt(document.body.dataset.scrollY || '0', 10);
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollY);
+    }
+
     function toggleMobNav() {
       const menu = document.getElementById('mob-nav');
       const header = document.querySelector('header');
@@ -105,12 +121,19 @@
         const headerBottom = header.getBoundingClientRect().bottom;
         menu.style.top = headerBottom + 'px';
         menu.style.setProperty('--mn-top', headerBottom + 'px');
-        document.body.style.overflow = 'hidden';
+        const scrollY = window.scrollY;
+        document.body.dataset.scrollY = scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = (-scrollY) + 'px';
+        document.body.style.width = '100%';
       } else {
-        menu.style.top = '';
-        document.body.style.overflow = '';
+        closeMobNav();
       }
     }
+
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('#mob-nav a')) closeMobNav();
+    });
 
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i|{}};
   plausible.init()

@@ -104,6 +104,17 @@
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-Cxk8PXNpeptW3BnTK8Zyt.js"></script>
 <script>
+    function closeMobNav() {
+      const menu = document.getElementById('mob-nav');
+      menu.classList.remove('open');
+      menu.style.top = '';
+      const scrollY = parseInt(document.body.dataset.scrollY || '0', 10);
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollY);
+    }
+
     function toggleMobNav() {
       const menu = document.getElementById('mob-nav');
       const header = document.querySelector('header');
@@ -112,12 +123,19 @@
         const headerBottom = header.getBoundingClientRect().bottom;
         menu.style.top = headerBottom + 'px';
         menu.style.setProperty('--mn-top', headerBottom + 'px');
-        document.body.style.overflow = 'hidden';
+        const scrollY = window.scrollY;
+        document.body.dataset.scrollY = scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = (-scrollY) + 'px';
+        document.body.style.width = '100%';
       } else {
-        menu.style.top = '';
-        document.body.style.overflow = '';
+        closeMobNav();
       }
     }
+
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('#mob-nav a')) closeMobNav();
+    });
 
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i|{}};
   plausible.init()

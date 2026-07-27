@@ -1267,6 +1267,17 @@
       if (sub && sub.classList.contains('mobile-sub')) sub.classList.toggle('open');
     }
 
+    function closeMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.remove('open');
+      menu.style.top = '';
+      const scrollY = parseInt(document.body.dataset.scrollY || '0', 10);
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollY);
+    }
+
     function toggleMenu() {
       const menu = document.getElementById('mobile-menu');
       const header = document.querySelector('header');
@@ -1275,12 +1286,19 @@
         const headerBottom = header.getBoundingClientRect().bottom;
         menu.style.top = headerBottom + 'px';
         menu.style.setProperty('--mm-top', headerBottom + 'px');
-        document.body.style.overflow = 'hidden';
+        const scrollY = window.scrollY;
+        document.body.dataset.scrollY = scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = (-scrollY) + 'px';
+        document.body.style.width = '100%';
       } else {
-        menu.style.top = '';
-        document.body.style.overflow = '';
+        closeMobileMenu();
       }
     }
+
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('#mobile-menu a')) closeMobileMenu();
+    });
 
 
     // Lazy load images as they enter viewport
