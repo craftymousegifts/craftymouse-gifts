@@ -358,6 +358,9 @@ function cmgRemoveItem(idx) {
 
 // ── Checkout ──────────────────────────────────────────────────────────────────
 async function cmgCheckout() {
+  // Ordering is temporarily paused while CMG banking is changed.
+  alert('Online ordering is temporarily unavailable. Please check back soon.');
+  return;
   const cart = getCart();
   if (cart.length === 0) return;
 
@@ -439,7 +442,7 @@ function cmgInjectCart() {
     <div id="cmg-cart-items"></div>
     <div id="cmg-cart-footer" style="display:none;">
       <p id="cmg-delivery-msg"></p>
-      <button id="cmg-checkout-btn" onclick="cmgCheckout()">Checkout</button>
+      <p id="cmg-checkout-paused" role="status" style="text-align:center;font-size:14px;line-height:1.5;padding:12px;background:#fff2f0;color:#763b37;border-radius:8px;">Online ordering is temporarily unavailable. Please check back soon.</p>
     </div>
   `;
   document.body.appendChild(drawer);
