@@ -220,10 +220,48 @@
     }
 
     /* ── HERO ── */
-    .cmg-home-sale { padding: 34px 20px; text-align: center; background: #733d40; color: #fff; }
-    .cmg-home-sale h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.1; }
-    .cmg-home-sale p { margin: 10px 0; }
-    .cmg-home-sale a { display: inline-block; margin-top: 8px; border-radius: 5px; padding: 11px 20px; background: #fff; color: #733d40; font-weight: 700; }
+    .cmg-home-sale {
+      padding: clamp(8px, 1.1vw, 15px);
+      background:
+        repeating-linear-gradient(90deg, transparent 0 16px, #a96b7966 16px 19px, transparent 19px 24px, #7540508c 24px 30px, transparent 30px 48px),
+        repeating-linear-gradient(0deg, #e9bfc7 0 16px, #c68999 16px 19px, #f2d7db 19px 24px, #ad6b7f 24px 30px, #e9bfc7 30px 48px);
+    }
+    .cmg-home-sale-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(310px, 1.12fr) minmax(0, 1fr);
+      background: #fbf4eb;
+      color: #4b2b31;
+    }
+    .cmg-sale-photo { position: relative; min-height: 100%; overflow: hidden; background: #d6ad9f; }
+    .cmg-sale-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .cmg-sale-photo:first-child img { object-position: 50% 58%; }
+    .cmg-home-sale-copy { padding: clamp(26px, 4vw, 60px) clamp(16px, 3vw, 44px); text-align: center; }
+    .cmg-home-sale-kicker { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; }
+    .cmg-home-sale h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.25rem, 4.7vw, 4.75rem);
+      font-weight: 600;
+      line-height: 0.94;
+      margin: 13px 0;
+    }
+    .cmg-home-sale h2 span { display: block; }
+    .cmg-home-sale-offer { font-size: clamp(1.05rem, 1.5vw, 1.45rem); font-weight: 700; }
+    .cmg-home-sale-end { margin: 10px 0 18px; font-size: 0.9rem; line-height: 1.45; }
+    .cmg-home-sale a {
+      display: inline-block;
+      border: 1px solid #542f37;
+      padding: 12px 25px;
+      background: #542f37;
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .cmg-home-sale a:hover, .cmg-home-sale a:focus-visible { background: #fbf4eb; color: #542f37; }
+    @media (max-width: 700px) {
+      .cmg-home-sale-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cmg-home-sale-copy { grid-row: 1; grid-column: 1 / -1; }
+      .cmg-sale-photo { aspect-ratio: 1.4; min-height: 0; }
+    }
 
     .hero {
       background: var(--blush);
@@ -997,10 +1035,21 @@
 
   <!-- HERO -->
   <section class="cmg-home-sale" data-cmg-home-sale aria-labelledby="cmg-sale-title" hidden>
-    <h2 id="cmg-sale-title">Black Friday &amp; Cyber Monday</h2>
-    <p><strong>50% off all shop products</strong></p>
-    <p>Ends Monday 30 November. Discount applied automatically.</p>
-    <a href="/shop">Shop the sale</a>
+    <div class="cmg-home-sale-inner">
+      <div class="cmg-sale-photo">
+        <img src="/images/products/21677015.png" alt="Crafty Mouse Gifts Crimson Berry &amp; Clementine candle">
+      </div>
+      <div class="cmg-home-sale-copy">
+        <p class="cmg-home-sale-kicker">Crafty Mouse Gifts</p>
+        <h2 id="cmg-sale-title">Black Friday <span>&amp; Cyber Monday</span></h2>
+        <p class="cmg-home-sale-offer">50% off all shop products</p>
+        <p class="cmg-home-sale-end"><strong>Sale ends soon</strong> · Monday 30 November</p>
+        <a href="/shop">Shop the sale</a>
+      </div>
+      <div class="cmg-sale-photo">
+        <img src="/images/products/21677047.png" alt="Crafty Mouse Gifts Autumn Emporium candle">
+      </div>
+    </div>
   </section>
   <section class="hero">
     <div class="hero-text">
