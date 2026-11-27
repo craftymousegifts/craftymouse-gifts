@@ -32,7 +32,7 @@ function cmgSaleActive() {
 }
 
 function cmgShowSaleBanner() {
-  const banner = document.querySelector('[data-cmg-sale-banner]');
+  const banner = document.querySelector('[data-cmg-sale-banner], .promo-bar, .promo');
   if (!cmgSaleActive()) return;
   const homeSale = document.querySelector('[data-cmg-home-sale]');
   if (homeSale) homeSale.hidden = false;
@@ -41,7 +41,14 @@ function cmgShowSaleBanner() {
     const priceId = button?.getAttribute('onclick')?.match(/price_[A-Za-z0-9]+/)?.[0];
     cmgShowSalePrice(price, priceId);
   });
-  if (banner) banner.textContent = 'Black Friday & Cyber Monday · 75% off Classic Candles · 50% off the rest of the shop · Sale ends soon';
+  if (banner) {
+    banner.style.cssText += ';padding:0;background:#542f37;color:#fff;text-align:center;';
+    const link = document.createElement('a');
+    link.href = '/shop.html#classic-candles';
+    link.textContent = 'Sale ends soon · Classic Candles £4 · Shop the sale →';
+    link.style.cssText = 'display:block;padding:7px 12px;color:inherit;font-size:13px;font-weight:700;line-height:1.35;text-decoration:underline;text-underline-offset:3px;';
+    banner.replaceChildren(link);
+  }
   const bundleOffer = document.querySelector('[data-cmg-bundle-offer]');
   if (bundleOffer) bundleOffer.hidden = true;
 }
