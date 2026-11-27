@@ -75,7 +75,17 @@ function cmgShowModalSalePrice(modal, priceId) {
 function cmgStyleSiteNavigation() {
   const header = document.querySelector('header.site-header');
   if (!header) return;
-  if (cmgSaleActive()) header.classList.add('cmg-sale-navigation');
+  if (cmgSaleActive() && !document.querySelector('[data-cmg-home-sale]')) {
+    const sale = document.createElement('a');
+    sale.className = 'cmg-inner-sale';
+    sale.href = '/shop.html#classic-candles';
+    const title = document.createElement('strong');
+    title.textContent = 'Black Friday & Cyber Monday Deals';
+    const offer = document.createElement('span');
+    offer.textContent = 'Classic Candles £4 · 50% off the rest of the shop · Sale ends soon';
+    sale.append(title, offer);
+    header.after(sale);
+  }
 
   const style = document.createElement('style');
   style.textContent = `
@@ -90,16 +100,32 @@ function cmgStyleSiteNavigation() {
     .site-header .mobile-nav a.sub {
       font-size: 16px;
     }
-    .site-header.cmg-sale-navigation::after {
-      content: '';
-      display: block;
-      height: 7px;
-      background-color: #dc9eaa;
-      background-image:
-        repeating-linear-gradient(90deg, transparent 0 7px, #fae3dfbb 7px 9px, transparent 9px 15px, #582f4a99 15px 21px, transparent 21px 24px, #f8e4d5cc 24px 25px, transparent 25px 30px, #9d485e88 30px 42px, #62395199 42px 44px, transparent 44px 50px, #f9e5dfb5 50px 52px, transparent 52px 64px),
-        repeating-linear-gradient(0deg, transparent 0 2px, #582f4a66 2px 4px, #fae3df99 4px 5px, transparent 5px 7px);
+    .breadcrumb, .breadcrumb a {
+      font-size: 15px;
+      line-height: 1.45;
     }
-    .site-header.cmg-sale-navigation:has(+ .cmg-home-sale)::after { display: none; }
+    .breadcrumb a { color: #733d40; text-decoration: underline; text-underline-offset: 2px; }
+    .cmg-inner-sale {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 3px 14px;
+      padding: 9px 16px;
+      background: #f7e7e9;
+      color: #4b2b31;
+      border-block: 1px solid #c68d99;
+      text-align: center;
+      text-decoration: none;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .cmg-inner-sale strong {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 19px;
+      line-height: 1.1;
+    }
+    .cmg-inner-sale:hover strong, .cmg-inner-sale:focus-visible strong { text-decoration: underline; }
   `;
   document.head.appendChild(style);
 }
