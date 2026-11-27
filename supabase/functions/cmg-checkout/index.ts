@@ -8,7 +8,8 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const ALLOWED_ORIGINS = ['https://craftymousegifts.com', 'https://www.craftymousegifts.com', 'https://craftymousegifts.netlify.app'];
 const SALE_START = Date.parse('2026-11-27T00:00:00Z');
-const SALE_END = Date.parse('2026-12-01T00:00:00Z');
+const CYBER_END = Date.parse('2026-12-01T00:00:00Z');
+const SALE_END = Date.parse('2026-12-25T00:00:00Z');
 const CMG_CLASSIC_CANDLE_PRICES = new Set([
   'price_1TizjiQpAVWZATGhr6BBDNsF',
   'price_1TizjjQpAVWZATGhh7ePcWgj',
@@ -313,7 +314,7 @@ serve(async (req) => {
       : 'Standard UK Delivery (£3.95)';
     params['shipping_options[0][shipping_rate_data][fixed_amount][amount]'] = freeDelivery ? '0' : '395';
     if (sale) {
-      params['metadata[offer]'] = 'Black Friday and Cyber Monday';
+      params['metadata[offer]'] = now < CYBER_END ? 'Black Friday and Cyber Monday' : 'Christmas Sale';
       params['expires_at'] = String(Math.floor(Math.min(now + 3600000, Math.max(SALE_END, now + 31 * 60000)) / 1000));
     }
 
