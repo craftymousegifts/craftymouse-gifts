@@ -11,10 +11,39 @@ function cmgSaleActive() {
 
 function cmgShowSaleBanner() {
   const banner = document.querySelector('[data-cmg-sale-banner]');
-  if (!banner || !cmgSaleActive()) return;
-  banner.textContent = 'Black Friday & Cyber Monday · 50% off all shop products · Ends Monday 30 November';
+  if (!cmgSaleActive()) return;
+  const homeSale = document.querySelector('[data-cmg-home-sale]');
+  if (homeSale) homeSale.hidden = false;
+  document.querySelectorAll('.product-card .price').forEach(cmgShowSalePrice);
+  if (banner) banner.textContent = 'Black Friday & Cyber Monday · 50% off all shop products · Ends Monday 30 November';
   const bundleOffer = document.querySelector('[data-cmg-bundle-offer]');
   if (bundleOffer) bundleOffer.hidden = true;
+}
+
+function cmgShowSalePrice(original) {
+  if (!original || !cmgSaleActive() || original.closest('.cmg-sale-price')) return;
+  const pricePence = cmgParsePriceToPence(original.textContent);
+  if (pricePence === null) return;
+
+  const group = document.createElement('span');
+  group.className = 'cmg-sale-price';
+  const regular = document.createElement('del');
+  const reduced = document.createElement('strong');
+  original.before(group);
+  regular.append(original);
+  reduced.textContent = cmgFormatPence(Math.ceil(pricePence / 2));
+  reduced.setAttribute('aria-label', 'Sale price ' + reduced.textContent);
+  group.append(regular, reduced);
+}
+
+function cmgShowModalSalePrice(modal) {
+  if (!cmgSaleActive()) return;
+  const price = modal.querySelector('.pm-price');
+  if (!price) return;
+  const original = document.createElement('span');
+  original.textContent = price.textContent;
+  price.replaceChildren(original);
+  cmgShowSalePrice(original);
 }
 
 document.addEventListener('DOMContentLoaded', cmgShowSaleBanner);

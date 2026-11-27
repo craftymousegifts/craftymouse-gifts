@@ -220,6 +220,11 @@
     }
 
     /* ── HERO ── */
+    .cmg-home-sale { padding: 34px 20px; text-align: center; background: #733d40; color: #fff; }
+    .cmg-home-sale h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.1; }
+    .cmg-home-sale p { margin: 10px 0; }
+    .cmg-home-sale a { display: inline-block; margin-top: 8px; border-radius: 5px; padding: 11px 20px; background: #fff; color: #733d40; font-weight: 700; }
+
     .hero {
       background: var(--blush);
       display: grid;
@@ -861,7 +866,7 @@
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
   plausible.init()
 </script>
-<script src="/cmg-cart.js?v=6"></script>
+<script src="/cmg-cart.js?v=7"></script>
 <!-- CMG-INDEX-v2 202606171905 -->
 </head>
 <body>
@@ -991,6 +996,12 @@
   </header>
 
   <!-- HERO -->
+  <section class="cmg-home-sale" data-cmg-home-sale aria-labelledby="cmg-sale-title" hidden>
+    <h2 id="cmg-sale-title">Black Friday &amp; Cyber Monday</h2>
+    <p><strong>50% off all shop products</strong></p>
+    <p>Ends Monday 30 November. Discount applied automatically.</p>
+    <a href="/shop">Shop the sale</a>
+  </section>
   <section class="hero">
     <div class="hero-text">
       <h1>Hand-Poured Candles, Wax Melts &amp;<br><em>Eco-Friendly Home Décor</em></h1>
