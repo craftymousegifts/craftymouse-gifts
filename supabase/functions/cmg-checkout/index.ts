@@ -143,14 +143,6 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
-  // Temporary CMG-only ordering pause, 14 Nov 2026.
-  // Return before reading payment credentials or creating any Stripe session.
-  if (req.method === 'POST' && Deno.env.get('CMG_ORDERING_ENABLED') !== 'true') {
-    return new Response(JSON.stringify({ error: 'Online ordering is temporarily unavailable. Please check back soon.', code: 'CMG_ORDERING_PAUSED' }), {
-      status: 503,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
-    });
-  }
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
       status: 405, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -158,7 +150,7 @@ serve(async (req) => {
   }
 
   try {
-    const STRIPE_SECRET = Deno.env.get('CRAFTYMOUSE_STRIPE_SECRET_KEY');
+    const STRIPE_SECRET = Deno.env.get('CRAFTYMOUSE_STRIPE_SECRET_KEY')?.trim();
     if (!STRIPE_SECRET || !/^(sk|rk)_live_/.test(STRIPE_SECRET)) {
       throw new Error('Live CMG Stripe key not configured');
     }
