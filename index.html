@@ -222,17 +222,17 @@
     /* ── HERO ── */
     .cmg-home-sale {
       padding: clamp(7px, .75vw, 13px);
-      --cmg-tartan-sett: #62395199 0 5%, #ae697d99 5% 14%,
-        #fae3dfd9 14% 17%, transparent 17% 28%, #9d485e88 28% 41%,
-        #582f4a99 41% 47%, #f8e4d5cc 47% 53%, #582f4a99 53% 59%,
-        #9d485e88 59% 72%, transparent 72% 83%, #fae3dfd9 83% 86%,
-        #ae697d99 86% 95%, #62395199 95% 100%;
+      --cmg-tartan-sett: transparent 0 7px, #fae3dfbb 7px 9px, transparent 9px 15px,
+        #582f4a99 15px 21px, transparent 21px 24px, #f8e4d5cc 24px 25px,
+        transparent 25px 30px, #9d485e88 30px 42px, #62395199 42px 44px,
+        transparent 44px 50px, #f9e5dfb5 50px 52px, transparent 52px 64px;
       background-color: #dc9eaa;
       background-image:
+        repeating-linear-gradient(135deg, #fff2e828 0 1px, #49213922 1px 2px, transparent 2px 4px),
         linear-gradient(90deg, var(--cmg-tartan-sett)),
         linear-gradient(0deg, var(--cmg-tartan-sett));
-      background-size: 44px 44px;
-      background-repeat: round;
+      background-size: auto, 64px 64px, 64px 64px;
+      background-repeat: no-repeat, round, round;
     }
     .cmg-home-sale-inner {
       display: grid;
