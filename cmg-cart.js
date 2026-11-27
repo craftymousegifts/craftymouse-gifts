@@ -48,6 +48,8 @@ function cmgShowModalSalePrice(modal) {
 
 document.addEventListener('DOMContentLoaded', cmgShowSaleBanner);
 
+const CMG_DEPLOY_PREVIEW = /^deploy-preview-\d+--craftymousegifts\.netlify\.app$/.test(location.hostname);
+
 const CMG_CHECKOUT_URL = 'https://qvkosdqcryrcfbjtaxic.supabase.co/functions/v1/cmg-checkout';
 const CMG_FREE_DELIVERY = 3000; // £30 in pence
 const CMG_DELIVERY_COST = 395;  // £3.95 in pence
@@ -413,6 +415,7 @@ function cmgRemoveItem(idx) {
 
 // ── Checkout ──────────────────────────────────────────────────────────────────
 async function cmgCheckout() {
+  if (CMG_DEPLOY_PREVIEW) return;
   const cart = getCart();
   if (cart.length === 0) return;
 
@@ -484,7 +487,9 @@ function cmgInjectCart() {
     <div id="cmg-cart-items"></div>
     <div id="cmg-cart-footer" style="display:none;">
       <p id="cmg-delivery-msg"></p>
-      <button type="button" id="cmg-checkout-btn" onclick="cmgCheckout()">Checkout</button>
+      ${CMG_DEPLOY_PREVIEW
+        ? '<p role="status" style="margin:12px 0;text-align:center">Preview only. You can review your basket here. Orders are unavailable in this preview.</p><button type="button" id="cmg-checkout-btn" disabled>Checkout</button>'
+        : '<button type="button" id="cmg-checkout-btn" onclick="cmgCheckout()">Checkout</button>'}
     </div>
   `;
   document.body.appendChild(drawer);
