@@ -265,6 +265,15 @@
       text-decoration: none;
     }
     .cmg-home-sale a:hover, .cmg-home-sale a:focus-visible { background: #fbf4eb; color: #542f37; }
+    .cmg-home-sale a.cmg-home-sale-inline {
+      display: inline;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #542f37;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
     @media (max-width: 700px) {
       .cmg-home-sale-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .cmg-home-sale-copy { grid-row: 1; grid-column: 1 / -1; }
@@ -1051,7 +1060,7 @@
         <p class="cmg-home-sale-kicker">Crafty Mouse Gifts</p>
         <h2 id="cmg-sale-title">Black Friday <span>&amp; Cyber Monday</span></h2>
         <p class="cmg-home-sale-offer">75% off Classic Candles</p>
-        <p>Classic Candles now £4 · 50% off the rest of the shop</p>
+        <p><a class="cmg-home-sale-inline" href="/shop.html#classic-candles">Classic Candles now £4</a> · 50% off the rest of the shop</p>
         <p class="cmg-home-sale-end"><strong>Sale ends soon</strong></p>
         <a href="/shop">Shop the sale</a>
       </div>
