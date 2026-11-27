@@ -30,6 +30,54 @@ function cmgSaleUnitPence(pricePence: number, priceId: string) {
   return Math.ceil(pricePence / (CMG_CLASSIC_CANDLE_PRICES.has(priceId) ? 4 : 2));
 }
 
+const CMG_STRIPE_ACCOUNT = 'acct_1RYOrYKcFRsZIN3E';
+// Existing basket IDs are retained as product identifiers. The amounts below
+// come from the public shop catalogue and are controlled by this function.
+const CATALOGUE = new Map<string, [string, number]>([
+  ["price_1TizjiQpAVWZATGhr6BBDNsF", ["Autumn Emporium", 1600]],
+  ["price_1TizjjQpAVWZATGhh7ePcWgj", ["Snowflake Kisses", 1600]],
+  ["price_1TizjkQpAVWZATGhuNg9ZC0S", ["Cinnamon Bark & White Ginger", 1600]],
+  ["price_1TizjlQpAVWZATGhsQ6b4ljE", ["Cosmic Plum & Saffron", 1600]],
+  ["price_1TizjlQpAVWZATGhbxTNpelA", ["Crimson Berry & Clementine", 1600]],
+  ["price_1TizjmQpAVWZATGhUX38EXSj", ["Meditation", 1600]],
+  ["price_1TizjnQpAVWZATGhDJRlYLf1", ["Me Time", 1600]],
+  ["price_1TizjoQpAVWZATGhm7AA2ALS", ["Recharge Black Pepper", 1600]],
+  ["price_1TizjoQpAVWZATGhPwdKVSCH", ["Birthday Cake", 1600]],
+  ["price_1TizjpQpAVWZATGhvJvVs2t9", ["Pink Rhubarb", 1600]],
+  ["price_1TizjqQpAVWZATGhHRTq54Sj", ["Shimmering Star", 1600]],
+  ["price_1TizjrQpAVWZATGhAlnTIndW", ["Charming Oasis", 1600]],
+  ["price_1TizjsQpAVWZATGhkaq4Mybg", ["Intergalactic", 1600]],
+  ["price_1TizjsQpAVWZATGhCKC1yWSZ", ["Amethyst", 1600]],
+  ["price_1TizjaQpAVWZATGhHzLuPxhq", ["Eco-Friendly Jesmonite Candle", 2699]],
+  ["price_1TizjtQpAVWZATGhQoKq1exn", ["Root Chakra", 2499]],
+  ["price_1TizjOQpAVWZATGhbuWSBndO", ["Sacral Chakra", 2499]],
+  ["price_1TizjuQpAVWZATGhMvNzAXne", ["Solar Plexus", 2499]],
+  ["price_1TizjvQpAVWZATGh1SAiyZaN", ["Heart Chakra", 2499]],
+  ["price_1TizjwQpAVWZATGhPYvXgctA", ["Throat Chakra", 2499]],
+  ["price_1TizjwQpAVWZATGhr5D6gcLO", ["Third Eye Chakra", 2499]],
+  ["price_1TizjxQpAVWZATGhyi67MCAB", ["Crown Chakra", 2499]],
+  ["price_1TizjTQpAVWZATGh4CmdKhgQ", ["The Candle Lover's Collection", 3699]],
+  ["price_1TizjTQpAVWZATGhWVSs7WsZ", ["The Dad's Treat Box", 1899]],
+  ["price_1TizjSQpAVWZATGhWPcBdmMJ", ["The Eco Gifting Set", 4199]],
+  ["price_1TizjRQpAVWZATGhoIRgWEG2", ["The Grand Occasion Gift Box", 5999]],
+  ["price_1TizjQQpAVWZATGhDMWQs4XY", ["The Luxury Home Spa", 5999]],
+  ["price_1TizjQQpAVWZATGhwRJQwjWc", ["The Relaxation Box", 4699]],
+  ["price_1TizjPQpAVWZATGhhMTCTIQL", ["The Wax Melt Treat", 1899]],
+  ["price_1TizjVQpAVWZATGhgykZxsNa", ["Seashell Keyring", 499]],
+  ["price_1TizjYQpAVWZATGhlRlqbD4x", ["Eco Resin Hamsa Tealight Holder", 1999]],
+  ["price_1TizjaQpAVWZATGhfGSdqY54", ["Celtic & Pagan Symbol Fridge Magnets", 399]],
+  ["price_1TizjbQpAVWZATGhDSBnHfYU", ["Moon Face Fridge Magnets", 499]],
+  ["price_1TizjhQpAVWZATGha7x7TT89", ["Rose Floral Bouquet", 2999]],
+  ["price_1TizjZQpAVWZATGhKaaFwLV9", ["Mother's Day Bouquet", 2999]],
+  ["price_1TizjVQpAVWZATGh9cTfhm5s", ["Cylinder Style Wax Melt Warmer", 1699]],
+  ["price_1TizjWQpAVWZATGhaLKukUh0", ["Nordic Style Wax Melt Warmer", 1699]],
+  ["price_1TizjXQpAVWZATGh6BDvbvav", ["Handmade Arch Jesmonite Wax Melt Warmer", 1699]],
+  ["price_1TizjdQpAVWZATGhRqPPieqi", ["Passionfruit Martini & Coconut", 350]],
+  ["price_1TizjeQpAVWZATGhKKnnvDmv", ["Passionfruit Martini", 350]],
+  ["price_1TizjfQpAVWZATGhGxX6aIxQ", ["Cosmic Plum & Saffron Wax Melt", 350]],
+  ["price_1TizjcQpAVWZATGhm9xuDp25", ["Champagne Toast", 350]],
+  ["price_1TizjdQpAVWZATGhXMxWy5ls", ["Champagne Grapes & Roses", 350]],
+]);
 const FREE_DELIVERY_THRESHOLD = 3000; // £30 in pence
 
 // ── Mix-and-match bundle discount, recomputed here (not trusted from the
@@ -111,7 +159,9 @@ serve(async (req) => {
 
   try {
     const STRIPE_SECRET = Deno.env.get('CRAFTYMOUSE_STRIPE_SECRET_KEY');
-    if (!STRIPE_SECRET) throw new Error('Stripe key not configured');
+    if (!STRIPE_SECRET || !/^(sk|rk)_live_/.test(STRIPE_SECRET)) {
+      throw new Error('Live CMG Stripe key not configured');
+    }
 
     const { items } = await req.json();
     type Item = { price_id: string; quantity: number; variant?: string };
@@ -127,23 +177,27 @@ serve(async (req) => {
     }
 
     const typedItems = items as Item[];
-    const priceIds = [...new Set(typedItems.map(item => item.price_id))];
-    const prices = new Map(await Promise.all(priceIds.map(async id => {
-      const response = await fetch('https://api.stripe.com/v1/prices/' + id, {
-        headers: { Authorization: `Bearer ${STRIPE_SECRET}` },
+    if (typedItems.some(item => !CATALOGUE.has(item.price_id))) {
+      return new Response(JSON.stringify({ error: 'A product in your basket is unavailable. Please refresh the shop.' }), {
+        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
-      const price = await response.json();
-      if (!response.ok || !price.active || price.currency !== 'gbp' ||
-          price.type !== 'one_time' || !Number.isSafeInteger(price.unit_amount) ||
-          typeof price.product !== 'string') {
-        throw new Error('A product in your basket is unavailable. Please refresh the shop.');
-      }
-      return [id, { unit: price.unit_amount as number, product: price.product as string }] as const;
-    })));
+    }
+
+    const accountResponse = await fetch('https://api.stripe.com/v1/account', {
+      headers: { Authorization: `Bearer ${STRIPE_SECRET}` },
+    });
+    const account = await accountResponse.json();
+    if (!accountResponse.ok || account.id !== CMG_STRIPE_ACCOUNT ||
+        account.charges_enabled !== true || account.payouts_enabled !== true) {
+      console.error('CMG checkout Stripe account verification failed');
+      return new Response(JSON.stringify({ error: 'Online ordering is temporarily unavailable.' }), {
+        status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
     const now = Date.now();
     const sale = now >= SALE_START && now < SALE_END;
     const subtotal = typedItems.reduce((total, item) => {
-      const unit = prices.get(item.price_id)!.unit;
+      const [, unit] = CATALOGUE.get(item.price_id)!;
       return total + (sale ? cmgSaleUnitPence(unit, item.price_id) : unit) * item.quantity;
     }, 0);
     const params: Record<string, string> = {
@@ -239,14 +293,11 @@ serve(async (req) => {
     });
 
     normalItems.forEach((item) => {
-      if (sale) {
-        const price = prices.get(item.price_id)!;
-        params[`line_items[${lineIndex}][price_data][currency]`] = 'gbp';
-        params[`line_items[${lineIndex}][price_data][product]`] = price.product;
-        params[`line_items[${lineIndex}][price_data][unit_amount]`] = String(cmgSaleUnitPence(price.unit, item.price_id));
-      } else {
-        params[`line_items[${lineIndex}][price]`] = item.price_id;
-      }
+      const [name, unit] = CATALOGUE.get(item.price_id)!;
+      params[`line_items[${lineIndex}][price_data][currency]`] = 'gbp';
+      params[`line_items[${lineIndex}][price_data][product_data][name]`] = name;
+      params[`line_items[${lineIndex}][price_data][unit_amount]`] =
+        String(sale ? cmgSaleUnitPence(unit, item.price_id) : unit);
       params[`line_items[${lineIndex}][quantity]`] = String(item.quantity);
       if (item.variant) {
         params[`line_items[${lineIndex}][adjustable_quantity][enabled]`] = 'false';
