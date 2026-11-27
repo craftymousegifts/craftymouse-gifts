@@ -1,6 +1,164 @@
 // ── Crafty Mouse Gifts — Cart Drawer ─────────────────────────────────────────
 // Handles add to basket, cart drawer UI, and Stripe checkout
 
+const CMG_SALE_START = Date.parse('2026-11-27T00:00:00Z');
+const CMG_SALE_END = Date.parse('2026-12-01T00:00:00Z');
+
+const CMG_CLASSIC_CANDLE_PRICES = new Set([
+  'price_1TizjiQpAVWZATGhr6BBDNsF',
+  'price_1TizjjQpAVWZATGhh7ePcWgj',
+  'price_1TizjkQpAVWZATGhuNg9ZC0S',
+  'price_1TizjlQpAVWZATGhsQ6b4ljE',
+  'price_1TizjlQpAVWZATGhbxTNpelA',
+  'price_1TizjmQpAVWZATGhUX38EXSj',
+  'price_1TizjnQpAVWZATGhDJRlYLf1',
+  'price_1TizjoQpAVWZATGhm7AA2ALS',
+  'price_1TizjoQpAVWZATGhPwdKVSCH',
+  'price_1TizjpQpAVWZATGhvJvVs2t9',
+  'price_1TizjqQpAVWZATGhHRTq54Sj',
+  'price_1TizjrQpAVWZATGhAlnTIndW',
+  'price_1TizjsQpAVWZATGhkaq4Mybg',
+  'price_1TizjsQpAVWZATGhCKC1yWSZ',
+]);
+
+
+function cmgSaleUnitPence(pricePence, priceId) {
+  return Math.ceil(pricePence / (CMG_CLASSIC_CANDLE_PRICES.has(priceId) ? 4 : 2));
+}
+
+function cmgSaleActive() {
+  const now = Date.now();
+  return now >= CMG_SALE_START && now < CMG_SALE_END;
+}
+
+function cmgShowSaleBanner() {
+  const banner = document.querySelector('[data-cmg-sale-banner]');
+  if (!cmgSaleActive()) return;
+  const homeSale = document.querySelector('[data-cmg-home-sale]');
+  if (homeSale) homeSale.hidden = false;
+  document.querySelectorAll('.product-card .price').forEach(price => {
+    const button = price.closest('.product-card').querySelector('.btn-cart');
+    const priceId = button?.getAttribute('onclick')?.match(/price_[A-Za-z0-9]+/)?.[0];
+    cmgShowSalePrice(price, priceId);
+  });
+  if (banner) banner.textContent = 'Black Friday & Cyber Monday · 75% off Classic Candles · 50% off the rest of the shop · Sale ends soon';
+  const bundleOffer = document.querySelector('[data-cmg-bundle-offer]');
+  if (bundleOffer) bundleOffer.hidden = true;
+}
+
+function cmgShowSalePrice(original, priceId) {
+  if (!original || !cmgSaleActive() || original.closest('.cmg-sale-price')) return;
+  const pricePence = cmgParsePriceToPence(original.textContent);
+  if (pricePence === null) return;
+
+  const group = document.createElement('span');
+  group.className = 'cmg-sale-price';
+  const regular = document.createElement('del');
+  const reduced = document.createElement('strong');
+  original.before(group);
+  regular.append(original);
+  reduced.textContent = cmgFormatPence(cmgSaleUnitPence(pricePence, priceId));
+  reduced.setAttribute('aria-label', 'Sale price ' + reduced.textContent);
+  group.append(regular, reduced);
+}
+
+function cmgShowModalSalePrice(modal, priceId) {
+  if (!cmgSaleActive()) return;
+  const price = modal.querySelector('.pm-price');
+  if (!price) return;
+  const original = document.createElement('span');
+  original.textContent = price.textContent;
+  price.replaceChildren(original);
+  cmgShowSalePrice(original, priceId);
+}
+
+function cmgStyleSiteNavigation() {
+  const header = document.querySelector('header.site-header');
+  if (!header) return;
+  if (cmgSaleActive()) {
+    const sale = document.createElement('a');
+    sale.className = 'cmg-inner-sale';
+    sale.href = '/shop.html#classic-candles';
+    const title = document.createElement('strong');
+    title.textContent = 'Black Friday & Cyber Monday Deals';
+    const offer = document.createElement('span');
+    offer.textContent = 'Classic Candles £4 · 50% off the rest of the shop · Sale ends soon';
+    sale.append(title, offer);
+    header.appendChild(sale);
+  }
+
+  const style = document.createElement('style');
+  style.textContent = `
+    .site-header nav .nav-item > a,
+    .site-header nav .nav-list > li > a {
+      font-size: clamp(14px, 1.25vw, 17px);
+      letter-spacing: .045em;
+    }
+    .site-header .mobile-menu a,
+    .site-header .mobile-menu .mobile-sub a,
+    .site-header .mobile-nav a,
+    .site-header .mobile-nav a.sub {
+      font-size: 16px;
+    }
+    html { scroll-padding-top: var(--cmg-header-offset, 0px); }
+    .makers-corner { scroll-margin-top: 0; }
+    .shop-layout .sidebar, .sidebar:has(.sidebar-nav) {
+      top: var(--cmg-header-offset, 120px);
+      max-height: calc(100dvh - var(--cmg-header-offset, 120px) - 16px);
+      overflow-y: auto;
+    }
+    .sf-detail { top: var(--cmg-header-offset, 18px) !important; }
+    .breadcrumb, .breadcrumb a {
+      font-size: 15px;
+      line-height: 1.45;
+    }
+    .breadcrumb a { color: #733d40; text-decoration: underline; text-underline-offset: 2px; }
+    .cmg-inner-sale {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 3px 14px;
+      padding: 9px 16px;
+      background: #f7e7e9;
+      color: #4b2b31;
+      border-block: 1px solid #c68d99;
+      text-align: center;
+      text-decoration: none;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .cmg-inner-sale strong {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 19px;
+      line-height: 1.1;
+    }
+    .cmg-inner-sale:hover strong, .cmg-inner-sale:focus-visible strong { text-decoration: underline; }
+  `;
+  document.head.appendChild(style);
+
+  const updateOffset = () => {
+    const sticky = getComputedStyle(header).position === 'sticky';
+    const offset = sticky ? Math.ceil(header.getBoundingClientRect().height) + 16 : 16;
+    document.documentElement.style.setProperty('--cmg-header-offset', offset + 'px');
+  };
+  updateOffset();
+  if ('ResizeObserver' in window) new ResizeObserver(updateOffset).observe(header);
+  window.addEventListener('resize', updateOffset);
+
+  if (location.hash === '#classic-candles') {
+    const classicCandles = document.getElementById('classic-candles');
+    requestAnimationFrame(() => classicCandles?.scrollIntoView({ block: 'start', behavior: 'instant' }));
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  cmgStyleSiteNavigation();
+  cmgShowSaleBanner();
+});
+
+const CMG_DEPLOY_PREVIEW = /^deploy-preview-\d+--craftymousegifts\.netlify\.app$/.test(location.hostname);
+
 const CMG_CHECKOUT_URL = 'https://qvkosdqcryrcfbjtaxic.supabase.co/functions/v1/cmg-checkout';
 const CMG_FREE_DELIVERY = 3000; // £30 in pence
 const CMG_DELIVERY_COST = 395;  // £3.95 in pence
@@ -276,16 +434,21 @@ function renderCart() {
   // price couldn't be found on the page), we flag it rather than silently
   // undercounting.
   let subtotalPence = 0;
+  let saleSubtotalPence = 0;
   let hasUnknownPrice = false;
   cart.forEach(item => {
     if (typeof item.pricePence === 'number' && !isNaN(item.pricePence)) {
       subtotalPence += item.pricePence * item.qty;
+      saleSubtotalPence += cmgSaleUnitPence(item.pricePence, item.priceId) * item.qty;
     } else {
       hasUnknownPrice = true;
     }
   });
 
-  const bundle = cmgComputeBundleDiscount(cart, subtotalPence);
+  const sale = cmgSaleActive();
+  const savings = sale
+    ? { discountPence: subtotalPence - saleSubtotalPence, adjustedSubtotalPence: saleSubtotalPence }
+    : cmgComputeBundleDiscount(cart, subtotalPence);
 
   container.innerHTML = cart.map((item, idx) => `
     <div style="display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #f0e8e6;align-items:flex-start;">
@@ -318,15 +481,18 @@ function renderCart() {
     const subtotalRow = hasUnknownPrice
       ? `<div style="display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;color:#1e1e1e;"><span>Subtotal</span><span>${cmgFormatPence(subtotalPence)}+</span></div>`
       : `<div style="display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;color:#1e1e1e;"><span>Subtotal</span><span>${cmgFormatPence(subtotalPence)}</span></div>`;
-    const discountRow = bundle.discountPence > 0
-      ? `<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;color:#e46d69;margin-top:4px;"><span>🎁 Mix &amp; Match Discount</span><span>−${cmgFormatPence(bundle.discountPence)}</span></div>`
+    const discountRow = savings.discountPence > 0
+      ? `<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;color:#e46d69;margin-top:4px;"><span>${sale ? 'Black Friday &amp; Cyber Monday discount' : 'Mix &amp; Match Discount'}</span><span>−${cmgFormatPence(savings.discountPence)}</span></div>`
       : '';
-    subtotalEl.innerHTML = subtotalRow + discountRow;
+    const totalRow = !hasUnknownPrice && savings.discountPence > 0
+      ? `<div style="display:flex;justify-content:space-between;font-weight:700"><span>Products total</span><span>${cmgFormatPence(savings.adjustedSubtotalPence)}</span></div>`
+      : '';
+    subtotalEl.innerHTML = subtotalRow + discountRow + totalRow;
   }
 
   // Delivery nudge — based on the real, discounted subtotal
   const deliveryMsg = document.getElementById('cmg-delivery-msg');
-  const effectiveSubtotal = bundle.adjustedSubtotalPence;
+  const effectiveSubtotal = savings.adjustedSubtotalPence;
   if (deliveryMsg) {
     if (hasUnknownPrice) {
       // We couldn't price every item confidently — don't claim a threshold we can't verify
@@ -358,9 +524,7 @@ function cmgRemoveItem(idx) {
 
 // ── Checkout ──────────────────────────────────────────────────────────────────
 async function cmgCheckout() {
-  // Ordering is temporarily paused while CMG banking is changed.
-  alert('Online ordering is temporarily unavailable. Please check back soon.');
-  return;
+  if (CMG_DEPLOY_PREVIEW) return;
   const cart = getCart();
   if (cart.length === 0) return;
 
@@ -374,20 +538,10 @@ async function cmgCheckout() {
       variant: item.variant || ''
     }));
 
-    // Real subtotal in pence, computed from the prices we tracked when items
-    // were added, minus the mix-and-match bundle discount — the edge
-    // function recomputes the discount itself from price_id + quantity for
-    // the actual charge, this is only used for the free-delivery threshold.
-    const rawSubtotal = cart.reduce((sum, item) => {
-      return sum + (typeof item.pricePence === 'number' ? item.pricePence * item.qty : 0);
-    }, 0);
-    const bundle = cmgComputeBundleDiscount(cart, rawSubtotal);
-    const subtotal = bundle.adjustedSubtotalPence;
-
     const res = await fetch(CMG_CHECKOUT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items, subtotal })
+      body: JSON.stringify({ items })
     });
 
     const data = await res.json();
@@ -442,7 +596,9 @@ function cmgInjectCart() {
     <div id="cmg-cart-items"></div>
     <div id="cmg-cart-footer" style="display:none;">
       <p id="cmg-delivery-msg"></p>
-      <p id="cmg-checkout-paused" role="status" style="text-align:center;font-size:14px;line-height:1.5;padding:12px;background:#fff2f0;color:#763b37;border-radius:8px;">Online ordering is temporarily unavailable. Please check back soon.</p>
+      ${CMG_DEPLOY_PREVIEW
+        ? '<p role="status" style="margin:12px 0;text-align:center">Preview only. You can review your basket here. Orders are unavailable in this preview.</p><button type="button" id="cmg-checkout-btn" disabled>Checkout</button>'
+        : '<button type="button" id="cmg-checkout-btn" onclick="cmgCheckout()">Checkout</button>'}
     </div>
   `;
   document.body.appendChild(drawer);

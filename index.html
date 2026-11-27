@@ -86,7 +86,7 @@
       text-decoration: none;
     }
 
-    .logo-link img, .header-logo img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; background: var(--blush); }
+    .logo-link img, .header-logo img { display: block; width: 120px; height: auto; object-fit: contain; image-rendering: auto; }
 
     .header-actions {
       display: flex;
@@ -220,6 +220,66 @@
     }
 
     /* ── HERO ── */
+    .cmg-home-sale {
+      padding: clamp(7px, .75vw, 13px);
+      --cmg-tartan-sett: transparent 0 7px, #fae3dfbb 7px 9px, transparent 9px 15px,
+        #582f4a99 15px 21px, transparent 21px 24px, #f8e4d5cc 24px 25px,
+        transparent 25px 30px, #9d485e88 30px 42px, #62395199 42px 44px,
+        transparent 44px 50px, #f9e5dfb5 50px 52px, transparent 52px 64px;
+      background-color: #dc9eaa;
+      background-image:
+        repeating-linear-gradient(135deg, #fff2e828 0 1px, #49213922 1px 2px, transparent 2px 4px),
+        linear-gradient(90deg, var(--cmg-tartan-sett)),
+        linear-gradient(0deg, var(--cmg-tartan-sett));
+      background-size: auto, 64px 64px, 64px 64px;
+      background-repeat: no-repeat, round, round;
+    }
+    .cmg-home-sale-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 1.25fr) minmax(0, 1fr);
+      background: #fbf4eb;
+      color: #4b2b31;
+    }
+    .cmg-sale-photo { position: relative; min-height: 100%; overflow: hidden; background: #d6ad9f; }
+    .cmg-sale-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .cmg-sale-photo:first-child img { object-position: 50% 58%; }
+    .cmg-home-sale-copy { padding: clamp(16px, 1.5vw, 26px) clamp(12px, 2vw, 28px); text-align: center; }
+    .cmg-home-sale-kicker { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; }
+    .cmg-home-sale h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.85rem, 2.8vw, 3.3rem);
+      font-weight: 600;
+      line-height: 1;
+      margin: 8px 0;
+    }
+    .cmg-home-sale h2 span { display: block; }
+    .cmg-home-sale-offer { font-size: clamp(1.05rem, 1.5vw, 1.45rem); font-weight: 700; }
+    .cmg-home-sale-end { margin: 7px 0 10px; font-size: 0.9rem; line-height: 1.45; }
+    .cmg-home-sale a {
+      display: inline-block;
+      border: 1px solid #542f37;
+      padding: 8px 20px;
+      background: #542f37;
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .cmg-home-sale a:hover, .cmg-home-sale a:focus-visible { background: #fbf4eb; color: #542f37; }
+    .cmg-home-sale a.cmg-home-sale-inline {
+      display: inline;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #542f37;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    @media (max-width: 700px) {
+      .cmg-home-sale-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cmg-home-sale-copy { grid-row: 1; grid-column: 1 / -1; }
+      .cmg-sale-photo { aspect-ratio: 2; min-height: 0; }
+    }
+
     .hero {
       background: var(--blush);
       display: grid;
@@ -848,7 +908,7 @@
     /* Mobile nav improvements */
     @media (max-width: 600px) {
       .header-top { padding: 8px 16px; }
-      .logo-link img, .header-logo img { width: 80px; height: 80px; }
+      .logo-link img, .header-logo img { width: 96px; }
       main, .shop-layout, section { padding-top: 8px; }
     }
 
@@ -861,13 +921,13 @@
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
   plausible.init()
 </script>
-<script src="/cmg-cart.js"></script>
+<script src="/cmg-cart.js?v=10"></script>
 <!-- CMG-INDEX-v2 202606171905 -->
 </head>
 <body>
 
   <!-- PROMO BAR -->
-  <div class="promo-bar">
+  <div data-cmg-sale-banner class="promo-bar">
     10% off your first order – use code <strong>WELCOME10</strong> &nbsp;•&nbsp; Free UK Delivery on orders over £30
   </div>
 
@@ -895,7 +955,7 @@
 
       <!-- Logo -->
       <a href="/" class="header-logo">
-        <img src="/logo.png" alt="Crafty Mouse Gifts Logo" onerror="this.style.display='none'">
+        <img src="/logo.png?v=ac4315d" width="1005" height="944" alt="Crafty Mouse Gifts" onerror="this.style.display='none'">
       </a>
 
       <!-- Actions -->
@@ -991,6 +1051,24 @@
   </header>
 
   <!-- HERO -->
+  <section class="cmg-home-sale" data-cmg-home-sale aria-labelledby="cmg-sale-title" hidden>
+    <div class="cmg-home-sale-inner">
+      <div class="cmg-sale-photo">
+        <img src="/images/products/21677030.png" alt="Crafty Mouse Gifts Snowflake Kisses candle in a snowy festive setting">
+      </div>
+      <div class="cmg-home-sale-copy">
+        <p class="cmg-home-sale-kicker">Crafty Mouse Gifts</p>
+        <h2 id="cmg-sale-title">Black Friday <span>&amp; Cyber Monday</span></h2>
+        <p class="cmg-home-sale-offer">75% off Classic Candles</p>
+        <p><a class="cmg-home-sale-inline" href="/shop.html#classic-candles">Classic Candles now £4</a> · 50% off the rest of the shop</p>
+        <p class="cmg-home-sale-end"><strong>Sale ends soon</strong></p>
+        <a href="/shop">Shop the sale</a>
+      </div>
+      <div class="cmg-sale-photo">
+        <img src="/images/products/21677026.png" alt="Crafty Mouse Gifts Cinnamon Bark &amp; White Ginger candle">
+      </div>
+    </div>
+  </section>
   <section class="hero">
     <div class="hero-text">
       <h1>Hand-Poured Candles, Wax Melts &amp;<br><em>Eco-Friendly Home Décor</em></h1>
