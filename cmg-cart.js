@@ -32,7 +32,7 @@ function cmgSaleActive() {
 }
 
 function cmgShowSaleBanner() {
-  const banner = document.querySelector('[data-cmg-sale-banner], .promo-bar, .promo');
+  const banner = document.querySelector('[data-cmg-sale-banner]');
   if (!cmgSaleActive()) return;
   const homeSale = document.querySelector('[data-cmg-home-sale]');
   if (homeSale) homeSale.hidden = false;
@@ -41,14 +41,7 @@ function cmgShowSaleBanner() {
     const priceId = button?.getAttribute('onclick')?.match(/price_[A-Za-z0-9]+/)?.[0];
     cmgShowSalePrice(price, priceId);
   });
-  if (banner) {
-    banner.style.cssText += ';padding:0;background:#542f37;color:#fff;text-align:center;';
-    const link = document.createElement('a');
-    link.href = '/shop.html#classic-candles';
-    link.textContent = 'Sale ends soon · Classic Candles £4 · Shop the sale →';
-    link.style.cssText = 'display:block;padding:7px 12px;color:inherit;font-size:13px;font-weight:700;line-height:1.35;text-decoration:underline;text-underline-offset:3px;';
-    banner.replaceChildren(link);
-  }
+  if (banner) banner.textContent = 'Black Friday & Cyber Monday · 75% off Classic Candles · 50% off the rest of the shop · Sale ends soon';
   const bundleOffer = document.querySelector('[data-cmg-bundle-offer]');
   if (bundleOffer) bundleOffer.hidden = true;
 }
@@ -79,7 +72,42 @@ function cmgShowModalSalePrice(modal, priceId) {
   cmgShowSalePrice(original, priceId);
 }
 
-document.addEventListener('DOMContentLoaded', cmgShowSaleBanner);
+function cmgStyleSiteNavigation() {
+  const header = document.querySelector('header.site-header');
+  if (!header) return;
+  if (cmgSaleActive()) header.classList.add('cmg-sale-navigation');
+
+  const style = document.createElement('style');
+  style.textContent = `
+    .site-header nav .nav-item > a,
+    .site-header nav .nav-list > li > a {
+      font-size: clamp(14px, 1.25vw, 17px);
+      letter-spacing: .045em;
+    }
+    .site-header .mobile-menu a,
+    .site-header .mobile-menu .mobile-sub a,
+    .site-header .mobile-nav a,
+    .site-header .mobile-nav a.sub {
+      font-size: 16px;
+    }
+    .site-header.cmg-sale-navigation::after {
+      content: '';
+      display: block;
+      height: 7px;
+      background-color: #dc9eaa;
+      background-image:
+        repeating-linear-gradient(90deg, transparent 0 7px, #fae3dfbb 7px 9px, transparent 9px 15px, #582f4a99 15px 21px, transparent 21px 24px, #f8e4d5cc 24px 25px, transparent 25px 30px, #9d485e88 30px 42px, #62395199 42px 44px, transparent 44px 50px, #f9e5dfb5 50px 52px, transparent 52px 64px),
+        repeating-linear-gradient(0deg, transparent 0 2px, #582f4a66 2px 4px, #fae3df99 4px 5px, transparent 5px 7px);
+    }
+    .site-header.cmg-sale-navigation:has(+ .cmg-home-sale)::after { display: none; }
+  `;
+  document.head.appendChild(style);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  cmgStyleSiteNavigation();
+  cmgShowSaleBanner();
+});
 
 const CMG_DEPLOY_PREVIEW = /^deploy-preview-\d+--craftymousegifts\.netlify\.app$/.test(location.hostname);
 
