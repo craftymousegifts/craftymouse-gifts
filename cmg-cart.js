@@ -75,7 +75,7 @@ function cmgShowModalSalePrice(modal, priceId) {
 function cmgStyleSiteNavigation() {
   const header = document.querySelector('header.site-header');
   if (!header) return;
-  if (cmgSaleActive() && !document.querySelector('[data-cmg-home-sale]')) {
+  if (cmgSaleActive()) {
     const sale = document.createElement('a');
     sale.className = 'cmg-inner-sale';
     sale.href = '/shop.html#classic-candles';
@@ -84,7 +84,7 @@ function cmgStyleSiteNavigation() {
     const offer = document.createElement('span');
     offer.textContent = 'Classic Candles £4 · 50% off the rest of the shop · Sale ends soon';
     sale.append(title, offer);
-    header.after(sale);
+    header.appendChild(sale);
   }
 
   const style = document.createElement('style');
@@ -100,6 +100,7 @@ function cmgStyleSiteNavigation() {
     .site-header .mobile-nav a.sub {
       font-size: 16px;
     }
+    #classic-candles { scroll-margin-top: var(--cmg-header-offset, 250px); }
     .breadcrumb, .breadcrumb a {
       font-size: 15px;
       line-height: 1.45;
@@ -128,6 +129,18 @@ function cmgStyleSiteNavigation() {
     .cmg-inner-sale:hover strong, .cmg-inner-sale:focus-visible strong { text-decoration: underline; }
   `;
   document.head.appendChild(style);
+
+  const classicCandles = document.getElementById('classic-candles');
+  if (classicCandles) {
+    const updateOffset = () => {
+      classicCandles.style.setProperty('--cmg-header-offset', `${Math.ceil(header.getBoundingClientRect().height) + 16}px`);
+    };
+    updateOffset();
+    new ResizeObserver(updateOffset).observe(header);
+    if (location.hash === '#classic-candles') {
+      requestAnimationFrame(() => classicCandles.scrollIntoView({ block: 'start', behavior: 'instant' }));
+    }
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
