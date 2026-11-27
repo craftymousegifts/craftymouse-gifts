@@ -9,6 +9,27 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 const ALLOWED_ORIGINS = ['https://craftymousegifts.com', 'https://www.craftymousegifts.com', 'https://craftymousegifts.netlify.app'];
 const SALE_START = Date.parse('2026-11-27T00:00:00Z');
 const SALE_END = Date.parse('2026-12-01T00:00:00Z');
+const CMG_CLASSIC_CANDLE_PRICES = new Set([
+  'price_1TizjiQpAVWZATGhr6BBDNsF',
+  'price_1TizjjQpAVWZATGhh7ePcWgj',
+  'price_1TizjkQpAVWZATGhuNg9ZC0S',
+  'price_1TizjlQpAVWZATGhsQ6b4ljE',
+  'price_1TizjlQpAVWZATGhbxTNpelA',
+  'price_1TizjmQpAVWZATGhUX38EXSj',
+  'price_1TizjnQpAVWZATGhDJRlYLf1',
+  'price_1TizjoQpAVWZATGhm7AA2ALS',
+  'price_1TizjoQpAVWZATGhPwdKVSCH',
+  'price_1TizjpQpAVWZATGhvJvVs2t9',
+  'price_1TizjqQpAVWZATGhHRTq54Sj',
+  'price_1TizjrQpAVWZATGhAlnTIndW',
+  'price_1TizjsQpAVWZATGhkaq4Mybg',
+  'price_1TizjsQpAVWZATGhCKC1yWSZ',
+]);
+
+function cmgSaleUnitPence(pricePence: number, priceId: string) {
+  return Math.ceil(pricePence / (CMG_CLASSIC_CANDLE_PRICES.has(priceId) ? 4 : 2));
+}
+
 const FREE_DELIVERY_THRESHOLD = 3000; // £30 in pence
 
 // ── Mix-and-match bundle discount, recomputed here (not trusted from the
@@ -123,7 +144,7 @@ serve(async (req) => {
     const sale = now >= SALE_START && now < SALE_END;
     const subtotal = typedItems.reduce((total, item) => {
       const unit = prices.get(item.price_id)!.unit;
-      return total + (sale ? Math.ceil(unit / 2) : unit) * item.quantity;
+      return total + (sale ? cmgSaleUnitPence(unit, item.price_id) : unit) * item.quantity;
     }, 0);
     const params: Record<string, string> = {
       mode: 'payment',
@@ -222,7 +243,7 @@ serve(async (req) => {
         const price = prices.get(item.price_id)!;
         params[`line_items[${lineIndex}][price_data][currency]`] = 'gbp';
         params[`line_items[${lineIndex}][price_data][product]`] = price.product;
-        params[`line_items[${lineIndex}][price_data][unit_amount]`] = String(Math.ceil(price.unit / 2));
+        params[`line_items[${lineIndex}][price_data][unit_amount]`] = String(cmgSaleUnitPence(price.unit, item.price_id));
       } else {
         params[`line_items[${lineIndex}][price]`] = item.price_id;
       }
@@ -249,7 +270,7 @@ serve(async (req) => {
       : 'Standard UK Delivery (£3.95)';
     params['shipping_options[0][shipping_rate_data][fixed_amount][amount]'] = freeDelivery ? '0' : '395';
     if (sale) {
-      params['metadata[offer]'] = 'Black Friday and Cyber Monday: 50% off';
+      params['metadata[offer]'] = 'Black Friday and Cyber Monday';
       params['expires_at'] = String(Math.floor(Math.min(now + 3600000, Math.max(SALE_END, now + 31 * 60000)) / 1000));
     }
 

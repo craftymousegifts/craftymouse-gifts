@@ -221,10 +221,16 @@
 
     /* ── HERO ── */
     .cmg-home-sale {
-      padding: clamp(8px, 1.1vw, 15px);
-      background:
-        repeating-linear-gradient(90deg, transparent 0 16px, #a96b7966 16px 19px, transparent 19px 24px, #7540508c 24px 30px, transparent 30px 48px),
-        repeating-linear-gradient(0deg, #e9bfc7 0 16px, #c68999 16px 19px, #f2d7db 19px 24px, #ad6b7f 24px 30px, #e9bfc7 30px 48px);
+      padding: clamp(12px, 1.65vw, 23px);
+      --cmg-tartan-sett: transparent 0 7px, #fae3dfbb 7px 9px, transparent 9px 15px,
+        #582f4a99 15px 21px, transparent 21px 24px, #f8e4d5cc 24px 25px,
+        transparent 25px 30px, #9d485e88 30px 42px, #62395199 42px 44px,
+        transparent 44px 50px, #f9e5dfb5 50px 52px, transparent 52px 64px;
+      background-color: #dc9eaa;
+      background-image:
+        repeating-linear-gradient(135deg, #fff2e828 0 1px, #49213922 1px 2px, transparent 2px 4px),
+        repeating-linear-gradient(90deg, var(--cmg-tartan-sett)),
+        repeating-linear-gradient(0deg, var(--cmg-tartan-sett));
     }
     .cmg-home-sale-inner {
       display: grid;
@@ -904,7 +910,7 @@
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
   plausible.init()
 </script>
-<script src="/cmg-cart.js?v=8"></script>
+<script src="/cmg-cart.js?v=9"></script>
 <!-- CMG-INDEX-v2 202606171905 -->
 </head>
 <body>
@@ -938,7 +944,7 @@
 
       <!-- Logo -->
       <a href="/" class="header-logo">
-        <img src="/logo.png" alt="Crafty Mouse Gifts Logo" onerror="this.style.display='none'">
+        <img src="/logo.png?v=ac4315d" alt="Crafty Mouse Gifts Logo" onerror="this.style.display='none'">
       </a>
 
       <!-- Actions -->
@@ -1042,7 +1048,8 @@
       <div class="cmg-home-sale-copy">
         <p class="cmg-home-sale-kicker">Crafty Mouse Gifts</p>
         <h2 id="cmg-sale-title">Black Friday <span>&amp; Cyber Monday</span></h2>
-        <p class="cmg-home-sale-offer">50% off all shop products</p>
+        <p class="cmg-home-sale-offer">75% off Classic Candles</p>
+        <p>Classic Candles now £4 · 50% off the rest of the shop</p>
         <p class="cmg-home-sale-end"><strong>Sale ends soon</strong> · Monday 30 November</p>
         <a href="/shop">Shop the sale</a>
       </div>

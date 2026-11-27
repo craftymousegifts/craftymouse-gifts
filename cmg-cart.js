@@ -4,6 +4,28 @@
 const CMG_SALE_START = Date.parse('2026-11-27T00:00:00Z');
 const CMG_SALE_END = Date.parse('2026-12-01T00:00:00Z');
 
+const CMG_CLASSIC_CANDLE_PRICES = new Set([
+  'price_1TizjiQpAVWZATGhr6BBDNsF',
+  'price_1TizjjQpAVWZATGhh7ePcWgj',
+  'price_1TizjkQpAVWZATGhuNg9ZC0S',
+  'price_1TizjlQpAVWZATGhsQ6b4ljE',
+  'price_1TizjlQpAVWZATGhbxTNpelA',
+  'price_1TizjmQpAVWZATGhUX38EXSj',
+  'price_1TizjnQpAVWZATGhDJRlYLf1',
+  'price_1TizjoQpAVWZATGhm7AA2ALS',
+  'price_1TizjoQpAVWZATGhPwdKVSCH',
+  'price_1TizjpQpAVWZATGhvJvVs2t9',
+  'price_1TizjqQpAVWZATGhHRTq54Sj',
+  'price_1TizjrQpAVWZATGhAlnTIndW',
+  'price_1TizjsQpAVWZATGhkaq4Mybg',
+  'price_1TizjsQpAVWZATGhCKC1yWSZ',
+]);
+
+
+function cmgSaleUnitPence(pricePence, priceId) {
+  return Math.ceil(pricePence / (CMG_CLASSIC_CANDLE_PRICES.has(priceId) ? 4 : 2));
+}
+
 function cmgSaleActive() {
   const now = Date.now();
   return now >= CMG_SALE_START && now < CMG_SALE_END;
@@ -14,13 +36,17 @@ function cmgShowSaleBanner() {
   if (!cmgSaleActive()) return;
   const homeSale = document.querySelector('[data-cmg-home-sale]');
   if (homeSale) homeSale.hidden = false;
-  document.querySelectorAll('.product-card .price').forEach(cmgShowSalePrice);
-  if (banner) banner.textContent = 'Black Friday & Cyber Monday · 50% off all shop products · Ends Monday 30 November';
+  document.querySelectorAll('.product-card .price').forEach(price => {
+    const button = price.closest('.product-card').querySelector('.btn-cart');
+    const priceId = button?.getAttribute('onclick')?.match(/price_[A-Za-z0-9]+/)?.[0];
+    cmgShowSalePrice(price, priceId);
+  });
+  if (banner) banner.textContent = 'Black Friday & Cyber Monday · 75% off Classic Candles · 50% off the rest of the shop · Ends Monday 30 November';
   const bundleOffer = document.querySelector('[data-cmg-bundle-offer]');
   if (bundleOffer) bundleOffer.hidden = true;
 }
 
-function cmgShowSalePrice(original) {
+function cmgShowSalePrice(original, priceId) {
   if (!original || !cmgSaleActive() || original.closest('.cmg-sale-price')) return;
   const pricePence = cmgParsePriceToPence(original.textContent);
   if (pricePence === null) return;
@@ -31,19 +57,19 @@ function cmgShowSalePrice(original) {
   const reduced = document.createElement('strong');
   original.before(group);
   regular.append(original);
-  reduced.textContent = cmgFormatPence(Math.ceil(pricePence / 2));
+  reduced.textContent = cmgFormatPence(cmgSaleUnitPence(pricePence, priceId));
   reduced.setAttribute('aria-label', 'Sale price ' + reduced.textContent);
   group.append(regular, reduced);
 }
 
-function cmgShowModalSalePrice(modal) {
+function cmgShowModalSalePrice(modal, priceId) {
   if (!cmgSaleActive()) return;
   const price = modal.querySelector('.pm-price');
   if (!price) return;
   const original = document.createElement('span');
   original.textContent = price.textContent;
   price.replaceChildren(original);
-  cmgShowSalePrice(original);
+  cmgShowSalePrice(original, priceId);
 }
 
 document.addEventListener('DOMContentLoaded', cmgShowSaleBanner);
@@ -330,7 +356,7 @@ function renderCart() {
   cart.forEach(item => {
     if (typeof item.pricePence === 'number' && !isNaN(item.pricePence)) {
       subtotalPence += item.pricePence * item.qty;
-      saleSubtotalPence += Math.ceil(item.pricePence / 2) * item.qty;
+      saleSubtotalPence += cmgSaleUnitPence(item.pricePence, item.priceId) * item.qty;
     } else {
       hasUnknownPrice = true;
     }
@@ -373,7 +399,7 @@ function renderCart() {
       ? `<div style="display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;color:#1e1e1e;"><span>Subtotal</span><span>${cmgFormatPence(subtotalPence)}+</span></div>`
       : `<div style="display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;color:#1e1e1e;"><span>Subtotal</span><span>${cmgFormatPence(subtotalPence)}</span></div>`;
     const discountRow = savings.discountPence > 0
-      ? `<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;color:#e46d69;margin-top:4px;"><span>${sale ? 'Black Friday &amp; Cyber Monday · 50% off' : 'Mix &amp; Match Discount'}</span><span>−${cmgFormatPence(savings.discountPence)}</span></div>`
+      ? `<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;color:#e46d69;margin-top:4px;"><span>${sale ? 'Black Friday &amp; Cyber Monday discount' : 'Mix &amp; Match Discount'}</span><span>−${cmgFormatPence(savings.discountPence)}</span></div>`
       : '';
     const totalRow = !hasUnknownPrice && savings.discountPence > 0
       ? `<div style="display:flex;justify-content:space-between;font-weight:700"><span>Products total</span><span>${cmgFormatPence(savings.adjustedSubtotalPence)}</span></div>`
