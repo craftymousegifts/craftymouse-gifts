@@ -100,7 +100,14 @@ function cmgStyleSiteNavigation() {
     .site-header .mobile-nav a.sub {
       font-size: 16px;
     }
-    #classic-candles { scroll-margin-top: var(--cmg-header-offset, 250px); }
+    html { scroll-padding-top: var(--cmg-header-offset, 0px); }
+    .makers-corner { scroll-margin-top: 0; }
+    .shop-layout .sidebar, .sidebar:has(.sidebar-nav) {
+      top: var(--cmg-header-offset, 120px);
+      max-height: calc(100dvh - var(--cmg-header-offset, 120px) - 16px);
+      overflow-y: auto;
+    }
+    .sf-detail { top: var(--cmg-header-offset, 18px) !important; }
     .breadcrumb, .breadcrumb a {
       font-size: 15px;
       line-height: 1.45;
@@ -130,16 +137,18 @@ function cmgStyleSiteNavigation() {
   `;
   document.head.appendChild(style);
 
-  const classicCandles = document.getElementById('classic-candles');
-  if (classicCandles) {
-    const updateOffset = () => {
-      classicCandles.style.setProperty('--cmg-header-offset', `${Math.ceil(header.getBoundingClientRect().height) + 16}px`);
-    };
-    updateOffset();
-    new ResizeObserver(updateOffset).observe(header);
-    if (location.hash === '#classic-candles') {
-      requestAnimationFrame(() => classicCandles.scrollIntoView({ block: 'start', behavior: 'instant' }));
-    }
+  const updateOffset = () => {
+    const sticky = getComputedStyle(header).position === 'sticky';
+    const offset = sticky ? Math.ceil(header.getBoundingClientRect().height) + 16 : 16;
+    document.documentElement.style.setProperty('--cmg-header-offset', offset + 'px');
+  };
+  updateOffset();
+  if ('ResizeObserver' in window) new ResizeObserver(updateOffset).observe(header);
+  window.addEventListener('resize', updateOffset);
+
+  if (location.hash === '#classic-candles') {
+    const classicCandles = document.getElementById('classic-candles');
+    requestAnimationFrame(() => classicCandles?.scrollIntoView({ block: 'start', behavior: 'instant' }));
   }
 }
 
