@@ -1,6 +1,24 @@
 // ── Crafty Mouse Gifts — Cart Drawer ─────────────────────────────────────────
 // Handles add to basket, cart drawer UI, and Stripe checkout
 
+const CMG_SALE_START = Date.parse('2026-11-27T00:00:00Z');
+const CMG_SALE_END = Date.parse('2026-12-01T00:00:00Z');
+
+function cmgSaleActive() {
+  const now = Date.now();
+  return now >= CMG_SALE_START && now < CMG_SALE_END;
+}
+
+function cmgShowSaleBanner() {
+  const banner = document.querySelector('[data-cmg-sale-banner]');
+  if (!banner || !cmgSaleActive()) return;
+  banner.textContent = 'Black Friday & Cyber Monday · 50% off all shop products · Ends Monday 30 November';
+  const bundleOffer = document.querySelector('[data-cmg-bundle-offer]');
+  if (bundleOffer) bundleOffer.hidden = true;
+}
+
+document.addEventListener('DOMContentLoaded', cmgShowSaleBanner);
+
 const CMG_CHECKOUT_URL = 'https://qvkosdqcryrcfbjtaxic.supabase.co/functions/v1/cmg-checkout';
 const CMG_FREE_DELIVERY = 3000; // £30 in pence
 const CMG_DELIVERY_COST = 395;  // £3.95 in pence
@@ -276,16 +294,21 @@ function renderCart() {
   // price couldn't be found on the page), we flag it rather than silently
   // undercounting.
   let subtotalPence = 0;
+  let saleSubtotalPence = 0;
   let hasUnknownPrice = false;
   cart.forEach(item => {
     if (typeof item.pricePence === 'number' && !isNaN(item.pricePence)) {
       subtotalPence += item.pricePence * item.qty;
+      saleSubtotalPence += Math.ceil(item.pricePence / 2) * item.qty;
     } else {
       hasUnknownPrice = true;
     }
   });
 
-  const bundle = cmgComputeBundleDiscount(cart, subtotalPence);
+  const sale = cmgSaleActive();
+  const savings = sale
+    ? { discountPence: subtotalPence - saleSubtotalPence, adjustedSubtotalPence: saleSubtotalPence }
+    : cmgComputeBundleDiscount(cart, subtotalPence);
 
   container.innerHTML = cart.map((item, idx) => `
     <div style="display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #f0e8e6;align-items:flex-start;">
@@ -318,15 +341,18 @@ function renderCart() {
     const subtotalRow = hasUnknownPrice
       ? `<div style="display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;color:#1e1e1e;"><span>Subtotal</span><span>${cmgFormatPence(subtotalPence)}+</span></div>`
       : `<div style="display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;color:#1e1e1e;"><span>Subtotal</span><span>${cmgFormatPence(subtotalPence)}</span></div>`;
-    const discountRow = bundle.discountPence > 0
-      ? `<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;color:#e46d69;margin-top:4px;"><span>🎁 Mix &amp; Match Discount</span><span>−${cmgFormatPence(bundle.discountPence)}</span></div>`
+    const discountRow = savings.discountPence > 0
+      ? `<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;color:#e46d69;margin-top:4px;"><span>${sale ? 'Black Friday &amp; Cyber Monday · 50% off' : 'Mix &amp; Match Discount'}</span><span>−${cmgFormatPence(savings.discountPence)}</span></div>`
       : '';
-    subtotalEl.innerHTML = subtotalRow + discountRow;
+    const totalRow = !hasUnknownPrice && savings.discountPence > 0
+      ? `<div style="display:flex;justify-content:space-between;font-weight:700"><span>Products total</span><span>${cmgFormatPence(savings.adjustedSubtotalPence)}</span></div>`
+      : '';
+    subtotalEl.innerHTML = subtotalRow + discountRow + totalRow;
   }
 
   // Delivery nudge — based on the real, discounted subtotal
   const deliveryMsg = document.getElementById('cmg-delivery-msg');
-  const effectiveSubtotal = bundle.adjustedSubtotalPence;
+  const effectiveSubtotal = savings.adjustedSubtotalPence;
   if (deliveryMsg) {
     if (hasUnknownPrice) {
       // We couldn't price every item confidently — don't claim a threshold we can't verify
@@ -358,9 +384,6 @@ function cmgRemoveItem(idx) {
 
 // ── Checkout ──────────────────────────────────────────────────────────────────
 async function cmgCheckout() {
-  // Ordering is temporarily paused while CMG banking is changed.
-  alert('Online ordering is temporarily unavailable. Please check back soon.');
-  return;
   const cart = getCart();
   if (cart.length === 0) return;
 
@@ -374,20 +397,10 @@ async function cmgCheckout() {
       variant: item.variant || ''
     }));
 
-    // Real subtotal in pence, computed from the prices we tracked when items
-    // were added, minus the mix-and-match bundle discount — the edge
-    // function recomputes the discount itself from price_id + quantity for
-    // the actual charge, this is only used for the free-delivery threshold.
-    const rawSubtotal = cart.reduce((sum, item) => {
-      return sum + (typeof item.pricePence === 'number' ? item.pricePence * item.qty : 0);
-    }, 0);
-    const bundle = cmgComputeBundleDiscount(cart, rawSubtotal);
-    const subtotal = bundle.adjustedSubtotalPence;
-
     const res = await fetch(CMG_CHECKOUT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items, subtotal })
+      body: JSON.stringify({ items })
     });
 
     const data = await res.json();
@@ -442,7 +455,7 @@ function cmgInjectCart() {
     <div id="cmg-cart-items"></div>
     <div id="cmg-cart-footer" style="display:none;">
       <p id="cmg-delivery-msg"></p>
-      <p id="cmg-checkout-paused" role="status" style="text-align:center;font-size:14px;line-height:1.5;padding:12px;background:#fff2f0;color:#763b37;border-radius:8px;">Online ordering is temporarily unavailable. Please check back soon.</p>
+      <button type="button" id="cmg-checkout-btn" onclick="cmgCheckout()">Checkout</button>
     </div>
   `;
   document.body.appendChild(drawer);
