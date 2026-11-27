@@ -2,7 +2,8 @@
 // Handles add to basket, cart drawer UI, and Stripe checkout
 
 const CMG_SALE_START = Date.parse('2026-11-27T00:00:00Z');
-const CMG_SALE_END = Date.parse('2026-12-01T00:00:00Z');
+const CMG_CYBER_END = Date.parse('2026-12-01T00:00:00Z');
+const CMG_SALE_END = Date.parse('2026-12-25T00:00:00Z');
 
 const CMG_CLASSIC_CANDLE_PRICES = new Set([
   'price_1TizjiQpAVWZATGhr6BBDNsF',
@@ -31,17 +32,27 @@ function cmgSaleActive() {
   return now >= CMG_SALE_START && now < CMG_SALE_END;
 }
 
+function cmgSaleName() {
+  return Date.now() < CMG_CYBER_END ? 'Black Friday & Cyber Monday' : 'Christmas Sale';
+}
+
 function cmgShowSaleBanner() {
   const banner = document.querySelector('[data-cmg-sale-banner]');
   if (!cmgSaleActive()) return;
   const homeSale = document.querySelector('[data-cmg-home-sale]');
-  if (homeSale) homeSale.hidden = false;
+  if (homeSale) {
+    if (Date.now() >= CMG_CYBER_END) {
+      homeSale.querySelector('#cmg-sale-title').textContent = cmgSaleName();
+      homeSale.querySelector('.cmg-home-sale-end strong').textContent = 'Offer ends Christmas Eve';
+    }
+    homeSale.hidden = false;
+  }
   document.querySelectorAll('.product-card .price').forEach(price => {
     const button = price.closest('.product-card').querySelector('.btn-cart');
     const priceId = button?.getAttribute('onclick')?.match(/price_[A-Za-z0-9]+/)?.[0];
     cmgShowSalePrice(price, priceId);
   });
-  if (banner) banner.textContent = 'Black Friday & Cyber Monday · 75% off Classic Candles · 50% off the rest of the shop · Sale ends soon';
+  if (banner) banner.textContent = cmgSaleName() + ' · 75% off Classic Candles · 50% off the rest of the shop' + (Date.now() < CMG_CYBER_END ? ' · Sale ends soon' : ' · Ends Christmas Eve');
   const bundleOffer = document.querySelector('[data-cmg-bundle-offer]');
   if (bundleOffer) bundleOffer.hidden = true;
 }
@@ -80,9 +91,9 @@ function cmgStyleSiteNavigation() {
     sale.className = 'cmg-inner-sale';
     sale.href = '/shop.html#classic-candles';
     const title = document.createElement('strong');
-    title.textContent = 'Black Friday & Cyber Monday Deals';
+    title.textContent = Date.now() < CMG_CYBER_END ? 'Black Friday & Cyber Monday Deals' : cmgSaleName();
     const offer = document.createElement('span');
-    offer.textContent = 'Classic Candles £4 · 50% off the rest of the shop · Sale ends soon';
+    offer.textContent = 'Classic Candles £4 · 50% off the rest of the shop' + (Date.now() < CMG_CYBER_END ? ' · Sale ends soon' : ' · Ends Christmas Eve');
     sale.append(title, offer);
     header.appendChild(sale);
   }
@@ -482,7 +493,7 @@ function renderCart() {
       ? `<div style="display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;color:#1e1e1e;"><span>Subtotal</span><span>${cmgFormatPence(subtotalPence)}+</span></div>`
       : `<div style="display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;color:#1e1e1e;"><span>Subtotal</span><span>${cmgFormatPence(subtotalPence)}</span></div>`;
     const discountRow = savings.discountPence > 0
-      ? `<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;color:#e46d69;margin-top:4px;"><span>${sale ? 'Black Friday &amp; Cyber Monday discount' : 'Mix &amp; Match Discount'}</span><span>−${cmgFormatPence(savings.discountPence)}</span></div>`
+      ? `<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;color:#e46d69;margin-top:4px;"><span>${sale ? (Date.now() < CMG_CYBER_END ? 'Black Friday &amp; Cyber Monday discount' : 'Christmas Sale discount') : 'Mix &amp; Match Discount'}</span><span>−${cmgFormatPence(savings.discountPence)}</span></div>`
       : '';
     const totalRow = !hasUnknownPrice && savings.discountPence > 0
       ? `<div style="display:flex;justify-content:space-between;font-weight:700"><span>Products total</span><span>${cmgFormatPence(savings.adjustedSubtotalPence)}</span></div>`
