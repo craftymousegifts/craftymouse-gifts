@@ -86,7 +86,7 @@
       text-decoration: none;
     }
 
-    .logo-link img, .header-logo img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; background: var(--blush); }
+    .logo-link img, .header-logo img { display: block; width: 120px; height: auto; object-fit: contain; image-rendering: auto; }
 
     .header-actions {
       display: flex;
@@ -897,7 +897,7 @@
     /* Mobile nav improvements */
     @media (max-width: 600px) {
       .header-top { padding: 8px 16px; }
-      .logo-link img, .header-logo img { width: 80px; height: 80px; }
+      .logo-link img, .header-logo img { width: 96px; }
       main, .shop-layout, section { padding-top: 8px; }
     }
 
@@ -910,7 +910,7 @@
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
   plausible.init()
 </script>
-<script src="/cmg-cart.js?v=9"></script>
+<script src="/cmg-cart.js?v=10"></script>
 <!-- CMG-INDEX-v2 202606171905 -->
 </head>
 <body>
@@ -944,7 +944,7 @@
 
       <!-- Logo -->
       <a href="/" class="header-logo">
-        <img src="/logo.png?v=ac4315d" alt="Crafty Mouse Gifts Logo" onerror="this.style.display='none'">
+        <img src="/logo.png?v=ac4315d" width="1005" height="944" alt="Crafty Mouse Gifts" onerror="this.style.display='none'">
       </a>
 
       <!-- Actions -->
@@ -1050,7 +1050,7 @@
         <h2 id="cmg-sale-title">Black Friday <span>&amp; Cyber Monday</span></h2>
         <p class="cmg-home-sale-offer">75% off Classic Candles</p>
         <p>Classic Candles now £4 · 50% off the rest of the shop</p>
-        <p class="cmg-home-sale-end"><strong>Sale ends soon</strong> · Monday 30 November</p>
+        <p class="cmg-home-sale-end"><strong>Sale ends soon</strong></p>
         <a href="/shop">Shop the sale</a>
       </div>
       <div class="cmg-sale-photo">

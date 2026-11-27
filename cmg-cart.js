@@ -41,7 +41,7 @@ function cmgShowSaleBanner() {
     const priceId = button?.getAttribute('onclick')?.match(/price_[A-Za-z0-9]+/)?.[0];
     cmgShowSalePrice(price, priceId);
   });
-  if (banner) banner.textContent = 'Black Friday & Cyber Monday · 75% off Classic Candles · 50% off the rest of the shop · Ends Monday 30 November';
+  if (banner) banner.textContent = 'Black Friday & Cyber Monday · 75% off Classic Candles · 50% off the rest of the shop · Sale ends soon';
   const bundleOffer = document.querySelector('[data-cmg-bundle-offer]');
   if (bundleOffer) bundleOffer.hidden = true;
 }
